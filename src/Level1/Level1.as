@@ -49,7 +49,7 @@
 		
 		private function goToShop (e:Event):void
 		{
-			this.screenSwitcher.loadScreen( ShopMenu );
+			ScreenSwitcher.ScreenSwitcher.getInstance().loadScreen( ShopMenu );
 		}
 		
 		
