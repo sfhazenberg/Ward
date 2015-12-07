@@ -16,7 +16,7 @@
 		private var screenSwitcher:ScreenSwitcher;
 		private var sprite:Sprite;
 
-		public function ShopMenu( screenSwitcher:ScreenSwitcher ) {
+		public function ShopMenu() {
 			
 			this.screenSwitcher = screenSwitcher;
 			addEventListener( Event.ADDED_TO_STAGE, initialize );
@@ -25,7 +25,7 @@
 		public function initialize (event:Event):void 
 		{			
 			asset = new AssetManager;
-			var folder:File = File.applicationDirectory.resolvePath("assets/game");
+			var folder:File = File.applicationDirectory.resolvePath("Shop/assets");
 			asset.enqueue( folder );
 			asset.loadQueue( onProgress );
 		}

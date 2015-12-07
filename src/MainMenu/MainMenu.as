@@ -18,7 +18,7 @@
 		
 		public var asset:AssetManager;
 		
-		public function MainMenu( screenSwitcher:ScreenSwitcher ) {
+		public function MainMenu( ) {
 			addEventListener( Event.ADDED_TO_STAGE, initialize );
 		}
 		

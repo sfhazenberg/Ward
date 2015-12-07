@@ -23,8 +23,8 @@ package Main
 			var viewPort:Rectangle = new Rectangle(0, 0, screenWidth, screenHeight);
 
 			var starlingInstance:Starling = new Starling(Loader, stage, viewPort);
-			starlingInstance.stage.stageWidth = 1080;
-			starlingInstance.stage.stageHeight = 1920;
+			starlingInstance.stage.stageWidth = 1920;
+			starlingInstance.stage.stageHeight = 1080;
 			starlingInstance.start();
 		}
 	}

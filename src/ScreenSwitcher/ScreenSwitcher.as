@@ -60,7 +60,7 @@
 			}
 			
 			// instantiate the screen to load with a reference to this classph
-			screen = new screenToLoad( this );
+			screen = new screenToLoad();
 			addChild( screen );
 		}
 	}
