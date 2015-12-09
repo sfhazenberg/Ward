@@ -7,6 +7,7 @@
 	
 	import starling.display.Button;
 	import starling.display.Image;
+	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.utils.AssetManager;
@@ -37,14 +38,33 @@
 		
 		private function startLevel1():void 
 		{
-			//var conceptBar:Image = new Image(asset.getTexture("ConceptBar"));
-			//addChild(conceptBar);
+			var conceptBar:Image = new Image(asset.getTexture("TopBar"));
+			addChild(conceptBar);
 			
-			var shopButton:Button = new Button ( asset.getTexture("shopButton_PH" ));
-			shopButton.x = 20;
-			shopButton.y = 20;
+			var shopButton:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
+			shopButton.x = stage.stageWidth - 100;
+			shopButton.y = 50;
 			shopButton.addEventListener( Event.TRIGGERED, goToShop)
 			addChild(shopButton);
+			
+			var waitingRoom:Image = new Image(asset.getTexture("waiting_room"));
+			waitingRoom.x = stage.stageWidth - 375;
+			waitingRoom.y = stage.stageHeight - 329;
+			addChild(waitingRoom);
+			
+			var supplyRoom:Image = new Image(asset.getTexture("supply_room"));
+			supplyRoom.x = stage.stageWidth - 755;
+			supplyRoom.y = stage.stageHeight - 329;
+			addChild(supplyRoom);
+			
+			var treatmentRoom:Image = new Image(asset.getTexture("Treatment Room"));
+			treatmentRoom.x = stage.stageWidth - 1135;
+			treatmentRoom.y = stage.stageHeight - 329;
+			addChild(treatmentRoom);
+			
+			//var doctor1:MovieClip = new MovieClip(asset.getTexture("Doctor Front mc"), 24);
+			//Starling.juggler.add(doctor1);
+			
 		}
 		
 		private function goToShop (e:Event):void

@@ -2,9 +2,14 @@
 	
 	import flash.filesystem.File;
 	
+	import Level1.Level1;
+	
+	import MainInfo.MainInfo;
+	
 	import ScreenSwitcher.ScreenSwitcher;
 	
 	import starling.display.Button;
+	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -15,6 +20,7 @@
 		private var asset:AssetManager;
 		private var screenSwitcher:ScreenSwitcher;
 		private var sprite:Sprite;
+		//private var bar:MainInfo.MainInfo.conceptBar;
 
 		public function ShopMenu() {
 			
@@ -40,8 +46,17 @@
 		
 		private function startShopMenu ():void
 		{
-			var conceptBar:Image = new Image(asset.getTexture("ConceptBar"));
+			var conceptBar:Image = new Image(asset.getTexture("TopBar"));
 			addChild(conceptBar);
+			//addChild(conceptBar);
+			//var conceptBar:DisplayObject = new MainInfo.MainInfo.conceptBar;
+			//addChild(conceptBar);
+			
+			var backToGame:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
+			backToGame.x = stage.stageWidth - 100;
+			backToGame.y = 50;
+			backToGame.addEventListener( Event.TRIGGERED, exitShop );
+			addChild( backToGame );
 			
 			var upgradeButton:Button = new Button ( asset.getTexture("up_upgrade"), "Upgrades", asset.getTexture("down_upgrade"));
 			upgradeButton.y = 300;
@@ -68,6 +83,11 @@
 			sprite.x = 500;
 			sprite.y = 500;
 			addChild(sprite);
+		}
+		
+		private function exitShop (e:Event):void
+		{
+			ScreenSwitcher.ScreenSwitcher.getInstance().loadScreen( Level1 );
 		}
 		
 		private function upgradeScreen (e:Event):void
