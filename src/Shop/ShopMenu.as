@@ -15,7 +15,7 @@
 	import starling.events.Event;
 	import starling.utils.AssetManager;
 	
-	public class ShopMenu extends Sprite {
+	public class ShopMenu extends MainInfo {
 		
 		private var asset:AssetManager;
 		private var screenSwitcher:ScreenSwitcher;
@@ -45,33 +45,29 @@
 		}
 		
 		private function startShopMenu ():void
-		{
-			var conceptBar:Image = new Image(asset.getTexture("TopBar"));
-			addChild(conceptBar);
-			//addChild(conceptBar);
-			//var conceptBar:DisplayObject = new MainInfo.MainInfo.conceptBar;
-			//addChild(conceptBar);
-			
+		{			
 			var backToGame:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
 			backToGame.x = stage.stageWidth - 100;
 			backToGame.y = 50;
 			backToGame.addEventListener( Event.TRIGGERED, exitShop );
 			addChild( backToGame );
 			
-			var upgradeButton:Button = new Button ( asset.getTexture("up_upgrade"), "Upgrades", asset.getTexture("down_upgrade"));
+			var upgradeButton:Button = new Button ( asset.getTexture("UpgradeButton"));
+			upgradeButton.x = 50;
 			upgradeButton.y = 300;
 			addChild(upgradeButton);
 			
-			var staffButton:Button = new Button ( asset.getTexture("up_staff"), "Staff", asset.getTexture("down_staff"));
-			staffButton.y = 400;
+			var staffButton:Button = new Button ( asset.getTexture("StaffButton"));
+			staffButton.x = 50;
+			staffButton.y = 475;
 			addChild(staffButton);
 			
 			var suppliesButton:Button = new Button ( asset.getTexture("up_supplies"), "Suplies", asset.getTexture("down_supplies"));
-			suppliesButton.y = 500;
+			suppliesButton.y = 650;
 			addChild(suppliesButton);
 			
 			var statsButton:Button = new Button ( asset.getTexture("up_stats"), "Information", asset.getTexture("down_stats"));
-			statsButton.y = 600;
+			statsButton.y = 775;
 			addChild(statsButton);
 			
 			upgradeButton.addEventListener( Event.TRIGGERED, upgradeScreen );
@@ -94,20 +90,59 @@
 		{
 			removeChild(sprite);
 			sprite = new Sprite();
-			sprite.x = 500;
-			sprite.y = 500;
+			sprite.x = 280;
+			sprite.y = 180;
 			addChild(sprite);
-			var upgradeImage:Image = new Image (asset.getTexture("shopScreenUpgrades_PH"));
-			sprite.addChild(upgradeImage);
+			var upgradeBackground:Image = new Image (asset.getTexture("UpgradesScreen"));
+			sprite.addChild(upgradeBackground);
+			
+			var treatmentRoom:Button = new Button (asset.getTexture("TreatmentRoomButton"));
+			treatmentRoom.x = 500;
+			treatmentRoom.y = 150;
+			sprite.addChild(treatmentRoom);
+			
+			var waitingRoom:Button = new Button (asset.getTexture("WaitingRoomButton"));
+			waitingRoom.x = 500;
+			waitingRoom.y = 280;
+			sprite.addChild(waitingRoom);
+			
+			var supplyRoom:Button = new Button (asset.getTexture("SupplyRoomButton"));
+			supplyRoom.x = 500;
+			supplyRoom.y = 410;
+			sprite.addChild(supplyRoom);
+			
+			var workshop:Button = new Button (asset.getTexture("WorkshopButton"));
+			workshop.x = 500;
+			workshop.y = 590;
+			sprite.addChild(workshop);
+			
+			var seminar:Button = new Button (asset.getTexture("SeminarButton"));
+			seminar.x = 500;
+			seminar.y = 720;
+			sprite.addChild(seminar);
+			
 		}
 		
 		private function staffScreen (e:Event):void
 		{
 			removeChild(sprite);
 			sprite = new Sprite();
-			sprite.x = 500;
-			sprite.y = 500;
+			sprite.x = 310;
+			sprite.y = 190;
 			addChild(sprite);
+			
+			var staffBackground:Image = new Image (asset.getTexture("StaffScreen"));
+			sprite.addChild(staffBackground);
+			
+			var hireDoctor:Button = new Button (asset.getTexture("HireButton"));
+			hireDoctor.x = 300;
+			hireDoctor.y = 280;
+			sprite.addChild(hireDoctor);
+			
+			var fireDoctor:Button = new Button (asset.getTexture("FireButton"));
+			fireDoctor.x = 300;
+			fireDoctor.y = 500;
+			sprite.addChild(fireDoctor);
 		}
 		
 		private function suppliesScreen (e:Event):void

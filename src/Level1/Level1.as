@@ -1,20 +1,22 @@
 ﻿package  Level1{
 	import flash.filesystem.File;
 	
+	import MainInfo.MainInfo;
+	
 	import ScreenSwitcher.ScreenSwitcher;
 	
 	import Shop.ShopMenu;
-	
+	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.MovieClip;
-	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.utils.AssetManager;
 	
-	public class Level1 extends Sprite {
+	public class Level1 extends MainInfo {
 		
 		private var asset:AssetManager;
+		private var animation:MovieClip;
 
 		public function Level1() {
 			addEventListener( Event.ADDED_TO_STAGE, initialize );
@@ -37,10 +39,7 @@
 		}
 		
 		private function startLevel1():void 
-		{
-			var conceptBar:Image = new Image(asset.getTexture("TopBar"));
-			addChild(conceptBar);
-			
+		{			
 			var shopButton:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
 			shopButton.x = stage.stageWidth - 100;
 			shopButton.y = 50;
@@ -62,8 +61,10 @@
 			treatmentRoom.y = stage.stageHeight - 329;
 			addChild(treatmentRoom);
 			
-			//var doctor1:MovieClip = new MovieClip(asset.getTexture("Doctor Front mc"), 24);
-			//Starling.juggler.add(doctor1);
+			animation = new MovieClip( asset.getTextures( "Doctor Front mc" ), 24 );
+			animation.x = animation.y = 300;
+			Starling.juggler.add( animation );
+			addChild( animation );
 			
 		}
 		

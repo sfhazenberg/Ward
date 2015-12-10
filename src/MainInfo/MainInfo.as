@@ -2,21 +2,23 @@
 	
 	import flash.filesystem.File;
 	
+	import starling.display.Button;
+	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Sprite;
+	import starling.events.Event;
 	import starling.utils.AssetManager;
-	import starling.display.DisplayObject;
 	
 	public class MainInfo extends Sprite{
 
 		private var asset:AssetManager;
-		public static var conceptBar:Image;
+		//public static var conceptBar:Image;
 		//public static var conceptBar:DisplayObject;
 		
 		public function MainInfo() 
 		{
 			asset = new AssetManager;
-			var folder:File = File.applicationDirectory.resolvePath("Main/assets");
+			var folder:File = File.applicationDirectory.resolvePath("MainInfo/assets");
 			asset.enqueue( folder );
 			asset.loadQueue( onProgress );
 		}
@@ -31,8 +33,13 @@
 			
 		public function addConceptBar():void
 		{	
-			conceptBar = new Image(asset.getTexture("TopBar"));
-			addChild(conceptBar);
+			var conceptBar:Image = new Image(asset.getTexture("TopBar"));
+			addChildAt(conceptBar, 0);
+			
+			var infectivityBar:Image = new Image (asset.getTexture("Infectivity"));
+			infectivityBar.x = stage.stageWidth - 1390;
+			infectivityBar.y = 33;
+			addChild(infectivityBar);
 		}
 	}
 }
