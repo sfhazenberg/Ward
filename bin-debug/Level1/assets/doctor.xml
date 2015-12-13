@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:1bed7cfbc6f09cb86f8703b6853af56c:897c4bc3def96dded3a507d19aaeba78:0b7187ea509f657ce6fba21a194c5ac2$ -->
+<TextureAtlas imagePath="doctor.png" width="46" height="186">
+    <SubTexture name="Doctor_Front0001" x="0" y="0" width="46" height="93"/>
+    <SubTexture name="Doctor_Front0002" x="0" y="93" width="46" height="93"/>
+</TextureAtlas>

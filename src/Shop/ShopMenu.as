@@ -21,6 +21,7 @@
 		private var screenSwitcher:ScreenSwitcher;
 		private var sprite:Sprite;
 		//private var bar:MainInfo.MainInfo.conceptBar;
+		public static var treatmentRoom:Object;
 
 		public function ShopMenu() {
 			
@@ -88,7 +89,8 @@
 		
 		private function upgradeScreen (e:Event):void
 		{
-			removeChild(sprite);
+			sprite.dispose();
+			//removeChild(sprite);
 			sprite = new Sprite();
 			sprite.x = 280;
 			sprite.y = 180;
@@ -100,6 +102,7 @@
 			treatmentRoom.x = 500;
 			treatmentRoom.y = 150;
 			sprite.addChild(treatmentRoom);
+			
 			
 			var waitingRoom:Button = new Button (asset.getTexture("WaitingRoomButton"));
 			waitingRoom.x = 500;

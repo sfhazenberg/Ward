@@ -6,18 +6,28 @@
 	import ScreenSwitcher.ScreenSwitcher;
 	
 	import Shop.ShopMenu;
+	
 	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.events.Event;
+	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
 	
 	public class Level1 extends MainInfo {
 		
-		private var asset:AssetManager;
-		private var animation:MovieClip;
-
+		[Embed(source="assets/spritesheet_doctor.xml", mimeType="application/octet-stream")]
+		public static const AtlasXML:Class;
+		[Embed(source="assets/spritesheet_doctor.png")]
+		public static const AtlasTexture:Class;
+		public static var asset:AssetManager;
+		private var doctor1:MovieClip;
+		var texture:Texture = Texture.fromEmbeddedAsset(AtlasTexture);
+		var xml:XML = XML(new AtlasXML());
+		var atlas:TextureAtlas = new TextureAtlas(texture, xml);
+		
 		public function Level1() {
 			addEventListener( Event.ADDED_TO_STAGE, initialize );
 		}
@@ -56,15 +66,21 @@
 			supplyRoom.y = stage.stageHeight - 329;
 			addChild(supplyRoom);
 			
-			var treatmentRoom:Image = new Image(asset.getTexture("Treatment Room"));
+			var treatmentRoom:Image = new Image(asset.getTexture("treatment_room"));
 			treatmentRoom.x = stage.stageWidth - 1135;
 			treatmentRoom.y = stage.stageHeight - 329;
 			addChild(treatmentRoom);
 			
-			animation = new MovieClip( asset.getTextures( "Doctor Front mc" ), 24 );
-			animation.x = animation.y = 300;
-			Starling.juggler.add( animation );
-			addChild( animation );
+			
+			//doctor1 = new MovieClip(asset.getTextures("Doctor"), 6);
+			//doctor1.x = doctor1.y = 300;
+			//addChild( doctor1 );
+			//Starling.juggler.add( doctor1 );
+			doctor1 = new MovieClip(atlas.getTextures("Doctor_Front000"), 6);
+			doctor1.x = doctor1.y = 300;
+			addChild( doctor1 );
+			Starling.juggler.add( doctor1 );
+			
 			
 		}
 		

@@ -2,6 +2,10 @@
 	
 	import flash.filesystem.File;
 	
+	import Level1.Level1;
+	
+	import Shop.ShopMenu;
+	
 	import starling.display.Button;
 	import starling.display.DisplayObject;
 	import starling.display.Image;
@@ -40,6 +44,17 @@
 			infectivityBar.x = stage.stageWidth - 1390;
 			infectivityBar.y = 33;
 			addChild(infectivityBar);
+			
+			ShopMenu.treatmentRoom.addEventListener(Event.TRIGGERED, addTreatmentRoom);
+			//treatmentRoom.addEventListener (Event.TRIGGERED, addTreatmentRoom);
+		}
+		
+		public function addTreatmentRoom (e:Event)
+		{
+			var treatmentRoom:Image = new Image(Level1.Level1.asset.getTexture("treatment_room"));
+			treatmentRoom.x = stage.stageWidth - 1135;
+			treatmentRoom.y = stage.stageHeight - 329;
+			addChild(treatmentRoom);
 		}
 	}
 }
