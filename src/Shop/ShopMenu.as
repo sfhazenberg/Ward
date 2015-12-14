@@ -95,8 +95,8 @@
 			sprite.dispose();
 			removeChild(sprite);
 			sprite = new Sprite();
-			sprite.x = 280;
-			sprite.y = 180;
+			sprite.x = 315;
+			sprite.y = 170;
 			addChild(sprite);
 			var upgradeBackground:Image = new Image (asset.getTexture("UpgradesScreen"));
 			sprite.addChild(upgradeBackground);
@@ -108,6 +108,7 @@
 			treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouched);
 			
 			var waitingRoom:Button = new Button (asset.getTexture("WaitingRoomButton"));
+			waitingRoom.addEventListener(Event.TRIGGERED, WaitingRoomTriggered);
 			waitingRoom.x = 500;
 			waitingRoom.y = 280;
 			sprite.addChild(waitingRoom);
@@ -132,13 +133,16 @@
 			if(event.getTouch(this, TouchPhase.ENDED))
 				ScreenSwitcher.ScreenSwitcher.getInstance().loadScreen( Level1 );
 		}
+		private function WaitingRoomTriggered():void {
+			
+		}
 		
 		private function staffScreen (e:Event):void
 		{
 			removeChild(sprite);
 			sprite = new Sprite();
-			sprite.x = 310;
-			sprite.y = 190;
+			sprite.x = 315;
+			sprite.y = 170;
 			addChild(sprite);
 			
 			var staffBackground:Image = new Image (asset.getTexture("StaffScreen"));
@@ -159,9 +163,12 @@
 		{
 			removeChild(sprite);
 			sprite = new Sprite();
-			sprite.x = 500;
-			sprite.y = 500;
+			sprite.x = 315;
+			sprite.y = 170;
 			addChild(sprite);
+			
+			var suppliesBackground:Image = new Image (asset.getTexture("SuppliesScreen"));
+			sprite.addChild(suppliesBackground);
 		}
 		
 		private function statsScreen (e:Event):void

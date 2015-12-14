@@ -13,10 +13,20 @@
 	import starling.display.MovieClip;
 	import starling.events.Event;
 	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
 	
 	public class Level1 extends MainInfo {
 		
+		[Embed(source="assets/spritesheet_doctor.xml", mimeType="application/octet-stream")]
+		public static const AtlasXML:Class;
+		[Embed(source="assets/spritesheet_doctor.png")]
+		public static const AtlasTexture:Class;
+		public static var asset:AssetManager;
+		private var doctor1:MovieClip;
+		var texture:Texture = Texture.fromEmbeddedAsset(AtlasTexture);
+		var xml:XML = XML(new AtlasXML());
+		var atlas:TextureAtlas = new TextureAtlas(texture, xml);
 		private var asset:AssetManager;
 		private var animation:MovieClip;
 		
@@ -85,10 +95,10 @@
 			treatmentRoom.y = stage.stageHeight - 329;
 			addChild(treatmentRoom);*/
 			
-			animation = new MovieClip( asset.getTextures( "Doctor Front mc" ), 24 );
-			animation.x = animation.y = 300;
-			Starling.juggler.add( animation );
-			addChild( animation );
+			doctor1 = new MovieClip(atlas.getTextures("Doctor_Front000"), 6);
+			doctor1.x = doctor1.y = 300;
+			addChild( doctor1 );
+			Starling.juggler.add( doctor1 );
 			
 		}
 		

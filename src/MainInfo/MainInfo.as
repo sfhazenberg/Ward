@@ -7,6 +7,7 @@
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.text.TextField;
 	import starling.utils.AssetManager;
 	
 	public class MainInfo extends Sprite{
@@ -39,6 +40,14 @@
 			infectivityBar.x = stage.stageWidth - 1390;
 			infectivityBar.y = 12;
 			addChild(infectivityBar);
+			
+			var budget:int = 10000;
+			
+			var money:TextField = new TextField(533, 126, budget.toString(10));
+			money.fontSize = 80;
+			money.x = 1300;
+			money.y = 17;
+			addChild(money);
 	
 		}
 		
