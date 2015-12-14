@@ -13,6 +13,8 @@
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.utils.AssetManager;
 	
 	public class ShopMenu extends MainInfo {
@@ -21,6 +23,7 @@
 		private var screenSwitcher:ScreenSwitcher;
 		private var sprite:Sprite;
 		public static var treatmentRoom:Object;
+
 
 		public function ShopMenu() {
 			
@@ -102,7 +105,7 @@
 			treatmentRoom.x = 500;
 			treatmentRoom.y = 150;
 			sprite.addChild(treatmentRoom);
-			
+			treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouched);
 			
 			var waitingRoom:Button = new Button (asset.getTexture("WaitingRoomButton"));
 			waitingRoom.x = 500;
@@ -123,7 +126,11 @@
 			seminar.x = 500;
 			seminar.y = 720;
 			sprite.addChild(seminar);
-			
+		}
+		
+		private function onTouched(event:TouchEvent):void {
+			if(event.getTouch(this, TouchPhase.ENDED))
+				ScreenSwitcher.ScreenSwitcher.getInstance().loadScreen( Level1 );
 		}
 		
 		private function staffScreen (e:Event):void
@@ -166,8 +173,8 @@
 			addChild(sprite);
 		}
 		
-		}
-
 	}
 	
+}
+
 
