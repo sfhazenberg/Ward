@@ -42,20 +42,16 @@
 			
 			var infectivityBar:Image = new Image (asset.getTexture("Infectivity"));
 			infectivityBar.x = stage.stageWidth - 1390;
-			infectivityBar.y = 33;
+			infectivityBar.y = 12;
 			addChild(infectivityBar);
 			
-			ShopMenu.treatmentRoom.addEventListener(Event.TRIGGERED, addTreatmentRoom);
-			//treatmentRoom.addEventListener (Event.TRIGGERED, addTreatmentRoom);
 		}
 		
-		public function addTreatmentRoom (e:Event)
+		/*private function staffScreen (e:Event):void
 		{
-			var treatmentRoom:Image = new Image(Level1.Level1.asset.getTexture("treatment_room"));
-			treatmentRoom.x = stage.stageWidth - 1135;
-			treatmentRoom.y = stage.stageHeight - 329;
-			addChild(treatmentRoom);
-		}
+			//removeChild(sprite);
+			
+		}*/
 	}
 }
 

@@ -51,8 +51,8 @@
 		private function startLevel1():void 
 		{			
 			var shopButton:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
-			shopButton.x = stage.stageWidth - 100;
-			shopButton.y = 50;
+			shopButton.x = stage.stageWidth - 95;
+			shopButton.y = 30;
 			shopButton.addEventListener( Event.TRIGGERED, goToShop)
 			addChild(shopButton);
 			

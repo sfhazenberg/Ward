@@ -20,7 +20,6 @@
 		private var asset:AssetManager;
 		private var screenSwitcher:ScreenSwitcher;
 		private var sprite:Sprite;
-		//private var bar:MainInfo.MainInfo.conceptBar;
 		public static var treatmentRoom:Object;
 
 		public function ShopMenu() {
@@ -46,29 +45,30 @@
 		}
 		
 		private function startShopMenu ():void
-		{			
+		{						
 			var backToGame:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
-			backToGame.x = stage.stageWidth - 100;
-			backToGame.y = 50;
+			backToGame.x = stage.stageWidth - 95;
+			backToGame.y = 30;
 			backToGame.addEventListener( Event.TRIGGERED, exitShop );
 			addChild( backToGame );
 			
-			var upgradeButton:Button = new Button ( asset.getTexture("UpgradeButton"));
-			upgradeButton.x = 50;
-			upgradeButton.y = 300;
+			var upgradeButton:Button = new Button ( asset.getTexture("UpgradeButtonOff"),"", asset.getTexture("UpgradeButtonOn"));
+			upgradeButton.x = 5;
+			upgradeButton.y = 170;
 			addChild(upgradeButton);
 			
-			var staffButton:Button = new Button ( asset.getTexture("StaffButton"));
-			staffButton.x = 50;
-			staffButton.y = 475;
+			var staffButton:Button = new Button ( asset.getTexture("StaffButtonOff"), "", asset.getTexture("StaffButtonOn"));
+			staffButton.x = 5;
+			staffButton.y = 395;
 			addChild(staffButton);
 			
-			var suppliesButton:Button = new Button ( asset.getTexture("up_supplies"), "Suplies", asset.getTexture("down_supplies"));
-			suppliesButton.y = 650;
+			var suppliesButton:Button = new Button ( asset.getTexture("SuppliesButtonOff"), "", asset.getTexture("SuppliesButtonOn"));
+			suppliesButton.x = 5;
+			suppliesButton.y = 620;
 			addChild(suppliesButton);
 			
 			var statsButton:Button = new Button ( asset.getTexture("up_stats"), "Information", asset.getTexture("down_stats"));
-			statsButton.y = 775;
+			statsButton.y = 1000;
 			addChild(statsButton);
 			
 			upgradeButton.addEventListener( Event.TRIGGERED, upgradeScreen );
@@ -90,7 +90,7 @@
 		private function upgradeScreen (e:Event):void
 		{
 			sprite.dispose();
-			//removeChild(sprite);
+			removeChild(sprite);
 			sprite = new Sprite();
 			sprite.x = 280;
 			sprite.y = 180;
