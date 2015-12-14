@@ -13,10 +13,20 @@
 	import starling.display.MovieClip;
 	import starling.events.Event;
 	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
 	
 	public class Level1 extends MainInfo {
 		
+		[Embed(source="assets/spritesheet_doctor.xml", mimeType="application/octet-stream")]
+		public static const AtlasXML:Class;
+		[Embed(source="assets/spritesheet_doctor.png")]
+		public static const AtlasTexture:Class;
+		public static var asset:AssetManager;
+		private var doctor1:MovieClip;
+		var texture:Texture = Texture.fromEmbeddedAsset(AtlasTexture);
+		var xml:XML = XML(new AtlasXML());
+		var atlas:TextureAtlas = new TextureAtlas(texture, xml);
 		private var asset:AssetManager;
 		private var animation:MovieClip;
 		
@@ -48,7 +58,7 @@
 			shopButton.addEventListener( Event.TRIGGERED, goToShop)
 			addChild(shopButton);
 			
-			//array that stores the images of the rooms
+			//array that stores the images of the built rooms
 			var rooms:Array = new Array();
 			rooms.push(new Image(asset.getTexture("waiting_room")));
 			rooms[0].x = stage.stageWidth - 375;
@@ -68,6 +78,23 @@
 			rooms[2].y = stage.stageHeight - 329;
 			addChild(rooms[2]);
 			
+			//array that holds grid views of empty rooms
+			var grids:Array = new Array();
+			grids.push(new Image(asset.getTexture("grid_waitingroom")));
+			grids[0].x = stage.stageWidth - 1500;
+			grids[0].y = stage.stageHeight - 925;
+			addChild(grids[0]);
+			
+			grids.push(new Image(asset.getTexture("grid_supplyroom")));
+			grids[1].x = stage.stageWidth - 1125;
+			grids[1].y = stage.stageHeight - 925;
+			addChild(grids[1]);
+			
+			grids.push(new Image(asset.getTexture("grid_treatmentroom")));
+			grids[2].x = stage.stageWidth - 750;
+			grids[2].y = stage.stageHeight - 925;
+			addChild(grids[2]);
+			//addChild event needs to be alongside the shop button functionality majigger. You know what I mean.
 			
 			/*var waitingRoom:Image = new Image(asset.getTexture("waiting_room"));
 			waitingRoom.x = stage.stageWidth - 375;
@@ -85,10 +112,10 @@
 			treatmentRoom.y = stage.stageHeight - 329;
 			addChild(treatmentRoom);*/
 			
-			animation = new MovieClip( asset.getTextures( "Doctor Front mc" ), 24 );
-			animation.x = animation.y = 300;
-			Starling.juggler.add( animation );
-			addChild( animation );
+			doctor1 = new MovieClip(atlas.getTextures("Doctor_Front000"), 6);
+			doctor1.x = doctor1.y = 300;
+			addChild( doctor1 );
+			Starling.juggler.add( doctor1 );
 			
 		}
 		
