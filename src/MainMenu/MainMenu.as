@@ -5,7 +5,7 @@
 	
 	import Level1.Level1;
 	
-	import ScreenSwitcher.ScreenSwitcher;
+	import View.View;
 	
 	import Settings.Settings;
 	
@@ -67,12 +67,12 @@
 		
 		public function loadLevel1Screen(e:Event):void 
 		{
-			ScreenSwitcher.ScreenSwitcher.getInstance().loadScreen( Level1 );
+			View.View.getInstance().loadScreen( Level1 );
 		}
 		
 		public function loadSettingsScreen(e:Event):void
 		{
-			ScreenSwitcher.ScreenSwitcher.getInstance().loadScreen( Settings );
+			View.View.getInstance().loadScreen( Settings );
 		}
 		
 		public function quitGame(e:Event):void

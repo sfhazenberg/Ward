@@ -5,25 +5,29 @@
 	import Level1.Level1;
 	
 	import MainInfo.MainInfo;
+	import MainInfo.TopBar;
 	
-	import ScreenSwitcher.ScreenSwitcher;
+	import View.View;
 	
 	import starling.display.Button;
-	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
 	import starling.utils.AssetManager;
 	
-	public class ShopMenu extends MainInfo {
+	public class ShopMenu extends Sprite {
 		
 		private var asset:AssetManager;
-		private var screenSwitcher:ScreenSwitcher;
+		private var screenSwitcher:View;
 		private var sprite:Sprite;
-		public static var treatmentRoom:Object;
-
+		private var budget:int;
+		private var lackOfMoney:Image;
+		private var close:Button;
+		public var numberOfDoctors:int = 1;
+		private var money:TextField;
 
 		public function ShopMenu() {
 			
@@ -48,7 +52,11 @@
 		}
 		
 		private function startShopMenu ():void
-		{						
+		{	
+			budget = View.View.getInstance().getBudget();
+			
+			addChild(View.View.getInstance().getTopBar());
+			
 			var backToGame:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
 			backToGame.x = stage.stageWidth - 95;
 			backToGame.y = 30;
@@ -87,7 +95,7 @@
 		
 		private function exitShop (e:Event):void
 		{
-			ScreenSwitcher.ScreenSwitcher.getInstance().loadScreen( Level1 );
+			View.View.getInstance().loadScreen( Level1 );
 		}
 		
 		private function upgradeScreen (e:Event):void
@@ -122,19 +130,51 @@
 			workshop.x = 500;
 			workshop.y = 590;
 			sprite.addChild(workshop);
+			workshop.addEventListener(Event.TRIGGERED, workshopTrigerred);
 			
 			var seminar:Button = new Button (asset.getTexture("SeminarButton"));
 			seminar.x = 500;
 			seminar.y = 720;
 			sprite.addChild(seminar);
+			seminar.addEventListener(Event.TRIGGERED, seminarTrigerred);
+			
 		}
 		
 		private function onTouched(event:TouchEvent):void {
 			if(event.getTouch(this, TouchPhase.ENDED))
-				ScreenSwitcher.ScreenSwitcher.getInstance().loadScreen( Level1 );
+				View.View.getInstance().loadScreen( Level1 );
 		}
 		private function WaitingRoomTriggered():void {
 			
+		}
+		
+		private function workshopTrigerred():void
+		{
+			if (budget >= 5000)
+			{
+				budget -= 5000;
+				View.View.getInstance().setBudget(budget);
+				View.View.getInstance().updateTopBar();
+				
+			}
+			else 
+			{
+				notEnoughMoney();
+			}
+		}
+		
+		private function seminarTrigerred():void
+		{
+			if (budget >= 10000)
+			{
+				budget -= 10000;
+				View.View.getInstance().setBudget(budget);
+				View.View.getInstance().updateTopBar();
+			}
+			else 
+			{
+				notEnoughMoney();
+			}
 		}
 		
 		private function staffScreen (e:Event):void
@@ -151,12 +191,27 @@
 			var hireDoctor:Button = new Button (asset.getTexture("HireButton"));
 			hireDoctor.x = 300;
 			hireDoctor.y = 280;
+			hireDoctor.addEventListener(Event.TRIGGERED, hireDoctorTriggered);
 			sprite.addChild(hireDoctor);
 			
 			var fireDoctor:Button = new Button (asset.getTexture("FireButton"));
 			fireDoctor.x = 300;
 			fireDoctor.y = 500;
+			fireDoctor.addEventListener(Event.TRIGGERED, fireDoctorTriggered);
 			sprite.addChild(fireDoctor);
+		}
+		
+		private function hireDoctorTriggered():void
+		{
+			numberOfDoctors += 1;
+		}
+		
+		private function fireDoctorTriggered():void
+		{
+			if (numberOfDoctors > 0)
+			{
+				numberOfDoctors -= 1;
+			}
 		}
 		
 		private function suppliesScreen (e:Event):void
@@ -178,6 +233,27 @@
 			sprite.x = 500;
 			sprite.y = 500;
 			addChild(sprite);
+		}
+		
+		private function notEnoughMoney():void
+		{
+			View.View.getInstance().getBudget();
+			
+			lackOfMoney = new Image (asset.getTexture("NoMoney"));
+			lackOfMoney.x = 800;
+			lackOfMoney.y = 400;
+			close = new Button (asset.getTexture("Close"));
+			close.x = 1000;
+			close.y = 680;
+			close.addEventListener(Event.TRIGGERED, closeLackOfMoney);
+			addChild(lackOfMoney);
+			addChild(close);
+		}
+		
+		private function closeLackOfMoney():void
+		{
+			removeChild(lackOfMoney);
+			removeChild(close);
 		}
 		
 	}

@@ -1,7 +1,11 @@
-﻿package  ScreenSwitcher{
+﻿package  View{
 	import flash.filesystem.File;
 	
+	import MainInfo.TopBar;
+	
 	import MainMenu.MainMenu;
+	
+	import Shop.ShopMenu;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -9,48 +13,53 @@
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.TouchEvent;
+	import starling.text.TextField;
 	import starling.utils.AssetManager;
 	
-	/**
-	 * the class that takes care of switching screens in the application (i.e. menu, game, credits)
-	 * 
-	 *
-	 */
-	public class ScreenSwitcher extends Sprite
+
+	public class View extends Sprite
 	{
-		private static var instance:ScreenSwitcher = new ScreenSwitcher();
+		private static var instance:View = new View();
 		private var screen:Sprite;
+		private var topBar:TopBar = new TopBar();
+		private var shopMenu:ShopMenu = new ShopMenu();
+		public var money:TextField;
 		
-		/**
-		 * The constructor
-		 * Tells this class to initialize once it is placed onto the stage
-		 *
-		 */
-		public function ScreenSwitcher() 
+	
+		public function View() 
 		{
 			addEventListener( Event.ADDED_TO_STAGE, initialize );
 		}
 		
-		public static function getInstance():ScreenSwitcher{
+		public static function getInstance():View{
 			return instance;
 		}
 		
-		/**
-		 * The initialization consists of: 
-		 * Making sure the first screen is loaded
-		 */
+		public function updateTopBar():void
+		{
+			topBar.update();
+		}
+		
+		public function getTopBar():TopBar
+		{
+			return topBar;
+		}
+		
+		public function getBudget():int
+		{
+			return this.topBar.budget;
+		}
+		
+		public function setBudget(b:int):void
+		{
+			this.topBar.budget = b;
+		}
+		
 		private function initialize( event:Event ):void
 		{
 			loadScreen( MainMenu );
 		}
-		
-		/**
-		 * One function to load any screen passed into it.
-		 * The screen to load is passed as its class name.
-		 * so, this function is called like: 
-		 * loadScreen( Game ) or loadScreen( Menu )
-		 *
-		 */
+
 		public function loadScreen( screenToLoad:Class ):void
 		{
 			// if a previous screen is present, remove it first

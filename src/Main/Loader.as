@@ -1,6 +1,6 @@
 package Main
 {		
-	import ScreenSwitcher.ScreenSwitcher;
+	import View.View;
 	
 	import starling.display.Sprite;
 
@@ -8,7 +8,7 @@ package Main
 	{
 		public function Loader()
 		{
-			addChild(ScreenSwitcher.ScreenSwitcher.getInstance());
+			addChild(View.View.getInstance());
 		}
 	}
 }

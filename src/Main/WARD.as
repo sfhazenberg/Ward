@@ -6,7 +6,7 @@ package Main
 	
 	import MainMenu.MainMenu;
 	
-	import ScreenSwitcher.ScreenSwitcher;
+	import View.View;
 	
 	import starling.core.Starling;
 	

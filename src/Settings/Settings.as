@@ -4,7 +4,7 @@
 	
 	import MainMenu.MainMenu;
 	
-	import ScreenSwitcher.ScreenSwitcher;
+	import View.View;
 	
 	import starling.display.Button;
 	import starling.display.Image;
@@ -75,7 +75,7 @@
 		
 		private function exitSettings (e:Event):void 
 		{
-			ScreenSwitcher.ScreenSwitcher.getInstance().loadScreen( MainMenu );
+			View.View.getInstance().loadScreen( MainMenu );
 		}
 	}
 	
