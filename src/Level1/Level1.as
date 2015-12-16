@@ -1,5 +1,7 @@
 ﻿package  Level1{
 	
+	import General.GeneralChecker
+	
 	import flash.events.TimerEvent;
 	import flash.filesystem.File;
 	import flash.utils.Timer;
@@ -28,9 +30,9 @@
 		public static const AtlasTexture:Class;
 		//public static var asset:AssetManager;
 		private var doctor1:MovieClip;
-		var texture:Texture = Texture.fromEmbeddedAsset(AtlasTexture);
-		var xml:XML = XML(new AtlasXML());
-		var atlas:TextureAtlas = new TextureAtlas(texture, xml);
+		private var texture:Texture = Texture.fromEmbeddedAsset(AtlasTexture);
+		private var xml:XML = XML(new AtlasXML());
+		private var atlas:TextureAtlas = new TextureAtlas(texture, xml);
 		private var asset:AssetManager;
 		private var topBar:TopBar = new TopBar();
 		private var timer:Timer;
@@ -64,7 +66,7 @@
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, dayFinished);
 			
 			var shopButton:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
-			shopButton.x = stage.stageWidth - 95;
+			shopButton.x = 1825;
 			shopButton.y = 30;
 			shopButton.addEventListener( Event.TRIGGERED, goToShop)
 			addChild(shopButton);
@@ -72,40 +74,41 @@
 			//array that stores the images of the built rooms
 			var rooms:Array = new Array();
 			rooms.push(new Image(asset.getTexture("waiting_room")));
-			rooms[0].x = stage.stageWidth - 375;
-			rooms[0].y = stage.stageHeight - 329;
+			rooms[0].x = 1545;
+			rooms[0].y = 751;
 			addChild(rooms[0]);
 			
 			//rooms.removeAt[0];
 			//removeChild(rooms[0]);
 			
 			rooms.push(new Image(asset.getTexture("supply_room")));
-			rooms[1].x = stage.stageWidth - 755;
-			rooms[1].y = stage.stageHeight - 329;
+			rooms[1].x = 1165;
+			rooms[1].y = 751;
 			addChild(rooms[1]);
 			
 			rooms.push(new Image(asset.getTexture("Treatment Room")));
-			rooms[2].x = stage.stageWidth - 1135;
-			rooms[2].y = stage.stageHeight - 329;
+			rooms[2].x = 785;
+			rooms[2].y = 751;
 			addChild(rooms[2]);
 			
 			//array that holds grid views of empty rooms
+			if(GeneralChecker.getInstance().getGridView()){
 			var grids:Array = new Array();
 			grids.push(new Image(asset.getTexture("grid_waitingroom")));
-			grids[0].x = stage.stageWidth - 1500;
-			grids[0].y = stage.stageHeight - 925;
+			grids[0].x = 420;
+			grids[0].y = 155;
 			addChild(grids[0]);
 			
 			grids.push(new Image(asset.getTexture("grid_supplyroom")));
-			grids[1].x = stage.stageWidth - 1125;
-			grids[1].y = stage.stageHeight - 925;
+			grids[1].x = 795;
+			grids[1].y = 155;
 			addChild(grids[1]);
 			
 			grids.push(new Image(asset.getTexture("grid_treatmentroom")));
-			grids[2].x = stage.stageWidth - 750;
-			grids[2].y = stage.stageHeight - 925;
+			grids[2].x = 1170;
+			grids[2].y = 155;
 			addChild(grids[2]);
-			//addChild event needs to be alongside the shop button functionality majigger. You know what I mean.
+			}
 			
 			/*var waitingRoom:Image = new Image(asset.getTexture("waiting_room"));
 			waitingRoom.x = stage.stageWidth - 375;

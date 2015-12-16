@@ -1,5 +1,7 @@
 ﻿package  Shop{
 	
+	import General.GeneralChecker;
+	
 	import flash.filesystem.File;
 	
 	import Level1.Level1;
@@ -58,7 +60,7 @@
 			addChild(View.View.getInstance().getTopBar());
 			
 			var backToGame:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
-			backToGame.x = stage.stageWidth - 95;
+			backToGame.x = 1825 //stage.stageWidth - 95;
 			backToGame.y = 30;
 			backToGame.addEventListener( Event.TRIGGERED, exitShop );
 			addChild( backToGame );
@@ -130,25 +132,27 @@
 			workshop.x = 500;
 			workshop.y = 590;
 			sprite.addChild(workshop);
-			workshop.addEventListener(Event.TRIGGERED, workshopTrigerred);
+			workshop.addEventListener(Event.TRIGGERED, workshopTriggered);
 			
 			var seminar:Button = new Button (asset.getTexture("SeminarButton"));
 			seminar.x = 500;
 			seminar.y = 720;
 			sprite.addChild(seminar);
-			seminar.addEventListener(Event.TRIGGERED, seminarTrigerred);
+			seminar.addEventListener(Event.TRIGGERED, seminarTriggered);
 			
 		}
 		
 		private function onTouched(event:TouchEvent):void {
-			if(event.getTouch(this, TouchPhase.ENDED))
+			if(event.getTouch(this, TouchPhase.ENDED)){
+				GeneralChecker.getInstance().setGridView(true);
 				View.View.getInstance().loadScreen( Level1 );
+		}
 		}
 		private function WaitingRoomTriggered():void {
 			
 		}
 		
-		private function workshopTrigerred():void
+		private function workshopTriggered():void
 		{
 			if (budget >= 5000)
 			{
@@ -163,7 +167,7 @@
 			}
 		}
 		
-		private function seminarTrigerred():void
+		private function seminarTriggered():void
 		{
 			if (budget >= 10000)
 			{
