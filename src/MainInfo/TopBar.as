@@ -13,10 +13,12 @@ package MainInfo
 	public class TopBar extends Sprite
 	{
 		private var asset:AssetManager;
-		public var budget:int = 10000;
-		public var money:TextField;
-		private var conceptBar:Image;
+		private var topBarBackground:Image;
 		private var infectivityBar:Image;
+		private var supplies:Image;
+		private var money:Image;
+		public var budget:int = 100000;
+		public var budgetTextField:TextField;
 		public var amountOfSupplies:int = 30;
 		
 		public function TopBar()
@@ -41,19 +43,28 @@ package MainInfo
 		
 		private function start():void
 		{
-			conceptBar = new Image(asset.getTexture("TopBar"));
-			addChildAt(conceptBar, 0);
+			topBarBackground = new Image(asset.getTexture("TopBarBackground"));
+			addChildAt(topBarBackground, 0);
+			
+			supplies = new Image(asset.getTexture("Supplies"));
+			supplies.x = 30;
+			supplies.y = 15;
+			addChild(supplies);
 			
 			infectivityBar = new Image (asset.getTexture("Infectivity"));
-			infectivityBar.x = 530;
+			infectivityBar.x = 440;
 			infectivityBar.y = 12;
 			addChild(infectivityBar);
 			
-			money = new TextField(533, 130, View.View.getInstance().getBudget()+"","",130,0xFFFFFF);
-			money.x = 1300;
+			money = new Image (asset.getTexture("Money"));
+			money.x = 1100;
 			money.y = 15;
-			
 			addChild(money);
+			
+			budgetTextField = new TextField(533, 130, budget.toString(10),"",100,0x333333);
+			budgetTextField.x = 1200;
+			budgetTextField.y = 15;
+			addChild(budgetTextField);
 			
 		}
 		
@@ -64,7 +75,12 @@ package MainInfo
 		
 		private function updateBudget():void
 		{
-			this.money.text = View.View.getInstance().getBudget().toString(10);
+			removeChild(budgetTextField);
+			budgetTextField = new TextField(533, 130, budget.toString(10),"",100,0x333333);
+			budgetTextField.x = 1200;
+			budgetTextField.y = 15;
+			
+			addChild(budgetTextField);
 		}
 	}
 }

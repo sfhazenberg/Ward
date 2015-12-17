@@ -1,29 +1,18 @@
 ﻿package  View{
-	import flash.filesystem.File;
-	
 	import MainInfo.TopBar;
 	
 	import MainMenu.MainMenu;
 	
 	import Shop.ShopMenu;
 	
-	import starling.core.Starling;
-	import starling.display.Image;
-	import starling.display.MovieClip;
 	import starling.display.Sprite;
-	import starling.events.Event;
-	import starling.events.TouchEvent;
-	import starling.text.TextField;
-	import starling.utils.AssetManager;
-	
+	import starling.events.Event;	
 
 	public class View extends Sprite
 	{
 		private static var instance:View = new View();
 		private var screen:Sprite;
 		private var topBar:TopBar = new TopBar();
-		private var shopMenu:ShopMenu = new ShopMenu();
-		public var money:TextField;
 		
 	
 		public function View() 
