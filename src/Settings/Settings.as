@@ -1,4 +1,5 @@
-﻿package  Settings{
+﻿package Settings
+{
 	
 	import flash.filesystem.File;
 	

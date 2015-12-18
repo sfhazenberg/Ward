@@ -1,4 +1,5 @@
-﻿package  Level1{
+﻿package Level1
+{
 	
 	import flash.events.TimerEvent;
 	import flash.filesystem.File;
@@ -127,7 +128,8 @@
 		 * method to show specific rooms based on shop
 		 * puts rooms in static name within the array
 		 */
-		private function showRooms():void{
+		private function showRooms():void
+		{
 			var foo:Array = GeneralChecker.getInstance().getRooms();
 			/** show grid **/
 			if(foo["SUP"]){
@@ -138,36 +140,62 @@
 				grids["supply"].addEventListener(TouchEvent.TOUCH, onTouchedSupply);
 			}
 			if(foo["TRE"]){
-				grids.push(new Image(asset.getTexture("grid_treatmentroom")));
-				grids[(grids.length - 1)].x = 1170;
-				grids[(grids.length - 1)].y = 155;
-				addChild(grids[(grids.length - 1)]);
-				//requires TouchEvent
+				//grids.push(new Image(asset.getTexture("grid_treatmentroom")));
+				grids["treatment"] = new Image(asset.getTexture("grid_treatmentroom"));
+				grids["treatment"].x = 1170;
+				grids["treatment"].y = 155;
+				addChild(grids["treatment"]);
+				grids["treatment"].addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
 			}
 			if(foo["WAI"]){
-				grids.push(new Image(asset.getTexture("grid_waitingroom")));
-				grids[(grids.length - 1)].x = 420;
-				grids[(grids.length - 1)].y = 155;
-				addChild(grids[(grids.length - 1)]);
-				//requires TouchEvent
+				//grids.push(new Image(asset.getTexture("grid_waitingroom")));
+				grids["waiting"] = new Image(asset.getTexture("grid_waitingroom"));
+				grids["waiting"].x = 420;
+				grids["waiting"].y = 155;
+				addChild(grids["waiting"]);
+				grids["waiting"].addEventListener(TouchEvent.TOUCH, onTouchedWaiting);
 			}
 		}
 		
 		/**
-		 * methods called when the relevant room is pushed
+		 * methods called when the grid of a room is pushed
+		 * right now they disappear when reentering the shop menu however. It should be permanent.
 		 */
 		private function onTouchedSupply(event:TouchEvent):void
 		{
-			var t:Touch = event.getTouch(this);
-			if(t) {
-				switch(t.phase) {
+			var touch:Touch = event.getTouch(this);
+			if(touch) {
+				switch(touch.phase) {
 					case TouchPhase.ENDED:
 					grids["supply"].texture = asset.getTexture("supply_room");	//supply cap also needs to increase
 					break;
 				}
 			}	
 		}
-		//additional functions required for SUP and WAI
+		
+		private function onTouchedTreatment(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(this);
+			if(touch) {
+				switch(touch.phase) {
+					case TouchPhase.ENDED:
+						grids["treatment"].texture = asset.getTexture("treatment_room");
+						break;
+				}
+			}	
+		}
+		
+		private function onTouchedWaiting(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(this);
+			if(touch) {
+				switch(touch.phase) {
+					case TouchPhase.ENDED:
+						grids["waiting"].texture = asset.getTexture("waiting_room");
+						break;
+				}
+			}	
+		}
 		
 		private function goToShop (e:Event):void
 		{

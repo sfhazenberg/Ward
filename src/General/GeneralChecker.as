@@ -4,6 +4,7 @@ package General
 	{
 		private static var instance:GeneralChecker;
 		private static var gridView:Boolean = false;
+		
 		/** An array holding room information **/
 		private var Rooms:Array;
 		

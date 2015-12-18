@@ -1,4 +1,5 @@
-﻿package  Shop{
+﻿package Shop
+{
 	
 	import flash.filesystem.File;
 	
@@ -174,21 +175,26 @@
 		 */
 		private function addUpgradesEventListeners():void
 		{
-			//treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
 			treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
 			waitingRoom.addEventListener(TouchEvent.TOUCH, onTouchedWaiting);
 			supplyRoom.addEventListener(TouchEvent.TOUCH, onTouchedSupply);
 			workshop.addEventListener(Event.TRIGGERED, workshopTriggered);
 		}
 		
-		//TouchEvent should be Phase ENDED
-		
 		/**
 		 * method called when treatment room is pushed
 		 */
 		private function onTouchedTreatment(event:TouchEvent):void
 		{
-					GeneralChecker.getInstance().setRooms("TRE", true);
+			var touch:Touch = event.getTouch(this);
+			if(touch){
+				switch(touch.phase){
+					case TouchPhase.ENDED:
+					GeneralChecker.getInstance().setRooms("TRE", true);	//reveals grid view of corresponding room
+					View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
+					break;
+				}
+			}
 		}
 		
 		/**
@@ -196,14 +202,31 @@
 		 */
 		private function onTouchedWaiting(event:TouchEvent):void
 		{
-			GeneralChecker.getInstance().setRooms("WAI", true);
+			var touch:Touch = event.getTouch(this);
+			if(touch){
+				switch(touch.phase){
+					case TouchPhase.ENDED:
+						GeneralChecker.getInstance().setRooms("WAI", true);	//reveals grid view of corresponding room
+						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
+						break;
+				}
+			}
 		}
 		
 		/**
 		 * method called when supply room is pushed
 		 */
-		private function onTouchedSupply(event:TouchEvent):void{
-			GeneralChecker.getInstance().setRooms("SUP", true);
+		private function onTouchedSupply(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(this);
+			if(touch){
+				switch(touch.phase){
+					case TouchPhase.ENDED:
+						GeneralChecker.getInstance().setRooms("SUP", true);	//reveals grid view of corresponding room
+						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
+						break;
+				}
+			}
 		}
 		
 		private function workshopTriggered():void
