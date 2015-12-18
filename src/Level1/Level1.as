@@ -1,15 +1,17 @@
 ﻿package  Level1{
 	
-	import General.GeneralChecker
-	
 	import flash.events.TimerEvent;
 	import flash.filesystem.File;
 	import flash.utils.Timer;
 	
-	import MainInfo.TopBar;
-	import Shop.ShopMenu;
-	import View.View;
+	import General.GeneralChecker;
+	
 	import MainInfo.DayReview;
+	import MainInfo.TopBar;
+	
+	import Shop.ShopMenu;
+	
+	import View.View;
 	
 	import starling.core.Starling;
 	import starling.display.Button;
@@ -17,9 +19,12 @@
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.TouchEvent;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
+	import starling.events.Touch;
+	import starling.events.TouchPhase;
 	
 	public class Level1 extends Sprite {
 		
@@ -32,7 +37,7 @@
 		private var texture:Texture = Texture.fromEmbeddedAsset(AtlasTexture);
 		private var xml:XML = XML(new AtlasXML());
 		private var atlas:TextureAtlas = new TextureAtlas(texture, xml);
-		
+		private var grids:Array = new Array();
 		
 		private var asset:AssetManager;
 		private var timer:Timer;
@@ -92,25 +97,7 @@
 			rooms[2].y = 751;
 			addChild(rooms[2]);
 			
-			//array that holds grid views of empty rooms
-			if(GeneralChecker.getInstance().getGridView()){
-			var grids:Array = new Array();
-			grids.push(new Image(asset.getTexture("grid_waitingroom")));
-			grids[0].x = 420;
-			grids[0].y = 155;
-			addChild(grids[0]);
-			
-			grids.push(new Image(asset.getTexture("grid_supplyroom")));
-			grids[1].x = 795;
-			grids[1].y = 155;
-			addChild(grids[1]);
-			
-			grids.push(new Image(asset.getTexture("grid_treatmentroom")));
-			grids[2].x = 1170;
-			grids[2].y = 155;
-			addChild(grids[2]);
-			}
-			
+			showRooms();
 			/*var waitingRoom:Image = new Image(asset.getTexture("waiting_room"));
 			waitingRoom.x = stage.stageWidth - 375;
 			waitingRoom.y = stage.stageHeight - 329;
@@ -135,6 +122,52 @@
 			//timer.start();
 			
 		}
+		
+		/**
+		 * method to show specific rooms based on shop
+		 * puts rooms in static name within the array
+		 */
+		private function showRooms():void{
+			var foo:Array = GeneralChecker.getInstance().getRooms();
+			/** show grid **/
+			if(foo["SUP"]){
+				grids["supply"] = new Image(asset.getTexture("grid_supplyroom"));
+				grids["supply"].x = 795;
+				grids["supply"].y = 155;
+				addChild(grids["supply"]);
+				grids["supply"].addEventListener(TouchEvent.TOUCH, onTouchedSupply);
+			}
+			if(foo["TRE"]){
+				grids.push(new Image(asset.getTexture("grid_treatmentroom")));
+				grids[(grids.length - 1)].x = 1170;
+				grids[(grids.length - 1)].y = 155;
+				addChild(grids[(grids.length - 1)]);
+				//requires TouchEvent
+			}
+			if(foo["WAI"]){
+				grids.push(new Image(asset.getTexture("grid_waitingroom")));
+				grids[(grids.length - 1)].x = 420;
+				grids[(grids.length - 1)].y = 155;
+				addChild(grids[(grids.length - 1)]);
+				//requires TouchEvent
+			}
+		}
+		
+		/**
+		 * methods called when the relevant room is pushed
+		 */
+		private function onTouchedSupply(event:TouchEvent):void
+		{
+			var t:Touch = event.getTouch(this);
+			if(t) {
+				switch(t.phase) {
+					case TouchPhase.ENDED:
+					grids["supply"].texture = asset.getTexture("supply_room");	//supply cap also needs to increase
+					break;
+				}
+			}	
+		}
+		//additional functions required for SUP and WAI
 		
 		private function goToShop (e:Event):void
 		{

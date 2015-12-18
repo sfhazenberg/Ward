@@ -12,6 +12,7 @@
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
@@ -168,13 +169,41 @@
 			addUpgradesEventListeners();
 		}
 		
-		private function onTouched(event:TouchEvent):void 
+		/**
+		 * eventlisteners for individual buttons inside upgrade screen
+		 */
+		private function addUpgradesEventListeners():void
 		{
-			if(event.getTouch(this, TouchPhase.ENDED))
-			{
-				GeneralChecker.getInstance().setGridView(true);
-				View.View.getInstance().loadScreen( Level1 );
-			}
+			//treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
+			treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
+			waitingRoom.addEventListener(TouchEvent.TOUCH, onTouchedWaiting);
+			supplyRoom.addEventListener(TouchEvent.TOUCH, onTouchedSupply);
+			workshop.addEventListener(Event.TRIGGERED, workshopTriggered);
+		}
+		
+		//TouchEvent should be Phase ENDED
+		
+		/**
+		 * method called when treatment room is pushed
+		 */
+		private function onTouchedTreatment(event:TouchEvent):void
+		{
+					GeneralChecker.getInstance().setRooms("TRE", true);
+		}
+		
+		/**
+		 * method called when waiting room is pushed
+		 */
+		private function onTouchedWaiting(event:TouchEvent):void
+		{
+			GeneralChecker.getInstance().setRooms("WAI", true);
+		}
+		
+		/**
+		 * method called when supply room is pushed
+		 */
+		private function onTouchedSupply(event:TouchEvent):void{
+			GeneralChecker.getInstance().setRooms("SUP", true);
 		}
 		
 		private function workshopTriggered():void
@@ -205,12 +234,6 @@
 			{
 				notEnoughMoney();
 			}
-		}
-		
-		private function addUpgradesEventListeners():void
-		{
-			treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouched);
-			workshop.addEventListener(Event.TRIGGERED, workshopTriggered);
 		}
 		
 		private function removeUpgradesEventListeners():void
