@@ -1,4 +1,5 @@
-﻿package  MainMenu{
+﻿package MainMenu
+{
 	
 	import flash.desktop.NativeApplication;
 	import flash.filesystem.File;

@@ -1,4 +1,6 @@
-﻿package  View{
+﻿package View
+{
+
 	import MainInfo.TopBar;
 	
 	import MainMenu.MainMenu;
