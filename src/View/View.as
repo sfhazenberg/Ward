@@ -44,6 +44,26 @@
 			this.topBar.budget = b;
 		}
 		
+		public function getNumberOfSupplies():int
+		{
+			return this.topBar.numberOfSupplies;
+		}
+		
+		public function setNumberOfSupplies(n:int):void
+		{
+			this.topBar.numberOfSupplies = n;
+		}
+		
+		public function getMaxNumberOfSupplies():int
+		{
+			return this.topBar.maxNumberOfSupplies;
+		}
+		
+		public function setMaxNumberOfSupplies(n:int):void
+		{
+			this.topBar.maxNumberOfSupplies = n;
+		}
+		
 		private function initialize( event:Event ):void
 		{
 			loadScreen( MainMenu );

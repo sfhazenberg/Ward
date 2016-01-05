@@ -6,6 +6,8 @@
 	
 	import Level1.Level1;
 	
+	import MainInfo.TopBar;
+	
 	import View.View;
 	
 	import starling.display.Button;
@@ -17,18 +19,23 @@
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.utils.AssetManager;
-	
+
 	public class ShopMenu extends Sprite {
 		
 		private var asset:AssetManager;
 		private var screenSwitcher:View;
 		private var sprite:Sprite;
+		private var topBar:TopBar;
 		private var lackOfMoney:Image;
 		private var close:Button;
 		public var numberOfDoctors:int = 1;
 		public var suppliesNumber:int = 0;
-		public var suppliesNumberTextField:TextField;
-		private var maxNumberOfSupplies:int = 30;
+		private var suppliesNumberTextField:TextField;
+		private var priceForSuppliesText:TextField;
+		private var priceOfSupplies:int = 500;
+		private var priceForSupplies:int = 0;
+		private var maxNumberOfSupplies:int = View.View.getInstance().getMaxNumberOfSupplies();
+		private var numberOfSupplies:int = View.View.getInstance().getNumberOfSupplies();
 		
 		private var backToGame:Button;
 		private var upgradeButton:Button;
@@ -93,8 +100,9 @@
 			suppliesButton.y = 620;
 			addChild(suppliesButton);
 			
-			statsButton = new Button ( asset.getTexture("up_stats"), "Information", asset.getTexture("down_stats"));
-			statsButton.y = 1000;
+			statsButton = new Button ( asset.getTexture("ShopInfoButtonOff"), "", asset.getTexture("ShopInfoButtonOn"));
+			statsButton.x = 5;
+			statsButton.y = 845;
 			addChild(statsButton);
 			
 			sprite = new Sprite();
@@ -177,8 +185,16 @@
 			//treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
 			treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
 			waitingRoom.addEventListener(TouchEvent.TOUCH, onTouchedWaiting);
-			supplyRoom.addEventListener(TouchEvent.TOUCH, onTouchedSupply);
+			//supplyRoom.addEventListener(TouchEvent.TOUCH, onTouchedSupply);
+			supplyRoom.addEventListener(Event.TRIGGERED, supplyTrigg);
 			workshop.addEventListener(Event.TRIGGERED, workshopTriggered);
+		}
+		
+		private function supplyTrigg():void
+		{
+			maxNumberOfSupplies += 30;
+			View.View.getInstance().setMaxNumberOfSupplies(maxNumberOfSupplies);
+			View.View.getInstance().updateTopBar();
 		}
 		
 		//TouchEvent should be Phase ENDED
@@ -204,6 +220,7 @@
 		 */
 		private function onTouchedSupply(event:TouchEvent):void{
 			GeneralChecker.getInstance().setRooms("SUP", true);
+			
 		}
 		
 		private function workshopTriggered():void
@@ -332,6 +349,16 @@
 			suppliesPlus.y = 450;
 			addChild(suppliesPlus);
 			
+			buySupplies = new Button (asset.getTexture("buyButton"));
+			buySupplies.x = 870;
+			buySupplies.y = 750;
+			addChild(buySupplies);
+			
+			priceForSuppliesText = new TextField (210, 140, priceForSupplies.toString(10), "", 60, 0xFFFFFF);
+			priceForSuppliesText.x = 870;
+			priceForSuppliesText.y = 750;
+			addChild(priceForSuppliesText);
+			
 			addSuppliesEventListeners();
 		}
 		
@@ -339,6 +366,14 @@
 		{
 			suppliesMinus.addEventListener(Event.TRIGGERED, suppliesMinusTrigerred);
 			suppliesPlus.addEventListener( Event.TRIGGERED, suppliesPlusTriggered);
+			buySupplies.addEventListener( Event.TRIGGERED, buySuppliesTriggered);
+		}
+		
+		private function removeSuppliesEventListeners():void
+		{
+			suppliesMinus.removeEventListener(Event.TRIGGERED, suppliesMinusTrigerred);
+			suppliesPlus.removeEventListener( Event.TRIGGERED, suppliesPlusTriggered);
+			buySupplies.removeEventListener( Event.TRIGGERED, buySuppliesTriggered);
 		}
 		
 		private function suppliesMinusTrigerred():void
@@ -346,26 +381,76 @@
 			if (suppliesNumber > 0)
 			{
 				suppliesNumber -= 1;
+				priceForSupplies = suppliesNumber * priceOfSupplies;
 				updateSuppliesNumber();
 			}
 		}
 		
 		private function suppliesPlusTriggered():void
 		{
-			if (suppliesNumber < maxNumberOfSupplies)
+			if (suppliesNumber < maxNumberOfSupplies - numberOfSupplies)
 			{
 				suppliesNumber += 1;
+				priceForSupplies = suppliesNumber * priceOfSupplies;
 				updateSuppliesNumber();
 			}
 		}
 		
 		private function updateSuppliesNumber():void
 		{
+			removeChild(priceForSuppliesText);
+			priceForSuppliesText = new TextField (210, 140, priceForSupplies.toString(10), "", 60, 0xFFFFFF);
+			priceForSuppliesText.x = 870;
+			priceForSuppliesText.y = 750;
+			addChild(priceForSuppliesText);
+			
 			removeChild(suppliesNumberTextField);
 			suppliesNumberTextField = new TextField (510, 200, suppliesNumber.toString(10),"",100, 0x333333);
 			suppliesNumberTextField.x = 830;
 			suppliesNumberTextField.y = 450;
-			addChild(suppliesNumberTextField);	
+			addChild(suppliesNumberTextField);			
+		}
+		
+		private function buySuppliesTriggered():void
+		{
+			if (priceForSupplies < View.View.getInstance().getTopBar().budget)
+			{
+				View.View.getInstance().getTopBar().budget -= priceForSupplies;
+				View.View.getInstance().setBudget(View.View.getInstance().getTopBar().budget);
+				View.View.getInstance().updateTopBar();
+
+				numberOfSupplies += suppliesNumber;
+				View.View.getInstance().setNumberOfSupplies(numberOfSupplies);
+				View.View.getInstance().updateTopBar();
+				
+				priceForSupplies = 0;
+				suppliesNumber = 0;
+				updateSuppliesNumber();
+			} else
+			{
+				removeSuppliesEventListeners();
+				notEnoughMoneyForSupplies();
+			}
+		}
+		
+		private function notEnoughMoneyForSupplies():void
+		{
+			lackOfMoney = new Image (asset.getTexture("NoMoney"));
+			lackOfMoney.x = 800;
+			lackOfMoney.y = 400;
+			close = new Button (asset.getTexture("Close"));
+			close.x = 1000;
+			close.y = 680;
+			close.addEventListener(Event.TRIGGERED, closeLackOfMoneyForSupplies);
+			addChild(lackOfMoney);
+			addChild(close);
+		}
+		
+		private function closeLackOfMoneyForSupplies():void
+		{
+			removeChild(lackOfMoney);
+			removeChild(close);
+			addSuppliesEventListeners();
 		}
 		
 // *STATS************************************************************************************
@@ -377,10 +462,7 @@
 			sprite.y = 500;
 			addChild(sprite);
 		}
-		
-// ******************************************************************************************		
-
-		
+		 
 	}
 	
 }

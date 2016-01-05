@@ -19,7 +19,10 @@ package MainInfo
 		private var money:Image;
 		public var budget:int = 100000;
 		public var budgetTextField:TextField;
-		public var amountOfSupplies:int = 30;
+		private var numberOfSuppliesText:TextField;
+		public var numberOfSupplies:int = 10;
+		private var maxNumberOfSuppliesText:TextField;
+		public var maxNumberOfSupplies:int = 30;
 		
 		public function TopBar()
 		{
@@ -47,22 +50,32 @@ package MainInfo
 			addChildAt(topBarBackground, 0);
 			
 			supplies = new Image(asset.getTexture("Supplies"));
-			supplies.x = 30;
+			supplies.x = 40;
 			supplies.y = 15;
 			addChild(supplies);
 			
+			numberOfSuppliesText = new TextField (100, 100, numberOfSupplies.toString(10), "", 70, 0x333333);
+			numberOfSuppliesText.x = 130;
+			numberOfSuppliesText.y = 30;
+			addChild(numberOfSuppliesText);
+			
+			maxNumberOfSuppliesText = new TextField (100, 100, maxNumberOfSupplies.toString(10), "", 70, 0x333333);
+			maxNumberOfSuppliesText.x = 230;
+			maxNumberOfSuppliesText.y = 30;
+			addChild(maxNumberOfSuppliesText);
+			
 			infectivityBar = new Image (asset.getTexture("Infectivity"));
-			infectivityBar.x = 440;
+			infectivityBar.x = 540;
 			infectivityBar.y = 12;
 			addChild(infectivityBar);
 			
 			money = new Image (asset.getTexture("Money"));
-			money.x = 1100;
+			money.x = 1150;
 			money.y = 15;
 			addChild(money);
 			
-			budgetTextField = new TextField(533, 130, budget.toString(10),"",100,0x333333);
-			budgetTextField.x = 1200;
+			budgetTextField = new TextField(533, 130, budget.toString(10),"Trajan Pro",100,0x333333);
+			budgetTextField.x = 1150;
 			budgetTextField.y = 15;
 			addChild(budgetTextField);
 			
@@ -71,16 +84,31 @@ package MainInfo
 		public function update():void
 		{
 			updateBudget();
+			updateSupplies();
 		}
 		
 		private function updateBudget():void
 		{
 			removeChild(budgetTextField);
-			budgetTextField = new TextField(533, 130, budget.toString(10),"",100,0x333333);
+			budgetTextField = new TextField(533, 130, budget.toString(10),"Trajan Pro",100,0x333333);
 			budgetTextField.x = 1200;
 			budgetTextField.y = 15;
-			
 			addChild(budgetTextField);
+		}
+		
+		private function updateSupplies():void
+		{
+			removeChild(numberOfSuppliesText);
+			numberOfSuppliesText = new TextField (100, 100, numberOfSupplies.toString(10), "", 70, 0x333333);
+			numberOfSuppliesText.x = 130;
+			numberOfSuppliesText.y = 30;
+			addChild(numberOfSuppliesText);
+			
+			removeChild(maxNumberOfSuppliesText);
+			maxNumberOfSuppliesText = new TextField (100, 100, maxNumberOfSupplies.toString(10), "", 70, 0x333333);
+			maxNumberOfSuppliesText.x = 230;
+			maxNumberOfSuppliesText.y = 30;
+			addChild(maxNumberOfSuppliesText);
 		}
 	}
 }
