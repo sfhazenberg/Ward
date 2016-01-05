@@ -185,13 +185,13 @@
 		{
 			treatmentRoom.addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
 			waitingRoom.addEventListener(TouchEvent.TOUCH, onTouchedWaiting);
-			//supplyRoom.addEventListener(TouchEvent.TOUCH, onTouchedSupply);
-			supplyRoom.addEventListener(Event.TRIGGERED, supplyTrigg);
+			supplyRoom.addEventListener(TouchEvent.TOUCH, onTouchedSupply);
+			//supplyRoom.addEventListener(Event.TRIGGERED, supplyTriggered);
 			workshop.addEventListener(Event.TRIGGERED, workshopTriggered);
 		}
 		
-<<<<<<< HEAD
-		private function supplyTrigg():void
+
+		private function supplyTriggered():void	//should happen at the same time a new supply room has been put into the hospital screen.
 		{
 			maxNumberOfSupplies += 30;
 			View.View.getInstance().setMaxNumberOfSupplies(maxNumberOfSupplies);
@@ -199,9 +199,6 @@
 		}
 		
 		//TouchEvent should be Phase ENDED
-		
-=======
->>>>>>> a52ecb897d2db6ca528989a942fe2556f78bbdc5
 		/**
 		 * method called when treatment room is pushed
 		 */
@@ -237,13 +234,15 @@
 		/**
 		 * method called when supply room is pushed
 		 */
-<<<<<<< HEAD
-		private function onTouchedSupply(event:TouchEvent):void{
+
+		/*private function onTouchedSupply(event:TouchEvent):void
+		{
 			GeneralChecker.getInstance().setRooms("SUP", true);
-			
-=======
+		}*/	
+
 		private function onTouchedSupply(event:TouchEvent):void
 		{
+			GeneralChecker.getInstance().setRooms("SUP", true);
 			var touch:Touch = event.getTouch(this);
 			if(touch){
 				switch(touch.phase){
@@ -253,7 +252,7 @@
 						break;
 				}
 			}
->>>>>>> a52ecb897d2db6ca528989a942fe2556f78bbdc5
+
 		}
 		
 		private function workshopTriggered():void
@@ -499,5 +498,3 @@
 	}
 	
 }
-
-
