@@ -7,6 +7,7 @@ package General
 		
 		/** An array holding room information **/
 		private var Rooms:Array;
+		private var Texture:Array;
 		
 		public function GeneralChecker(){
 			trace("loading constructor");
@@ -14,6 +15,10 @@ package General
 			Rooms["TRE"] = false;
 			Rooms["WAI"] = false;
 			Rooms["SUP"] = false;
+			Texture = new Array();
+			Texture["TRE"] = false;
+			Texture["WAI"] = false;
+			Texture["SUP"] = false;
 		}
 		
 		public static function getInstance():GeneralChecker{
@@ -41,10 +46,26 @@ package General
 		}
 		
 		/**
+		 * method to set room textures within the hospital from Shop
+		 * @param room: can be TRE, WAI, SUP
+		 * @param value: true (show), false (don't show)
+		 */
+		public function setTextureRooms(room:String, value:Boolean):void{
+			this.Texture[room] = value;
+		}
+		
+		/**
 		 * method to get the states of the rooms
 		 */
 		public function getRooms():Array{
 			return this.Rooms;
+		}
+		
+		/**
+		 * method to get the texture of the rooms
+		 */
+		public function getTexture(Name:String):Boolean{
+			return this.Texture[Name];
 		}
 	}
 }

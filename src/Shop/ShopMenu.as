@@ -191,7 +191,7 @@
 		}
 		
 
-		private function supplyTriggered():void	//should happen at the same time a new supply room has been put into the hospital screen.
+		private function supplyTriggered():void		//should happen at the same time a new supply room has been put into the hospital screen.
 		{
 			maxNumberOfSupplies += 30;
 			View.View.getInstance().setMaxNumberOfSupplies(maxNumberOfSupplies);
@@ -242,7 +242,6 @@
 
 		private function onTouchedSupply(event:TouchEvent):void
 		{
-			GeneralChecker.getInstance().setRooms("SUP", true);
 			var touch:Touch = event.getTouch(this);
 			if(touch){
 				switch(touch.phase){
