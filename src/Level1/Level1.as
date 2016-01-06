@@ -73,6 +73,7 @@
 		private function startLevel1():void 
 		{			
 			addChild(View.View.getInstance().getTopBar());
+			View.View.getInstance().updateTopBar();
 			
 			timer = new Timer(10000,1);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, dayFinished);
