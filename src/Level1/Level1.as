@@ -80,9 +80,9 @@
 			
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, dayFinished);
 			
-			shopButton = new Button(asset.getTexture("ShopButton"));
-			shopButton.x = 1800;
-			shopButton.y = 30;
+			shopButton = new Button(asset.getTexture("buttoninfo"));
+			shopButton.x = 1760;
+			shopButton.y = 17;
 			shopButton.addEventListener( Event.TRIGGERED, goToShop)
 			addChild(shopButton);
 			

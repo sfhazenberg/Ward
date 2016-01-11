@@ -61,53 +61,53 @@ package MainInfo
 			
 			supplies = new Image(asset.getTexture("Supplies"));
 			supplies.x = 40;
-			supplies.y = 15;
+			supplies.y = 12;
 			addChild(supplies);
 			
 			numberOfSuppliesText = new TextField (100, 100, numberOfSupplies.toString(10), "", 70, 0x333333);
-			numberOfSuppliesText.x = 170;
+			numberOfSuppliesText.x = 190;
 			numberOfSuppliesText.y = 30;
 			addChild(numberOfSuppliesText);
 			
 			maxNumberOfSuppliesText = new TextField (100, 100, maxNumberOfSupplies.toString(10), "", 70, 0x333333);
-			maxNumberOfSuppliesText.x = 310;
+			maxNumberOfSuppliesText.x = 360;
 			maxNumberOfSuppliesText.y = 30;
 			addChild(maxNumberOfSuppliesText);
 			
 			infectivityColorWhite = new Image (asset.getTexture("InfectivityColorWhite"));
-			infectivityColorWhite.x = 540;
+			infectivityColorWhite.x = 600;
 			infectivityColorWhite.y = 12;
 			addChild(infectivityColorWhite);
 			
 			infectivityColor = new Image (asset.getTexture("InfectivityColor"));
-			infectivityColor.x = 540;
+			infectivityColor.x = 600;
 			infectivityColor.y = 12;
 			infectivityColor.scaleX = currentInfectivity;
 			addChild(infectivityColor);
 			
 			infectivityBar = new Image (asset.getTexture("Infectivity"));
-			infectivityBar.x = 540;
+			infectivityBar.x = 600;
 			infectivityBar.y = 12;
 			addChild(infectivityBar);
 			
 			infPcentText = new TextField (220, 120, infPcent.toString(10) + "%", "Trajan Pro", 80, 0x333333);
-			infPcentText.x = 830;
-			infPcentText.y = 15;
+			infPcentText.x = 900;
+			infPcentText.y = 17;
 			addChild(infPcentText);
 			
 			money = new Image (asset.getTexture("Money"));
-			money.x = 1150;
-			money.y = 15;
+			money.x = 1160;
+			money.y = 12;
 			addChild(money);
 			
 			budgetTextField = new TextField(533, 130, budget.toString(10),"Trajan Pro",100,0x333333);
-			budgetTextField.x = 1150;
+			budgetTextField.x = 1230;
 			budgetTextField.y = 15;
 			addChild(budgetTextField);
 			
 			button = new Button (asset.getTexture("button"), "TRY");
 			button.x = 100;
-			button.y = 100;
+			button.y = 200;
 			addChild(button);
 			button.addEventListener(Event.TRIGGERED, changeInf);
 			
@@ -123,7 +123,7 @@ package MainInfo
 		{
 			removeChild(budgetTextField);
 			budgetTextField = new TextField(533, 130, budget.toString(10),"Trajan Pro",100,0x333333);
-			budgetTextField.x = 1200;
+			budgetTextField.x = 1230;
 			budgetTextField.y = 15;
 			addChild(budgetTextField);
 		}
@@ -132,13 +132,13 @@ package MainInfo
 		{
 			removeChild(numberOfSuppliesText);
 			numberOfSuppliesText = new TextField (100, 100, numberOfSupplies.toString(10), "", 70, 0x333333);
-			numberOfSuppliesText.x = 170;
+			numberOfSuppliesText.x = 190;
 			numberOfSuppliesText.y = 30;
 			addChild(numberOfSuppliesText);
 			
 			removeChild(maxNumberOfSuppliesText);
 			maxNumberOfSuppliesText = new TextField (100, 100, maxNumberOfSupplies.toString(10), "", 70, 0x333333);
-			maxNumberOfSuppliesText.x = 310;
+			maxNumberOfSuppliesText.x = 360;
 			maxNumberOfSuppliesText.y = 30;
 			addChild(maxNumberOfSuppliesText);
 		}
@@ -170,8 +170,8 @@ package MainInfo
 			infPcent = currentInfectivity * 100;
 			removeChild(infPcentText);
 			infPcentText = new TextField (220, 120, infPcent.toString(10) + "%", "Trajan Pro", 80, 0x333333);
-			infPcentText.x = 830;
-			infPcentText.y = 15;
+			infPcentText.x = 900;
+			infPcentText.y = 17;
 			addChild(infPcentText);
 		}
 		

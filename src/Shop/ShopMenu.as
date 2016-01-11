@@ -3,8 +3,11 @@
 	import flash.filesystem.File;
 	
 	import General.GeneralChecker;
+	
 	import Level1.Level1;
+	
 	import MainInfo.TopBar;
+	
 	import View.View;
 	
 	import starling.display.Button;
@@ -25,6 +28,8 @@
 		private var topBar:TopBar;
 		private var lackOfMoney:Image;
 		public var numberOfDoctors:int = 1;
+		private var amountOfDoctors:Image;
+		private var amountOfDoctorsText:TextField;
 		public var suppliesNumber:int = 0;
 		private var suppliesNumberTextField:TextField;
 		private var priceForSuppliesText:TextField;
@@ -99,7 +104,7 @@
 			suppliesButton.y = 620;
 			addChild(suppliesButton);
 			
-			statsButton = new Button ( asset.getTexture("ShopInfoButtonOff"), "", asset.getTexture("ShopInfoButtonOn"));
+			statsButton = new Button ( asset.getTexture("DailyReportOff"), "", asset.getTexture("DailyReportOn"));
 			statsButton.x = 5;
 			statsButton.y = 845;
 			addChild(statsButton);
@@ -348,14 +353,32 @@
 			
 			fireDoctor = new Button (asset.getTexture("FireButton"));
 			fireDoctor.x = 300;
-			fireDoctor.y = 500;
+			fireDoctor.y = 450;
 			fireDoctor.addEventListener(Event.TRIGGERED, fireDoctorTriggered);
 			sprite.addChild(fireDoctor);
+			
+			amountOfDoctors = new Image (asset.getTexture("amount"));
+			amountOfDoctors.x = 650;
+			amountOfDoctors.y = 800;
+			addChild(amountOfDoctors);
+			
+			amountOfDoctorsText = new TextField (150, 150, numberOfDoctors.toString(10), "Stencil", 60, 0xFFFFFF);
+			amountOfDoctorsText.x = 1265;
+			amountOfDoctorsText.y = 763;
+			addChild(amountOfDoctorsText);
 		}
 		
 		private function hireDoctorTriggered():void
 		{
-			numberOfDoctors += 1;
+			if ( numberOfDoctors < 25 )
+			{
+				numberOfDoctors += 1;
+				removeChild(amountOfDoctorsText);
+				amountOfDoctorsText = new TextField (150, 150, numberOfDoctors.toString(10), "Stencil", 60, 0xFFFFFF);
+				amountOfDoctorsText.x = 1265;
+				amountOfDoctorsText.y = 763;
+				addChild(amountOfDoctorsText);
+			}
 		}
 		
 		private function fireDoctorTriggered():void
@@ -363,6 +386,11 @@
 			if (numberOfDoctors > 0)
 			{
 				numberOfDoctors -= 1;
+				removeChild(amountOfDoctorsText);
+				amountOfDoctorsText = new TextField (150, 150, numberOfDoctors.toString(10), "Stencil", 60, 0xFFFFFF);
+				amountOfDoctorsText.x = 1265;
+				amountOfDoctorsText.y = 763;
+				addChild(amountOfDoctorsText);
 			}
 		}
 		
