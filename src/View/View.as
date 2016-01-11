@@ -66,6 +66,21 @@
 			this.topBar.maxNumberOfSupplies = n;
 		}
 		
+		public function getInfectivity():Number
+		{
+			return this.topBar.currentInfectivity;
+		}
+		
+		public function setInfectivity(i:Number):void
+		{
+			this.topBar.currentInfectivity = i;
+		}
+		
+		public function updateInf():void
+		{
+			topBar.updateInfectivity();
+		}
+		
 		private function initialize( event:Event ):void
 		{
 			loadScreen( MainMenu );

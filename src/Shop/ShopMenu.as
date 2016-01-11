@@ -1,14 +1,10 @@
 ﻿package Shop
 {
-	
 	import flash.filesystem.File;
 	
 	import General.GeneralChecker;
-	
 	import Level1.Level1;
-	
 	import MainInfo.TopBar;
-	
 	import View.View;
 	
 	import starling.display.Button;
@@ -28,7 +24,6 @@
 		private var sprite:Sprite;
 		private var topBar:TopBar;
 		private var lackOfMoney:Image;
-		private var close:Button;
 		public var numberOfDoctors:int = 1;
 		public var suppliesNumber:int = 0;
 		private var suppliesNumberTextField:TextField;
@@ -37,7 +32,9 @@
 		private var priceForSupplies:int = 0;
 		private var maxNumberOfSupplies:int = View.View.getInstance().getMaxNumberOfSupplies();
 		private var numberOfSupplies:int = View.View.getInstance().getNumberOfSupplies();
+		private var infectivity:Number = View.View.getInstance().getInfectivity();
 		
+		private var close:Button;
 		private var backToGame:Button;
 		private var upgradeButton:Button;
 		private var treatmentRoom:Button;
@@ -79,6 +76,7 @@
 		{	
 			addChild(View.View.getInstance().getTopBar());
 			View.View.getInstance().getTopBar().update();
+			View.View.getInstance().updateInf();
 			
 			backToGame = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
 			backToGame.x = 1825;
@@ -258,10 +256,17 @@
 		{
 			if (View.View.getInstance().getTopBar().budget >= 5000)
 			{
+				if (infectivity > 0)
+				{
+				infectivity -= 0.1;
+				infectivity = Math.floor(infectivity * 10) / 10;
+				View.View.getInstance().setInfectivity(infectivity);
+				View.View.getInstance().updateInf();
+				}
+				
 				View.View.getInstance().getTopBar().budget -= 5000;
 				View.View.getInstance().setBudget(View.View.getInstance().getTopBar().budget);
 				View.View.getInstance().updateTopBar();
-				
 			}
 			else 
 			{
@@ -274,6 +279,20 @@
 		{
 			if (View.View.getInstance().getTopBar().budget >= 10000)
 			{
+				if (infectivity > 0.1)
+				{
+					infectivity -= 0.2;
+					infectivity = Math.round(infectivity * 100) / 100;
+					View.View.getInstance().setInfectivity(infectivity);
+					View.View.getInstance().updateInf();
+				} else if (infectivity == 0.1)
+				{
+					infectivity -= 0.1;
+					infectivity = Math.floor(infectivity * 100) / 100;
+					View.View.getInstance().setInfectivity(infectivity);
+					View.View.getInstance().updateInf();
+				}
+				
 				View.View.getInstance().getTopBar().budget -= 10000;
 				View.View.getInstance().setBudget(View.View.getInstance().getTopBar().budget);
 				View.View.getInstance().updateTopBar();

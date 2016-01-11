@@ -1,18 +1,13 @@
 ﻿package Level1
 {
-	
 	import flash.events.TimerEvent;
 	import flash.filesystem.File;
 	import flash.geom.Point;
 	import flash.utils.Timer;
 	
 	import General.GeneralChecker;
-	
 	import MainInfo.DayReview;
-	import MainInfo.TopBar;
-	
 	import Shop.ShopMenu;
-	
 	import View.View;
 	
 	import starling.core.Starling;
@@ -34,7 +29,6 @@
 		public static const AtlasXML:Class;
 		[Embed(source="assets/spritesheet_doctor.png")]
 		public static const AtlasTexture:Class;
-		//public static var asset:AssetManager;
 		private var doctor1:MovieClip;
 		private var isLoaded:Boolean = false;
 		private var texture:Texture = Texture.fromEmbeddedAsset(AtlasTexture);
@@ -83,6 +77,7 @@
 			View.View.getInstance().updateTopBar();
 			
 			timer = new Timer(10000,1);
+			
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, dayFinished);
 			
 			shopButton = new Button(asset.getTexture("ShopButton"));
