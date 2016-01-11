@@ -40,6 +40,7 @@
 		private var timer:Timer;
 		private var shopButton:Button;
 		private var receptionDesk:Button;
+		private var hallwayH:Array;
 		
 		/*private var pointAx:Number = 960;	//points used for positioning the NPC's
 		private var pointAy:Number = 300;
@@ -76,7 +77,7 @@
 			addChild(View.View.getInstance().getTopBar());
 			View.View.getInstance().updateTopBar();
 			
-			timer = new Timer(10000,1);
+			timer = new Timer(30000);
 			
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, dayFinished);
 			
@@ -185,6 +186,37 @@
 					doctor1.x = doctor1.x + Math.cos(rotation/180*Math.PI)*playerSpeed;
 					doctor1.y = doctor1.y - Math.sin(rotation/180*Math.PI)*playerSpeed;
 				}
+				
+				//timer.stop();
+				//timer.start();	//11-01: tried to make the second movement function activate at an interval. Has so far been unsuccesful however. Therefore, opted to simply make that a function and call it at the end of the initial movement.
+				move();
+			}
+			
+		}
+		
+		/**
+		 * second movement of the doctor
+		 */
+		private function move():void	//incomplete movement code for the second walking portion of doctor1. Function name could also be renamed to something more....noticeable, applicable, obvious. Ya know, "sense making". 
+		{							
+			if(doctor1.y == 450)
+			{
+				var distanceX : Number = doctor1.x - pointC.x;
+				var distanceY : Number = doctor1.y - pointC.y;
+				
+				var rotation : Number = Math.atan2(doctor1.y - pointC.y,doctor1.x - pointC.x) / Math.PI * 180;
+				var distance : Number  = Math.sqrt((distanceX*distanceX)+(distanceY*distanceY));
+				
+				var playerSpeed:Number = 10;
+				
+				if(distance < playerSpeed){
+					doctor1.x = pointC.x;
+					doctor1.y = pointC.y;
+				}
+				else{
+					doctor1.x = doctor1.x + Math.cos(rotation/180*Math.PI)*playerSpeed;
+					doctor1.y = doctor1.y - Math.sin(rotation/180*Math.PI)*playerSpeed;
+				}
 			}
 			
 		}
@@ -198,8 +230,8 @@
 			var foo:Array = GeneralChecker.getInstance().getRooms();
 			/** show grid **/
 			if(foo["SUP"]){
-				grids["supply"] = new Image(asset.getTexture("grid_supplyroom"));	//if this position has a room texture, then it must not load. 
-				grids["supply"].x = 700;											//IF-statement in ShopMenu referring to GeneralChecker might be able to do that.
+				grids["supply"] = new Image(asset.getTexture("grid_supplyroom"));
+				grids["supply"].x = 700;
 				grids["supply"].y = 584;
 				addChild(grids["supply"]);
 				grids["supply"].addEventListener(TouchEvent.TOUCH, onTouchedSupply);
@@ -224,19 +256,22 @@
 			/**
 			 * when a room is placed that does not have contact with a hallway, additional pieces of hallway should be created until at least one has contact with the newly built room.
 			 */
-			if(GeneralChecker.getInstance().getTexture("SUP")){						//grid view still loads. Check comments from right above.
+			if(GeneralChecker.getInstance().getTexture("SUP"))
+			{
 				grids["texture_supply"] = new Image(asset.getTexture("supply_room"));
 				grids["texture_supply"].x = 700;
 				grids["texture_supply"].y = 584;
 				addChild(grids["texture_supply"]);
 			}
-			if(GeneralChecker.getInstance().getTexture("TRE")){						//grid view still loads
+			if(GeneralChecker.getInstance().getTexture("TRE"))
+			{
 				grids["texture_treatment"] = new Image(asset.getTexture("treatment_room"));
 				grids["texture_treatment"].x = 330;
 				grids["texture_treatment"].y = 584;
 				addChild(grids["texture_treatment"]);
 			}
-			if(GeneralChecker.getInstance().getTexture("WAI")){						//grid view still loads
+			if(GeneralChecker.getInstance().getTexture("WAI"))
+			{
 				grids["texture_waiting"] = new Image(asset.getTexture("waiting_room"));
 				grids["texture_waiting"].x = 1070;
 				grids["texture_waiting"].y = 584;
@@ -269,6 +304,13 @@
 					case TouchPhase.ENDED:
 						grids["treatment"].texture = asset.getTexture("treatment_room");
 						GeneralChecker.getInstance().setTextureRooms("TRE", true);
+						/*if((hallwayH[length-1]).x > grids["treatment"].x )				//Used to work fine, now breaks. "Cannot access a property or method of a null object reference." on line 307. Tha's dis one. Dis line. Why. LITERALLY NOTHING ABOUT THIS CODE CHANGED MFFFFFFFFFFGGGGGGGGGG 
+						{																	//places additional hallway piece if none are in contact with this room. Not the most efficient code however.
+							hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));	//Idea: check starting position and width of hallway instead of fiddling with exact numbers for the x and y position.
+							hallwayH[3].x = 320;											//additionally, hallway textures do not remain. Same logic used for the rooms should be applied.
+							hallwayH[3].y = 484;
+							addChild(hallwayH[3]);
+						}*/
 						break;
 				}
 			}	
@@ -289,7 +331,15 @@
 		
 		private function goToShop (e:Event):void
 		{
+			removeGrids();
 			View.View.getInstance().loadScreen(ShopMenu);
+		}
+		
+		private function removeGrids():void
+		{
+			GeneralChecker.getInstance().setRooms("TRE", false);
+			GeneralChecker.getInstance().setRooms("WAI", false);
+			GeneralChecker.getInstance().setRooms("SUP", false);	
 		}
 		
 		private function dayFinished(event:TimerEvent):void
