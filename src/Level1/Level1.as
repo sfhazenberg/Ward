@@ -3,6 +3,7 @@
 	import flash.events.TimerEvent;
 	import flash.filesystem.File;
 	import flash.geom.Point;
+	import flash.sampler.stopSampling;
 	import flash.utils.Timer;
 	
 	import General.GeneralChecker;
@@ -14,6 +15,7 @@
 	import View.View;
 	
 	import starling.core.Starling;
+	import starling.core.starling_internal;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.MovieClip;
@@ -186,7 +188,8 @@
 		 */
 		public function moveDoctor1toB(e:Event):void
 		{
-			if(isLoaded){
+			if(isLoaded)
+			{
 				var distanceX:Number = doctor1.x - pointB.x;
 				var distanceY:Number = doctor1.y - pointB.y;
 				
@@ -195,28 +198,34 @@
 				
 				var playerSpeed:Number = 10;
 				
-				if(distance < playerSpeed){
+				if(distance < playerSpeed)
+				{
 					doctor1.x = pointB.x;
 					doctor1.y = pointB.y;
 				}
-				else{
+				else
+				{
 					doctor1.x = doctor1.x + Math.cos(rotation/180*Math.PI)*playerSpeed;
 					doctor1.y = doctor1.y - Math.sin(rotation/180*Math.PI)*playerSpeed;
 				}
 				
 				//timer.stop();
 				//timer.start();	//11-01: tried to make the second movement function activate at an interval. Has so far been unsuccesful however. Therefore, opted to simply make that a function and call it at the end of the initial movement.
+				//moveDoctor1toC();
 				moveDoctor1toC();
 			}
-			
 		}
+		
+		/**
+		 * perhaps use seperate function for the tracking of the movement. Could call different function depending on position maybe then.
+		 */
 		
 		/**
 		 * second movement of the doctor
 		 */
 		private function moveDoctor1toC():void	//incomplete movement code for the second walking portion of doctor1. Function name could also be renamed to something more....noticeable, applicable, obvious. Ya know, "sense making". 
 		{							
-			if(doctor1.y == 450)
+			if(doctor1.y == pointB.y)
 			{
 				var distanceX : Number = doctor1.x - pointC.x;
 				var distanceY : Number = doctor1.y - pointC.y;
@@ -327,8 +336,10 @@
 		private function onTouchedTreatment(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(this);
-			if(touch) {
-				switch(touch.phase) {
+			if(touch)
+			{
+				switch(touch.phase)
+				{
 					case TouchPhase.ENDED:
 						grids["treatment"].texture = asset.getTexture("treatment_room");
 						GeneralChecker.getInstance().setTextureRooms("TRE", true);
