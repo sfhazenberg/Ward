@@ -110,7 +110,9 @@
 			sprite.x = 500;
 			sprite.y = 500;
 			addChild(sprite);
-			 
+			
+			infoScreen();
+			
 			addMainEventListeners();
 		}
 		
@@ -261,7 +263,7 @@
 				if (infectivity > 0)
 				{
 				infectivity -= 0.1;
-				infectivity = Math.floor(infectivity * 10) / 10;
+				infectivity = Math.round(infectivity * 10) / 10;
 				View.View.getInstance().setInfectivity(infectivity);
 				View.View.getInstance().updateInf();
 				}
@@ -531,7 +533,13 @@
 		}
 		
 // *STATS************************************************************************************
+		
 		private function statsScreen (e:Event):void
+		{
+			infoScreen();
+		}
+		
+		private function infoScreen ():void
 		{
 			sprite.dispose();
 			removeChild(sprite);

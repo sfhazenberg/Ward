@@ -7,13 +7,7 @@
 	import flash.utils.Timer;
 	
 	import General.GeneralChecker;
-<<<<<<< HEAD
-	import MainInfo.GameOver;
-=======
 	
-	import MainInfo.DayReview;
-	
->>>>>>> ac544adb7ff99e5472bed6ad1c9082ed2f032a6f
 	import Shop.ShopMenu;
 	
 	import View.View;
@@ -46,7 +40,7 @@
 		private var grids:Array = new Array();
 		
 		private var asset:AssetManager;
-		private var timer:Timer;
+		public var timer:Timer;
 		private var shopButton:Button;
 		private var receptionDesk:Button;
 		private var hallwayH:Array = new Array();
@@ -86,8 +80,6 @@
 		{			
 			addChild(View.View.getInstance().getTopBar());
 			View.View.getInstance().updateTopBar();
-			
-			timer = new Timer(10000, 5);
 			
 			shopButton = new Button(asset.getTexture("buttoninfo"));
 			shopButton.x = 1760;
@@ -181,16 +173,36 @@
 			addChild(doctor1);
 			Starling.juggler.add(doctor1);
 			
-			isLoaded = true;
+			isLoaded = true;			
 			
+			time();
+		}
+		
+		private function time():void
+		{
+			timer = new Timer(1, 1000);
 			timer.start();
+			timer.addEventListener(TimerEvent.TIMER, counting);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, dayFinished);
+		}
+		
+		private function counting(event:TimerEvent):void
+		{
 			trace("TIME: "+timer.currentCount);
-			/*if (timer.currentCount % 20 == 1)
+			if (timer.currentCount > 0 && timer.currentCount % 250 == 0 && timer.currentCount != 1000)
 			{
 				View.View.getInstance().updateInfPlus();
+				View.View.getInstance().updateTopBar();
 			}
-			/*///View.View.getInstance().updateInfPlus();
+			
+			var supplies:int = View.View.getInstance().getNumberOfSupplies();
+			if (timer.currentCount > 0 && timer.currentCount % 100 == 0 && supplies != 0)
+			{
+				supplies -= 1;
+				View.View.getInstance().setNumberOfSupplies(supplies);
+				View.View.getInstance().updateTopBar();
+				trace("SUPPLY: "+supplies);
+			}
 		}
 		
 		/**
@@ -393,10 +405,12 @@
 			GeneralChecker.getInstance().setRooms("SUP", false);	
 		}
 		
-		private function dayFinished(event:TimerEvent):void
+		private function dayFinished(e:TimerEvent):void
 		{
-			View.View.getInstance().loadScreen(GameOver);
-		}		
+			trace("DAY FINISHED");
+			View.View.getInstance().loadScreen(ShopMenu);
+		}
+
 	}
 	
 }

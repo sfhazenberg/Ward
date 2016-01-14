@@ -4,7 +4,6 @@ package MainInfo
 	
 	import View.View;
 	
-	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -21,7 +20,7 @@ package MainInfo
 		public var budget:int = 100000;
 		public var budgetTextField:TextField;
 		private var numberOfSuppliesText:TextField;
-		public var numberOfSupplies:int = 10;
+		public var numberOfSupplies:int = 30;
 		private var maxNumberOfSuppliesText:TextField;
 		public var maxNumberOfSupplies:int = 30;
 		public var infectivityColor:Image;
@@ -33,8 +32,6 @@ package MainInfo
 		private var gameOver:Image;
 		private var sprite:Sprite;
 		private var topBar:TopBar;
-		
-		private var button:Button;
 		
 		public function TopBar()
 		{
@@ -84,8 +81,9 @@ package MainInfo
 			infectivityColor = new Image (asset.getTexture("InfectivityColor"));
 			infectivityColor.x = 600;
 			infectivityColor.y = 12;
-			infectivityColor.scaleX = currentInfectivity;
 			addChild(infectivityColor);
+			infectivityColor.scaleX = currentInfectivity;
+			//trace("infectivityColor.scaleX:  "+ infectivityColor.scaleX);
 			
 			infectivityBar = new Image (asset.getTexture("Infectivity"));
 			infectivityBar.x = 600;
@@ -106,13 +104,6 @@ package MainInfo
 			budgetTextField.x = 1230;
 			budgetTextField.y = 15;
 			addChild(budgetTextField);
-			
-			button = new Button (asset.getTexture("button"), "TRY");
-			button.x = 100;
-			button.y = 200;
-			addChild(button);
-			//button.addEventListener(Event.TRIGGERED, changeInf);
-			
 		}
 		
 		public function update():void
@@ -168,8 +159,8 @@ package MainInfo
 		public function updateInfectivity():void
 		{
 			trace("updatas  "+currentInfectivity);
-			//trace("infCOLOR"+infectivityColor.scaleX);
-			//infectivityColor.scaleX = currentInfectivity;
+
+			infectivityColor.scaleX = currentInfectivity;
 			infPcent = currentInfectivity * 100;
 			removeChild(infPcentText);
 			infPcentText = new TextField (220, 120, infPcent.toString(10) + "%", "Trajan Pro", 80, 0x333333);

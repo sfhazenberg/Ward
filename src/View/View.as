@@ -80,6 +80,7 @@
 		public function updateInfPlus():void
 		{
 			topBar.changeInf();
+			//topBar.infectivityColor.scaleX = topBar.currentInfectivity;
 		}
 		
 		public function destroy():void
