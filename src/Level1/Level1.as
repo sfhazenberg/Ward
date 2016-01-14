@@ -3,14 +3,23 @@
 	import flash.events.TimerEvent;
 	import flash.filesystem.File;
 	import flash.geom.Point;
+	import flash.sampler.stopSampling;
 	import flash.utils.Timer;
 	
 	import General.GeneralChecker;
+<<<<<<< HEAD
 	import MainInfo.GameOver;
+=======
+	
+	import MainInfo.DayReview;
+	
+>>>>>>> ac544adb7ff99e5472bed6ad1c9082ed2f032a6f
 	import Shop.ShopMenu;
+	
 	import View.View;
 	
 	import starling.core.Starling;
+	import starling.core.starling_internal;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.MovieClip;
@@ -40,7 +49,8 @@
 		private var timer:Timer;
 		private var shopButton:Button;
 		private var receptionDesk:Button;
-		private var hallwayH:Array;
+		private var hallwayH:Array = new Array();
+		private var hallwayHLatest:int = 1520;
 		
 		/*private var pointAx:Number = 960;	//points used for positioning the NPC's
 		private var pointAy:Number = 300;
@@ -49,11 +59,11 @@
 		
 		private var pointA:Point = new Point(960, 300);		//different naming might be more convenient
 		private var pointB:Point = new Point(960, 450);
-		private var pointC:Point = new Point(1120, 450);
+		private var pointC:Point = new Point(1160, 450);
 		
 		public function Level1() {
 			addEventListener( Event.ADDED_TO_STAGE, initialize );
-			addEventListener(Event.ENTER_FRAME, movementDoctor1);
+			addEventListener(Event.ENTER_FRAME, moveDoctor1toB);
 		}
 		
 		public function initialize (event:Event):void 
@@ -93,19 +103,32 @@
 			//array that stores the horizontal hallways
 			var hallwayH:Array = new Array();
 			hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
-			hallwayH[0].x = 1520;
+			hallwayH[0].x = hallwayHLatest;
 			hallwayH[0].y = 484;
 			addChild(hallwayH[0]);
 			
+			hallwayHLatest -= 400;
+			
 			hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
-			hallwayH[1].x = 1120;
+			hallwayH[1].x = hallwayHLatest;
 			hallwayH[1].y = 484;
 			addChild(hallwayH[1]);
 			
+			hallwayHLatest -= 400;			
+			
 			hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
-			hallwayH[2].x = 720;
+			hallwayH[2].x = hallwayHLatest;
 			hallwayH[2].y = 484;
 			addChild(hallwayH[2]);
+			
+			if(GeneralChecker.getInstance().getHallwayH("0"))
+			{
+				hallwayHLatest -= 400;
+				hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
+				hallwayH[3].x = hallwayHLatest;
+				hallwayH[3].y = 484;
+				addChild(hallwayH[3]);
+			}
 			
 			//array that stores the vertical hallways
 			var hallwayV:Array = new Array();
@@ -173,9 +196,10 @@
 		/**
 		 * method that handles movement for doctor1
 		 */
-		public function movementDoctor1(e:Event):void
+		public function moveDoctor1toB(e:Event):void
 		{
-			if(isLoaded){
+			if(isLoaded)
+			{
 				var distanceX:Number = doctor1.x - pointB.x;
 				var distanceY:Number = doctor1.y - pointB.y;
 				
@@ -184,28 +208,34 @@
 				
 				var playerSpeed:Number = 10;
 				
-				if(distance < playerSpeed){
+				if(distance < playerSpeed)
+				{
 					doctor1.x = pointB.x;
 					doctor1.y = pointB.y;
 				}
-				else{
+				else
+				{
 					doctor1.x = doctor1.x + Math.cos(rotation/180*Math.PI)*playerSpeed;
 					doctor1.y = doctor1.y - Math.sin(rotation/180*Math.PI)*playerSpeed;
 				}
 				
 				//timer.stop();
 				//timer.start();	//11-01: tried to make the second movement function activate at an interval. Has so far been unsuccesful however. Therefore, opted to simply make that a function and call it at the end of the initial movement.
-				move();
+				//moveDoctor1toC();
+				moveDoctor1toC();
 			}
-			
 		}
+		
+		/**
+		 * perhaps use seperate function for the tracking of the movement. Could call different function depending on position maybe then.
+		 */
 		
 		/**
 		 * second movement of the doctor
 		 */
-		private function move():void	//incomplete movement code for the second walking portion of doctor1. Function name could also be renamed to something more....noticeable, applicable, obvious. Ya know, "sense making". 
+		private function moveDoctor1toC():void	//incomplete movement code for the second walking portion of doctor1. Function name could also be renamed to something more....noticeable, applicable, obvious. Ya know, "sense making". 
 		{							
-			if(doctor1.y == 450)
+			if(doctor1.y == pointB.y)
 			{
 				var distanceX : Number = doctor1.x - pointC.x;
 				var distanceY : Number = doctor1.y - pointC.y;
@@ -215,16 +245,17 @@
 				
 				var playerSpeed:Number = 10;
 				
-				if(distance < playerSpeed){
+				if(distance < playerSpeed)
+				{
 					doctor1.x = pointC.x;
 					doctor1.y = pointC.y;
 				}
-				else{
+				else
+				{
 					doctor1.x = doctor1.x + Math.cos(rotation/180*Math.PI)*playerSpeed;
 					doctor1.y = doctor1.y - Math.sin(rotation/180*Math.PI)*playerSpeed;
 				}
 			}
-			
 		}
 		
 		/**
@@ -235,14 +266,16 @@
 		{
 			var foo:Array = GeneralChecker.getInstance().getRooms();
 			/** show grid **/
-			if(foo["SUP"]){
+			if(foo["SUP"])
+			{
 				grids["supply"] = new Image(asset.getTexture("grid_supplyroom"));
 				grids["supply"].x = 700;
 				grids["supply"].y = 584;
 				addChild(grids["supply"]);
 				grids["supply"].addEventListener(TouchEvent.TOUCH, onTouchedSupply);
 			}
-			if(foo["TRE"]){
+			if(foo["TRE"])
+			{
 				//grids.push(new Image(asset.getTexture("grid_treatmentroom")));
 				grids["treatment"] = new Image(asset.getTexture("grid_treatmentroom"));
 				grids["treatment"].x = 330;
@@ -250,7 +283,8 @@
 				addChild(grids["treatment"]);
 				grids["treatment"].addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
 			}
-			if(foo["WAI"]){
+			if(foo["WAI"])
+			{
 				//grids.push(new Image(asset.getTexture("grid_waitingroom")));
 				grids["waiting"] = new Image(asset.getTexture("grid_waitingroom"));
 				grids["waiting"].x = 1070;
@@ -282,7 +316,14 @@
 				grids["texture_waiting"].x = 1070;
 				grids["texture_waiting"].y = 584;
 				addChild(grids["texture_waiting"]);
-			}
+			}													//add this hallway to the current array if possible
+			/*if(GeneralChecker.getInstance().getHallwayH("0"))
+			{
+				hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
+				hallwayH[3].x = 200;
+				hallwayH[3].y = 484;
+				addChild(hallwayH[3]);
+			}*/
 		}
 		
 		/**
@@ -305,18 +346,22 @@
 		private function onTouchedTreatment(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(this);
-			if(touch) {
-				switch(touch.phase) {
+			if(touch)
+			{
+				switch(touch.phase)
+				{
 					case TouchPhase.ENDED:
 						grids["treatment"].texture = asset.getTexture("treatment_room");
 						GeneralChecker.getInstance().setTextureRooms("TRE", true);
-						/*if((hallwayH[length-1]).x > grids["treatment"].x )				//Used to work fine, now breaks. "Cannot access a property or method of a null object reference." on line 307. Tha's dis one. Dis line. Why. LITERALLY NOTHING ABOUT THIS CODE CHANGED MFFFFFFFFFFGGGGGGGGGG 
-						{																	//places additional hallway piece if none are in contact with this room. Not the most efficient code however.
-							hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));	//Idea: check starting position and width of hallway instead of fiddling with exact numbers for the x and y position.
-							hallwayH[3].x = 320;											//additionally, hallway textures do not remain. Same logic used for the rooms should be applied.
-							hallwayH[3].y = 484;
-							addChild(hallwayH[3]);
-						}*/
+						if(hallwayHLatest > grids["treatment"].x )
+						{
+							hallwayHLatest -= 400;
+							var newHallway:Image = new Image(asset.getTexture("hallway_horz_PH"));
+							newHallway.x = hallwayHLatest;
+							newHallway.y = 484;
+							addChild(newHallway);
+							GeneralChecker.getInstance().setHallwayH("0", true);
+						}
 						break;
 				}
 			}	
