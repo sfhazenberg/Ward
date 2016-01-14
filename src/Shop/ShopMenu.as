@@ -116,6 +116,7 @@
 		
 		private function exitShop (e:Event):void
 		{
+			Destroy();
 			View.View.getInstance().loadScreen( Level1 );
 		}
 		
@@ -198,7 +199,6 @@
 			View.View.getInstance().updateTopBar();
 		}
 		
-		//TouchEvent should be Phase ENDED
 		/**
 		 * method called when treatment room is pushed
 		 */
@@ -208,7 +208,7 @@
 			if(touch){
 				switch(touch.phase){
 					case TouchPhase.ENDED:
-					GeneralChecker.getInstance().setRooms("TRE", true);	//reveals grid view of corresponding room
+					GeneralChecker.getInstance().setRoomGrids(0, true);	//reveals grid view of corresponding room	//0 should be calculated by different function, so that this function only needs to grab that integer.
 					View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
 					break;
 				}
@@ -224,7 +224,7 @@
 			if(touch){
 				switch(touch.phase){
 					case TouchPhase.ENDED:
-						GeneralChecker.getInstance().setRooms("WAI", true);	//reveals grid view of corresponding room
+						GeneralChecker.getInstance().setRoomGrids(1, true);	//reveals grid view of corresponding room
 						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
 						break;
 				}
@@ -246,12 +246,11 @@
 			if(touch){
 				switch(touch.phase){
 					case TouchPhase.ENDED:
-						GeneralChecker.getInstance().setRooms("SUP", true);	//reveals grid view of corresponding room
+						GeneralChecker.getInstance().setRoomGrids(2, true);	//reveals grid view of corresponding room
 						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
 						break;
 				}
 			}
-
 		}
 		
 		private function workshopTriggered():void
@@ -574,6 +573,10 @@
 			}
 			
 			// *FINANCIAL**************************************************************
+		}
+		
+		private function Destroy():void{
+			asset.dispose();
 		}
 		 
 	}

@@ -6,23 +6,41 @@ package General
 		private static var gridView:Boolean = false;
 		
 		/** An array holding room information **/
-		private var Rooms:Array;
+		private var RoomGrids:Array;
 		private var Texture:Array;
 		private var hallwayH:Array;
 		
 		public function GeneralChecker()
 		{
+			//variablenaam[indextype] = variabletype
 			trace("loading constructor");
-			Rooms = new Array();
-			Rooms["TRE"] = false;
-			Rooms["WAI"] = false;
-			Rooms["SUP"] = false;
+			RoomGrids = new Array();
+			RoomGrids[0] = true;	//TRE_1
+			RoomGrids[1] = true;	//WAI_1
+			RoomGrids[2] = true;	//SUP_1
+			//RoomGrids["TRE_1"] = false;
+			//RoomGrids["WAI_1"] = false;
+			//RoomGrids["SUP_1"] = false;
+			
 			Texture = new Array();
-			Texture["TRE"] = false;
-			Texture["WAI"] = false;
-			Texture["SUP"] = false;
+			Texture["TRE_1"] = false;
+			Texture["WAI_1"] = false;
+			Texture["SUP_1"] = false;
+			
+			//trace('sizeofTexture: ' + Texture.length);
+
+			for(var loop:int = 0; loop < RoomGrids.length; loop++)
+			{
+				RoomGrids[loop] = false;
+			}
+			
+			for each(var o:Boolean in RoomGrids)
+			{
+				trace(o);
+			}
+			
 			hallwayH = new Array;
-			hallwayH["0"] = false;
+			hallwayH[0] = false;
 		}
 		
 		public static function getInstance():GeneralChecker
@@ -49,9 +67,17 @@ package General
 		 * @param room:	can be: TRE,WAI,SUP
 		 * @param value:	true (show), false (don't show)
 		 */
-		public function setRooms(room:String, value:Boolean):void
+		public function setRoomGrids(room:int, value:Boolean):void
 		{
-			this.Rooms[room] = value;
+			this.RoomGrids[room] = value;
+		}
+		
+		public function removeRoomGrids():void
+		{
+			for(var loop:int = 0; loop < RoomGrids.length; loop++)
+			{
+				RoomGrids[loop] = false;
+			}
 		}
 		
 		/**
@@ -59,7 +85,7 @@ package General
 		 * @param room: can be TRE, WAI, SUP
 		 * @param value: true (show), false (don't show)
 		 */
-		public function setTextureRooms(room:String, value:Boolean):void
+		public function setTextureRooms(room:int, value:Boolean):void
 		{
 			this.Texture[room] = value;
 		}
@@ -69,7 +95,7 @@ package General
 		 * @param hallway: can be 0, 1, 2, etc
 		 * @param value: true (show), false (don't show)
 		 */
-		public function setHallwayH(room:String, value:Boolean):void
+		public function setHallwayH(room:int, value:Boolean):void
 		{
 			this.hallwayH[room] = value;
 		}
@@ -77,15 +103,15 @@ package General
 		/**
 		 * method to get the states of the rooms
 		 */
-		public function getRooms():Array
+		public function getRoomGrids():Array
 		{
-			return this.Rooms;
+			return this.RoomGrids;
 		}
 		
 		/**
 		 * method to get the texture of the rooms
 		 */
-		public function getTexture(Name:String):Boolean
+		public function getTexture(Name:int):Boolean
 		{
 			return this.Texture[Name];
 		}
@@ -97,5 +123,7 @@ package General
 		{
 			return this.hallwayH[Name];
 		}
+
+		
 	}
 }

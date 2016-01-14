@@ -7,13 +7,10 @@
 	import flash.utils.Timer;
 	
 	import General.GeneralChecker;
-<<<<<<< HEAD
-	import MainInfo.GameOver;
-=======
 	
 	import MainInfo.DayReview;
+	import MainInfo.GameOver;
 	
->>>>>>> ac544adb7ff99e5472bed6ad1c9082ed2f032a6f
 	import Shop.ShopMenu;
 	
 	import View.View;
@@ -95,49 +92,15 @@
 			shopButton.addEventListener( Event.TRIGGERED, goToShop)
 			addChild(shopButton);
 			
-			receptionDesk = new Button(asset.getTexture("reception_desk_PH"));
+			receptionDesk = new Button(asset.getTexture("reception_desk"));
 			receptionDesk.x = 1445;
 			receptionDesk.y = 584;
 			addChild(receptionDesk);
 			
-			//array that stores the horizontal hallways
-			var hallwayH:Array = new Array();
-			hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
-			hallwayH[0].x = hallwayHLatest;
-			hallwayH[0].y = 484;
-			addChild(hallwayH[0]);
-			
-			hallwayHLatest -= 400;
-			
-			hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
-			hallwayH[1].x = hallwayHLatest;
-			hallwayH[1].y = 484;
-			addChild(hallwayH[1]);
-			
-			hallwayHLatest -= 400;			
-			
-			hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
-			hallwayH[2].x = hallwayHLatest;
-			hallwayH[2].y = 484;
-			addChild(hallwayH[2]);
-			
-			if(GeneralChecker.getInstance().getHallwayH("0"))
-			{
-				hallwayHLatest -= 400;
-				hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
-				hallwayH[3].x = hallwayHLatest;
-				hallwayH[3].y = 484;
-				addChild(hallwayH[3]);
-			}
-			
-			//array that stores the vertical hallways
-			var hallwayV:Array = new Array();
-			hallwayV.push(new Image(asset.getTexture("hallway_vert_PH")));
-			hallwayV[0].x = 1820;
-			hallwayV[0].y = 584;
-			addChild(hallwayV[0]);
-			
-			//array that stores the images of the built rooms
+			/**
+			*array that stores the images of the initial rooms
+			*/
+			//idea: use variable similar to hallwayHLatest to set x position of rooms
 			var rooms:Array = new Array();
 			rooms.push(new Image(asset.getTexture("waiting_room")));
 			rooms[0].x = 1545;
@@ -145,7 +108,7 @@
 			addChild(rooms[0]);
 			
 			rooms.push(new Image(asset.getTexture("supply_room")));
-			rooms[1].x = 794;
+			rooms[1].x = 795;
 			rooms[1].y = 155;
 			addChild(rooms[1]);
 			
@@ -153,6 +116,64 @@
 			rooms[2].x = 1170;
 			rooms[2].y = 155;
 			addChild(rooms[2]);
+			
+			/**
+			 * array that stores the initial horizontal hallways
+			 */
+			var hallwayH:Array = new Array();
+			//hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
+			hallwayH.push(new Image(asset.getTexture("hallwayH")));
+			hallwayH[0].x = hallwayHLatest;
+			hallwayH[0].y = 484;
+			addChild(hallwayH[0]);
+			
+			hallwayHLatest -= 400;
+			
+			hallwayH.push(new Image(asset.getTexture("hallwayH")));
+			hallwayH[1].x = hallwayHLatest;
+			hallwayH[1].y = 484;
+			addChild(hallwayH[1]);
+			
+			hallwayHLatest -= 400;			
+			
+			hallwayH.push(new Image(asset.getTexture("hallwayH")));
+			hallwayH[2].x = hallwayHLatest;
+			hallwayH[2].y = 484;
+			addChild(hallwayH[2]);
+			
+			/**
+			 * array that stores the initial vertical hallways
+			 */
+			var hallwayV:Array = new Array();
+			//hallwayV.push(new Image(asset.getTexture("hallway_vert_PH")));
+			hallwayV.push(new Image(asset.getTexture("hallwayV")));
+			hallwayV[0].x = 1820;
+			hallwayV[0].y = 584;
+			addChild(hallwayV[0]);
+			
+			/**
+			 * stores newly added horizontal hallway textures to the array
+			 */
+			if(GeneralChecker.getInstance().getHallwayH("0"))
+			{
+				hallwayHLatest -= 400;
+				hallwayH.push(new Image(asset.getTexture("hallwayH")));
+				hallwayH[3].x = hallwayHLatest;
+				hallwayH[3].y = 484;
+				addChild(hallwayH[3]);
+			}
+			
+			//testing purposes
+			/*rooms.push(new Image(asset.getTexture("treatment_room")));
+			rooms[3].x = 420;
+			rooms[3].y = 155;
+			addChild(rooms[3]);
+			
+			rooms.push(new Image(asset.getTexture("treatment_room")));
+			rooms[4].x = 45;
+			rooms[4].y = 155;
+			addChild(rooms[4]);*/
+			//end testing purposes
 			
 			showRooms();
 			
@@ -175,6 +196,9 @@
 			treatmentRoom.y = stage.stageHeight - 329;
 			addChild(treatmentRoom);*/
 			
+			/**
+			 * loads the moving doctor
+			 */
 			doctor1 = new MovieClip(atlas.getTextures("Doctor_Front000"), 6);
 			doctor1.x = pointA.x;	//initial starting point of doctor1
 			doctor1.y = pointA.y;
@@ -259,22 +283,13 @@
 		}
 		
 		/**
-		 * method to show specific rooms based on shop
+		 * method to show specific grids based on shop
 		 * puts rooms in static name within the array
 		 */
 		private function showRooms():void
 		{
-			var foo:Array = GeneralChecker.getInstance().getRooms();
-			/** show grid **/
-			if(foo["SUP"])
-			{
-				grids["supply"] = new Image(asset.getTexture("grid_supplyroom"));
-				grids["supply"].x = 700;
-				grids["supply"].y = 584;
-				addChild(grids["supply"]);
-				grids["supply"].addEventListener(TouchEvent.TOUCH, onTouchedSupply);
-			}
-			if(foo["TRE"])
+			var foo:Array = GeneralChecker.getInstance().getRoomGrids();
+			if(foo[0])
 			{
 				//grids.push(new Image(asset.getTexture("grid_treatmentroom")));
 				grids["treatment"] = new Image(asset.getTexture("grid_treatmentroom"));
@@ -283,7 +298,7 @@
 				addChild(grids["treatment"]);
 				grids["treatment"].addEventListener(TouchEvent.TOUCH, onTouchedTreatment);
 			}
-			if(foo["WAI"])
+			if(foo[1])
 			{
 				//grids.push(new Image(asset.getTexture("grid_waitingroom")));
 				grids["waiting"] = new Image(asset.getTexture("grid_waitingroom"));
@@ -292,31 +307,42 @@
 				addChild(grids["waiting"]);
 				grids["waiting"].addEventListener(TouchEvent.TOUCH, onTouchedWaiting);
 			}
+			if(foo[2])
+			{
+				grids["supply"] = new Image(asset.getTexture("grid_supplyroom"));
+				grids["supply"].x = 700;
+				grids["supply"].y = 584;
+				addChild(grids["supply"]);
+				grids["supply"].addEventListener(TouchEvent.TOUCH, onTouchedSupply);
+			}
 			
 			/**
 			 * when a room is placed that does not have contact with a hallway, additional pieces of hallway should be created until at least one has contact with the newly built room.
+			 * happens now with first TRE room
 			 */
-			if(GeneralChecker.getInstance().getTexture("SUP"))
-			{
-				grids["texture_supply"] = new Image(asset.getTexture("supply_room"));
-				grids["texture_supply"].x = 700;
-				grids["texture_supply"].y = 584;
-				addChild(grids["texture_supply"]);
-			}
-			if(GeneralChecker.getInstance().getTexture("TRE"))
+			if(GeneralChecker.getInstance().getTexture(0))
 			{
 				grids["texture_treatment"] = new Image(asset.getTexture("treatment_room"));
 				grids["texture_treatment"].x = 330;
 				grids["texture_treatment"].y = 584;
 				addChild(grids["texture_treatment"]);
 			}
-			if(GeneralChecker.getInstance().getTexture("WAI"))
+			if(GeneralChecker.getInstance().getTexture(1))
 			{
 				grids["texture_waiting"] = new Image(asset.getTexture("waiting_room"));
 				grids["texture_waiting"].x = 1070;
 				grids["texture_waiting"].y = 584;
 				addChild(grids["texture_waiting"]);
-			}													//add this hallway to the current array if possible
+			}
+			if(GeneralChecker.getInstance().getTexture(2))
+			{
+				grids["texture_supply"] = new Image(asset.getTexture("supply_room"));
+				grids["texture_supply"].x = 700;
+				grids["texture_supply"].y = 584;
+				addChild(grids["texture_supply"]);
+			}
+			
+			//add this hallway to the current array if possible
 			/*if(GeneralChecker.getInstance().getHallwayH("0"))
 			{
 				hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
@@ -330,19 +356,6 @@
 		 * methods called when the grid of a room is pushed
 		 * right now they disappear when reentering the shop menu however. It should be permanent.
 		 */
-		private function onTouchedSupply(event:TouchEvent):void
-		{
-			var touch:Touch = event.getTouch(this);
-			if(touch) {
-				switch(touch.phase) {
-					case TouchPhase.ENDED:
-					grids["supply"].texture = asset.getTexture("supply_room");	//supply cap also needs to increase 
-					GeneralChecker.getInstance().setTextureRooms("SUP", true);
-					break;
-				}
-			}	
-		}
-		
 		private function onTouchedTreatment(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(this);
@@ -352,15 +365,15 @@
 				{
 					case TouchPhase.ENDED:
 						grids["treatment"].texture = asset.getTexture("treatment_room");
-						GeneralChecker.getInstance().setTextureRooms("TRE", true);
+						GeneralChecker.getInstance().setTextureRooms(0, true);
 						if(hallwayHLatest > grids["treatment"].x )
 						{
 							hallwayHLatest -= 400;
-							var newHallway:Image = new Image(asset.getTexture("hallway_horz_PH"));
+							var newHallway:Image = new Image(asset.getTexture("hallwayH"));
 							newHallway.x = hallwayHLatest;
 							newHallway.y = 484;
 							addChild(newHallway);
-							GeneralChecker.getInstance().setHallwayH("0", true);
+							GeneralChecker.getInstance().setHallwayH(0, true);
 						}
 						break;
 				}
@@ -374,7 +387,20 @@
 				switch(touch.phase) {
 					case TouchPhase.ENDED:
 						grids["waiting"].texture = asset.getTexture("waiting_room");
-						GeneralChecker.getInstance().setTextureRooms("WAI", true);
+						GeneralChecker.getInstance().setTextureRooms(1, true);
+						break;
+				}
+			}	
+		}
+		
+		private function onTouchedSupply(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(this);
+			if(touch) {
+				switch(touch.phase) {
+					case TouchPhase.ENDED:
+						grids["supply"].texture = asset.getTexture("supply_room");	//supply cap also needs to increase 
+						GeneralChecker.getInstance().setTextureRooms(2, true);
 						break;
 				}
 			}	
@@ -382,21 +408,29 @@
 		
 		private function goToShop (e:Event):void
 		{
-			removeGrids();
+			GeneralChecker.getInstance().removeRoomGrids();
+			//removeGrids();
+			Destroy();
 			View.View.getInstance().loadScreen(ShopMenu);
 		}
 		
-		private function removeGrids():void
+		/*private function removeGrids():void
 		{
-			GeneralChecker.getInstance().setRooms("TRE", false);
-			GeneralChecker.getInstance().setRooms("WAI", false);
-			GeneralChecker.getInstance().setRooms("SUP", false);	
-		}
+			//GeneralChecker.getInstance().setRoomGrids.
+			GeneralChecker.getInstance().setRoomGrids(0, false);
+			GeneralChecker.getInstance().setRoomGrids(1, false);
+			GeneralChecker.getInstance().setRoomGrids(2, false);
+		}*/
 		
 		private function dayFinished(event:TimerEvent):void
 		{
 			View.View.getInstance().loadScreen(GameOver);
 		}		
+		
+		private function Destroy():void
+		{
+			asset.dispose();
+		}
 	}
 	
 }

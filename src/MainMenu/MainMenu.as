@@ -72,6 +72,7 @@
 		
 		public function loadLevel1Screen(e:Event):void 
 		{
+			Destroy();
 			View.View.getInstance().loadScreen( Level1 );
 		}
 		
@@ -85,6 +86,10 @@
 			NativeApplication.nativeApplication.exit();
 		}
 		
+		private function Destroy():void
+		{
+			asset.dispose();
+		}
 	}
 	
 }
