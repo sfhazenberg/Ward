@@ -39,26 +39,25 @@
 		
 		private function startSettings():void 
 		{
-			var background:Image = new Image(asset.getTexture("settingsBackgr"));
+			var background:Image = new Image(asset.getTexture("SettingsBackground"));
 			addChild( background );
 			
-			var turnOnMusic:Button = new Button (asset.getTexture("OnButton"), "", asset.getTexture("OffButton"));
+			/*var turnOnMusic:Button = new Button (asset.getTexture("OnButton"), "", asset.getTexture("OffButton"));
 			turnOnMusic.x = stage.stageWidth / 2;
 			turnOnMusic.y = stage.stageHeight / 5 * 1.8;
+			turnOnMusic.addEventListener( Event.TRIGGERED, music );
+			addChild( turnOnMusic );*/
 			
-			var turnOnSound:Button = new Button (asset.getTexture("OnButton"), "", asset.getTexture("OffButton"));
-			turnOnSound.x = stage.stageWidth / 2;
+			var turnOnSound:Button = new Button (asset.getTexture("SoundOn"));
+			turnOnSound.x = 570;
 			turnOnSound.y = stage.stageHeight / 5 * 3.2;
 		
-			turnOnMusic.addEventListener( Event.TRIGGERED, music );
-			addChild( turnOnMusic );
-			
 			turnOnSound.addEventListener( Event.TRIGGERED, sound );
 			addChild( turnOnSound );
 			
-			var backToMenu:Button = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
-			backToMenu.x = stage.stageWidth - 150;
-			backToMenu.y = 20;
+			var backToMenu:Button = new Button (asset.getTexture("BackButton"));
+			backToMenu.x = 1730;
+			backToMenu.y = 880;
 			
 			backToMenu.addEventListener( Event.TRIGGERED, exitSettings );
 			addChild( backToMenu );

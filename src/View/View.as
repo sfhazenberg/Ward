@@ -1,14 +1,11 @@
 ﻿package View
 {
-
+	import MainInfo.GameOver;
 	import MainInfo.TopBar;
-	
 	import MainMenu.MainMenu;
 	
-	import Shop.ShopMenu;
-	
 	import starling.display.Sprite;
-	import starling.events.Event;	
+	import starling.events.Event;
 
 	public class View extends Sprite
 	{
@@ -16,7 +13,6 @@
 		private var screen:Sprite;
 		private var topBar:TopBar = new TopBar();
 		
-	
 		public function View() 
 		{
 			addEventListener( Event.ADDED_TO_STAGE, initialize );
@@ -79,6 +75,19 @@
 		public function updateInf():void
 		{
 			topBar.updateInfectivity();
+		}
+		
+		public function updateInfPlus():void
+		{
+			topBar.changeInf();
+		}
+		
+		public function destroy():void
+		{
+			while (numChildren > 0) {
+				removeChildAt(0);
+			}
+			loadScreen(GameOver);
 		}
 		
 		private function initialize( event:Event ):void

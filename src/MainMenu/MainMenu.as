@@ -6,11 +6,12 @@
 	
 	import Level1.Level1;
 	
-	import View.View;
-	
 	import Settings.Settings;
 	
+	import View.View;
+	
 	import starling.display.Button;
+	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.utils.AssetManager;
@@ -41,20 +42,23 @@
 		
 		private function startMenu() :void
 		{
+			var background:Image = new Image (asset.getTexture("Background"));
+			addChild(background);
+			
 			var playButton:Button = new Button ( asset.getTexture ("PlayButtonUp"), "", asset.getTexture ("PlayButtonDown"));
 			playButton.alignPivot();
-			playButton.x = stage.stageWidth / 2;
-			playButton.y = stage.stageHeight / 5 * 2;
+			playButton.x = 430;
+			playButton.y = 520;
 			
 			var settingsButton:Button = new Button ( asset.getTexture("SettingsButtonUp"), "", asset.getTexture("SettingsButtonDown"));
 			settingsButton.alignPivot();
-			settingsButton.x = stage.stageWidth / 2;
-			settingsButton.y = stage.stageHeight / 5 * 3;
+			settingsButton.x = 430;
+			settingsButton.y = 730;
 			
 			var quitButton:Button = new Button ( asset.getTexture("QuitButtonUp"), "", asset.getTexture("QuitButtonDown"));
 			quitButton.alignPivot();
-			quitButton.x = stage.stageWidth / 2;
-			quitButton.y =stage.stageHeight / 5 * 4;
+			quitButton.x = 430;
+			quitButton.y = 940;
 			
 			playButton.addEventListener( Event.TRIGGERED, loadLevel1Screen );
 			addChild( playButton );

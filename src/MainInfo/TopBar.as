@@ -24,13 +24,15 @@ package MainInfo
 		public var numberOfSupplies:int = 10;
 		private var maxNumberOfSuppliesText:TextField;
 		public var maxNumberOfSupplies:int = 30;
-		private var infectivityColor:Image;
+		public var infectivityColor:Image;
 		private var infectivityColorWhite:Image;
 		public var currentInfectivity:Number = 0;
 		private var curInf:Number;
 		private var infPcentText:TextField;
 		private var infPcent:int = 0;
 		private var gameOver:Image;
+		private var sprite:Sprite;
+		private var topBar:TopBar;
 		
 		private var button:Button;
 		
@@ -55,7 +57,7 @@ package MainInfo
 		}
 		
 		private function start():void
-		{
+		{			
 			topBarBackground = new Image(asset.getTexture("TopBarBackground"));
 			addChildAt(topBarBackground, 0);
 			
@@ -109,7 +111,7 @@ package MainInfo
 			button.x = 100;
 			button.y = 200;
 			addChild(button);
-			button.addEventListener(Event.TRIGGERED, changeInf);
+			//button.addEventListener(Event.TRIGGERED, changeInf);
 			
 		}
 		
@@ -143,7 +145,7 @@ package MainInfo
 			addChild(maxNumberOfSuppliesText);
 		}
 		
-		private function changeInf():void
+		public function changeInf():void
 		{
 			if (currentInfectivity < 0.9)
 			{
@@ -158,15 +160,16 @@ package MainInfo
 					currentInfectivity += 0.1;
 					currentInfectivity = Math.floor(currentInfectivity * 100) / 100;
 					updateInfectivity();
-					gameOver = new Image (asset.getTexture("GameOver"));
-					addChild(gameOver);
+
+					Destroy();
 			}
 		}
 		
 		public function updateInfectivity():void
 		{
 			trace("updatas  "+currentInfectivity);
-			infectivityColor.scaleX = currentInfectivity;
+			//trace("infCOLOR"+infectivityColor.scaleX);
+			//infectivityColor.scaleX = currentInfectivity;
 			infPcent = currentInfectivity * 100;
 			removeChild(infPcentText);
 			infPcentText = new TextField (220, 120, infPcent.toString(10) + "%", "Trajan Pro", 80, 0x333333);
@@ -175,6 +178,10 @@ package MainInfo
 			addChild(infPcentText);
 		}
 		
+		public function Destroy():void
+		{
+			View.View.getInstance().destroy();
+		}		
 	}
 }
 

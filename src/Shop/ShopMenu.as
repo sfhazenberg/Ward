@@ -3,11 +3,8 @@
 	import flash.filesystem.File;
 	
 	import General.GeneralChecker;
-	
 	import Level1.Level1;
-	
 	import MainInfo.TopBar;
-	
 	import View.View;
 	
 	import starling.display.Button;
@@ -89,22 +86,22 @@
 			backToGame.addEventListener( Event.TRIGGERED, exitShop );
 			addChild( backToGame );
 			
-			upgradeButton = new Button ( asset.getTexture("UpgradeButtonOff"),"", asset.getTexture("UpgradeButtonOn"));
+			upgradeButton = new Button ( asset.getTexture("UpgradeButtonOff"));
 			upgradeButton.x = 5;
 			upgradeButton.y = 170;
 			addChild(upgradeButton);
 			
-			staffButton = new Button ( asset.getTexture("StaffButtonOff"), "", asset.getTexture("StaffButtonOn"));
+			staffButton = new Button ( asset.getTexture("StaffButtonOff"));
 			staffButton.x = 5;
 			staffButton.y = 395;
 			addChild(staffButton);
 			
-			suppliesButton = new Button ( asset.getTexture("SuppliesButtonOff"), "", asset.getTexture("SuppliesButtonOn"));
+			suppliesButton = new Button ( asset.getTexture("SuppliesButtonOff"));
 			suppliesButton.x = 5;
 			suppliesButton.y = 620;
 			addChild(suppliesButton);
 			
-			statsButton = new Button ( asset.getTexture("DailyReportOff"), "", asset.getTexture("DailyReportOn"));
+			statsButton = new Button ( asset.getTexture("DailyReportOff"));
 			statsButton.x = 5;
 			statsButton.y = 845;
 			addChild(statsButton);
@@ -322,20 +319,21 @@
 			close.x = 1000;
 			close.y = 680;
 			close.addEventListener(Event.TRIGGERED, closeLackOfMoney);
-			addChild(lackOfMoney);
-			addChild(close);
+			sprite.addChild(lackOfMoney);
+			sprite.addChild(close);
 		}
 		
 		private function closeLackOfMoney():void
 		{
-			removeChild(lackOfMoney);
-			removeChild(close);
+			sprite.removeChild(lackOfMoney);
+			sprite.removeChild(close);
 			addUpgradesEventListeners();
 		}
 		
 // *STAFF************************************************************************
 		private function staffScreen (e:Event):void
 		{
+			sprite.dispose();
 			removeChild(sprite);
 			sprite = new Sprite();
 			sprite.x = 315;
@@ -358,14 +356,14 @@
 			sprite.addChild(fireDoctor);
 			
 			amountOfDoctors = new Image (asset.getTexture("amount"));
-			amountOfDoctors.x = 650;
-			amountOfDoctors.y = 800;
-			addChild(amountOfDoctors);
+			amountOfDoctors.x = 400;
+			amountOfDoctors.y = 600;
+			sprite.addChild(amountOfDoctors);
 			
 			amountOfDoctorsText = new TextField (150, 150, numberOfDoctors.toString(10), "Stencil", 60, 0xFFFFFF);
-			amountOfDoctorsText.x = 1265;
-			amountOfDoctorsText.y = 763;
-			addChild(amountOfDoctorsText);
+			amountOfDoctorsText.x = 1000;
+			amountOfDoctorsText.y = 562;
+			sprite.addChild(amountOfDoctorsText);
 		}
 		
 		private function hireDoctorTriggered():void
@@ -373,11 +371,11 @@
 			if ( numberOfDoctors < 25 )
 			{
 				numberOfDoctors += 1;
-				removeChild(amountOfDoctorsText);
+				sprite.removeChild(amountOfDoctorsText);
 				amountOfDoctorsText = new TextField (150, 150, numberOfDoctors.toString(10), "Stencil", 60, 0xFFFFFF);
-				amountOfDoctorsText.x = 1265;
-				amountOfDoctorsText.y = 763;
-				addChild(amountOfDoctorsText);
+				amountOfDoctorsText.x = 1000;
+				amountOfDoctorsText.y = 562;
+				sprite.addChild(amountOfDoctorsText);
 			}
 		}
 		
@@ -386,11 +384,11 @@
 			if (numberOfDoctors > 0)
 			{
 				numberOfDoctors -= 1;
-				removeChild(amountOfDoctorsText);
+				sprite.removeChild(amountOfDoctorsText);
 				amountOfDoctorsText = new TextField (150, 150, numberOfDoctors.toString(10), "Stencil", 60, 0xFFFFFF);
-				amountOfDoctorsText.x = 1265;
-				amountOfDoctorsText.y = 763;
-				addChild(amountOfDoctorsText);
+				amountOfDoctorsText.x = 1000;
+				amountOfDoctorsText.y = 562;
+				sprite.addChild(amountOfDoctorsText);
 			}
 		}
 		
@@ -398,6 +396,7 @@
 // *SUPPLIES*********************************************************************************		
 		private function suppliesScreen (e:Event):void
 		{
+			sprite.dispose();
 			removeChild(sprite);
 			sprite = new Sprite();
 			sprite.x = 315;
@@ -408,34 +407,34 @@
 			sprite.addChild(suppliesBackground);
 			
 			suppliesMinus = new Button (asset.getTexture("MinusButton"));
-			suppliesMinus.x = 500;
-			suppliesMinus.y = 450;
-			addChild(suppliesMinus);
+			suppliesMinus.x = 220;
+			suppliesMinus.y = 250;
+			sprite.addChild(suppliesMinus);
 			
 			var suppliesNumberBox:Image = new Image (asset.getTexture("NumberBox"));
-			suppliesNumberBox.x = 830;
-			suppliesNumberBox.y = 450;
-			addChild(suppliesNumberBox);
+			suppliesNumberBox.x = 550;
+			suppliesNumberBox.y = 250;
+			sprite.addChild(suppliesNumberBox);
 			
 			suppliesNumberTextField = new TextField (510, 200, suppliesNumber.toString(10),"",100, 0x333333);
-			suppliesNumberTextField.x = 830;
-			suppliesNumberTextField.y = 450;
-			addChild(suppliesNumberTextField);
+			suppliesNumberTextField.x = 550;
+			suppliesNumberTextField.y = 250;
+			sprite.addChild(suppliesNumberTextField);
 			
 			suppliesPlus = new Button (asset.getTexture("PlusButton"));
-			suppliesPlus.x = 1400;
-			suppliesPlus.y = 450;
-			addChild(suppliesPlus);
+			suppliesPlus.x = 1120;
+			suppliesPlus.y = 250;
+			sprite.addChild(suppliesPlus);
 			
 			buySupplies = new Button (asset.getTexture("buyButton"));
-			buySupplies.x = 870;
-			buySupplies.y = 750;
-			addChild(buySupplies);
+			buySupplies.x = 580;
+			buySupplies.y = 530;
+			sprite.addChild(buySupplies);
 			
 			priceForSuppliesText = new TextField (210, 140, priceForSupplies.toString(10), "", 60, 0xFFFFFF);
-			priceForSuppliesText.x = 870;
-			priceForSuppliesText.y = 750;
-			addChild(priceForSuppliesText);
+			priceForSuppliesText.x = 590;
+			priceForSuppliesText.y = 530;
+			sprite.addChild(priceForSuppliesText);
 			
 			addSuppliesEventListeners();
 		}
@@ -476,17 +475,17 @@
 		
 		private function updateSuppliesNumber():void
 		{
-			removeChild(priceForSuppliesText);
+			sprite.removeChild(priceForSuppliesText);
 			priceForSuppliesText = new TextField (210, 140, priceForSupplies.toString(10), "", 60, 0xFFFFFF);
-			priceForSuppliesText.x = 870;
-			priceForSuppliesText.y = 750;
-			addChild(priceForSuppliesText);
+			priceForSuppliesText.x = 590;
+			priceForSuppliesText.y = 530;
+			sprite.addChild(priceForSuppliesText);
 			
-			removeChild(suppliesNumberTextField);
+			sprite.removeChild(suppliesNumberTextField);
 			suppliesNumberTextField = new TextField (510, 200, suppliesNumber.toString(10),"",100, 0x333333);
-			suppliesNumberTextField.x = 830;
-			suppliesNumberTextField.y = 450;
-			addChild(suppliesNumberTextField);			
+			suppliesNumberTextField.x = 550;
+			suppliesNumberTextField.y = 250;
+			sprite.addChild(suppliesNumberTextField);			
 		}
 		
 		private function buySuppliesTriggered():void
@@ -520,25 +519,61 @@
 			close.x = 1000;
 			close.y = 680;
 			close.addEventListener(Event.TRIGGERED, closeLackOfMoneyForSupplies);
-			addChild(lackOfMoney);
-			addChild(close);
+			sprite.addChild(lackOfMoney);
+			sprite.addChild(close);
 		}
 		
 		private function closeLackOfMoneyForSupplies():void
 		{
-			removeChild(lackOfMoney);
-			removeChild(close);
+			sprite.removeChild(lackOfMoney);
+			sprite.removeChild(close);
 			addSuppliesEventListeners();
 		}
 		
 // *STATS************************************************************************************
 		private function statsScreen (e:Event):void
 		{
+			sprite.dispose();
 			removeChild(sprite);
 			sprite = new Sprite();
-			sprite.x = 500;
-			sprite.y = 500;
+			sprite.x = 315;
+			sprite.y = 170;
 			addChild(sprite);
+			
+			var dayReport:Image = new Image (asset.getTexture("DailyReportScreen"));
+			sprite.addChild(dayReport);
+			
+			// *DAILY REPORT********************************************************
+			
+			
+			// *DOCTORS*************************************************************
+			
+			
+			// *INFECTIVITY*********************************************************
+			var inf:Number = View.View.getInstance().getInfectivity();
+
+			if (inf  <= 0.3)
+			{
+				var stable:Image = new Image (asset.getTexture("InfectivityStable"));
+				stable.x = 580;
+				stable.y = 570;
+				sprite.addChild(stable);
+				
+			} else if (inf > 0.3 && inf <= 0.5)
+			{
+				
+			} else if (inf <= 0.7)
+			{
+				
+			} else if (inf <= 0.9)
+			{
+				var warning:Image = new Image (asset.getTexture("InfectivityWarning"));
+				warning.x = 580;
+				warning.y = 570;
+				sprite.addChild(warning);
+			}
+			
+			// *FINANCIAL**************************************************************
 		}
 		 
 	}

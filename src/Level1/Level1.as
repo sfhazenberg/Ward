@@ -6,7 +6,7 @@
 	import flash.utils.Timer;
 	
 	import General.GeneralChecker;
-	import MainInfo.DayReview;
+	import MainInfo.GameOver;
 	import Shop.ShopMenu;
 	import View.View;
 	
@@ -77,9 +77,7 @@
 			addChild(View.View.getInstance().getTopBar());
 			View.View.getInstance().updateTopBar();
 			
-			timer = new Timer(30000);
-			
-			timer.addEventListener(TimerEvent.TIMER_COMPLETE, dayFinished);
+			timer = new Timer(10000, 5);
 			
 			shopButton = new Button(asset.getTexture("buttoninfo"));
 			shopButton.x = 1760;
@@ -161,7 +159,15 @@
 			Starling.juggler.add(doctor1);
 			
 			isLoaded = true;
-			//timer.start();
+			
+			timer.start();
+			timer.addEventListener(TimerEvent.TIMER_COMPLETE, dayFinished);
+			trace("TIME: "+timer.currentCount);
+			/*if (timer.currentCount % 20 == 1)
+			{
+				View.View.getInstance().updateInfPlus();
+			}
+			/*///View.View.getInstance().updateInfPlus();
 		}
 		
 		/**
@@ -344,10 +350,8 @@
 		
 		private function dayFinished(event:TimerEvent):void
 		{
-			View.View.getInstance().loadScreen(DayReview);
-		}
-		
-		
+			View.View.getInstance().loadScreen(GameOver);
+		}		
 	}
 	
 }
