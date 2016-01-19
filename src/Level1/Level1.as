@@ -25,6 +25,7 @@
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.textures.SubTexture;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
@@ -217,12 +218,34 @@
 			
 			//time();	//reenable when done
 		}
-		
+
 		private function onTouchedROOM(event:TouchEvent):void{
-			if(event.target.texture == asset.getTexture('grid_treatmentroom')){
-				var IMAGE:Image = new Image(asset.getTexture('treatment_room'));
-				GeneralChecker.getInstance().getPlaceHolder().Add(IMAGE);
-			}
+				event.target.removeEventListeners(null);
+				
+				if(GeneralChecker.getInstance().getPlaceHolder().getTreat().indexOf(event.target) >= 0){
+					var newImage:Image = new Image(asset.getTexture('treatment_room'));
+					var locationInArray:int = this.RoomArrays.indexOf(event.target);
+					newImage.x = RoomArrays[locationInArray].x;
+					newImage.y = RoomArrays[locationInArray].y;
+					removeChild(RoomArrays[locationInArray]);
+					addChild(newImage);
+				}
+				else if(GeneralChecker.getInstance().getPlaceHolder().getWaiting().indexOf(event.target) >= 0){
+					var newImage2:Image = new Image(asset.getTexture('waiting_room'));
+					var locationInArray2:int = this.RoomArrays.indexOf(event.target);
+					newImage2.x = RoomArrays[locationInArray2].x;
+					newImage2.y = RoomArrays[locationInArray2].y;
+					removeChild(RoomArrays[locationInArray2]);
+					addChild(newImage2);
+				}
+				else if(GeneralChecker.getInstance().getPlaceHolder().getSupply().indexOf(event.target) >= 0){
+					var newImage3:Image = new Image(asset.getTexture('supply_room'));
+					var locationInArray3:int = this.RoomArrays.indexOf(event.target);
+					newImage3.x = RoomArrays[locationInArray3].x;
+					newImage3.y = RoomArrays[locationInArray3].y;
+					removeChild(RoomArrays[locationInArray3]);
+					addChild(newImage3);
+				}
 		}
 		
 		private function time():void

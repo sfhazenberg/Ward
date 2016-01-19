@@ -11,7 +11,12 @@ package General
 		private var position4:Array = new Array();
 		private var position5:Array = new Array();
 		//rooms in array
-		private var Rooms:Array  = new Array();
+		private var TreatRooms:Array  = new Array();
+		private var WaitRooms:Array  = new Array();
+		private var SupplyRooms:Array  = new Array();
+		
+		private var Rooms:Array = new Array();
+		
 		
 		/**
 		 * method to initialize variables that hold room information
@@ -43,15 +48,16 @@ package General
 			position5.push(false);
 			position5.push(45);
 			position5.push(155);
-			
-			Rooms = new Array();
 		}
 		
 		/**
 		 * method to add rooms depending on availability
 		 * @param texture: the image to display
 		 */
-		public function Add(texture:Image):void{
+		public function Add(texture:Image, identifier:int):void{
+			if(identifier == 0) addTreatment(texture);
+			if(identifier == 1) addSupply(texture);
+			if(identifier == 2) addWaiting(texture);
 			//room 1
 			if(!position1[0]){
 				position1[0] = texture;
@@ -60,29 +66,12 @@ package General
 				Rooms.push(position1[0]);
 				return;
 			}
-			if(!position1[1]){
-				position1[1] = texture;
-				texture.x = position1[2];
-				texture.y = position1[3];
-				roomChecker(position1[0]);
-				Rooms.push(position1[1]);
-				return;
-			}
-			
 			//room 2
 			if(!position2[0]){
 				position2[0] = texture;
 				texture.x = position2[2];
 				texture.y = position2[3];
 				Rooms.push(position2[0]);
-				return;
-			}
-			if(!position2[1]){
-				position2[1] = texture;
-				texture.x = position2[2];
-				texture.y = position2[3];
-				roomChecker(position2[0]);
-				Rooms.push(position2[1]);
 				return;
 			}
 			
@@ -94,14 +83,6 @@ package General
 				Rooms.push(position3[0]);
 				return;
 			}
-			if(!position3[1]){
-				position3[1] = texture;
-				texture.x = position3[2];
-				texture.y = position3[3];
-				roomChecker(position3[0]);
-				Rooms.push(position3[1]);
-				return;
-			}
 			
 			//room 4
 			if(!position4[0]){
@@ -109,14 +90,6 @@ package General
 				texture.x = position4[2];
 				texture.y = position4[3];
 				Rooms.push(position4[0]);
-				return;
-			}
-			if(!position4[1]){
-				position4[1] = texture;
-				texture.x = position4[2];
-				texture.y = position4[3];
-				roomChecker(position4[0]);
-				Rooms.push(position4[1]);
 				return;
 			}
 			
@@ -128,14 +101,6 @@ package General
 				Rooms.push(position5[0]);
 				return;
 			}
-			if(!position5[1]){
-				position5[1] = texture;
-				texture.x = position5[2];
-				texture.y = position5[3];
-				roomChecker(position5[0]);
-				Rooms.push(position5[1]);
-				return;
-			}
 		}
 		
 		/**
@@ -145,13 +110,28 @@ package General
 			return Rooms;
 		}
 		
-		private function roomChecker(object:Image):void{
-			for(var loop:int = 0; loop < Rooms.length; loop++){
-				if(Rooms[loop] == object){
-					Rooms[loop] = null;
-					return;
-				}
-			}
+		public function addSupply(object:Image):void{
+			this.SupplyRooms.push(object);
+		}
+		
+		public function getSupply():Array{
+			return this.SupplyRooms;
+		}
+		
+		public function addTreatment(object:Image):void{
+			this.TreatRooms.push(object);
+		}
+		
+		public function getTreat():Array{
+			return this.TreatRooms;
+		}
+		
+		public function addWaiting(object:Image):void{
+			this.WaitRooms.push(object);
+		}
+		
+		public function getWaiting():Array{
+			return this.WaitRooms;
 		}
 	}
 }
