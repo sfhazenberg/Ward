@@ -3,8 +3,11 @@
 	import flash.filesystem.File;
 	
 	import General.GeneralChecker;
+	
 	import Level1.Level1;
+	
 	import MainInfo.TopBar;
+	
 	import View.View;
 	
 	import starling.display.Button;
@@ -210,7 +213,9 @@
 			if(touch){
 				switch(touch.phase){
 					case TouchPhase.ENDED:
-					GeneralChecker.getInstance().setRoomGrids(0, true);	//reveals grid view of corresponding room	//0 should be calculated by different function, so that this function only needs to grab that integer.
+					//GeneralChecker.getInstance().setRoomGrids(0, true);	//reveals grid view of corresponding room	//0 should be calculated by different function, so that this function only needs to grab that integer.
+					var tmp:Image = new Image(asset.getTexture('grid_treatmentroom'));
+					GeneralChecker.getInstance().getPlaceHolder().Add(tmp);
 					View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
 					break;
 				}

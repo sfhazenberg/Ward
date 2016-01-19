@@ -1,9 +1,16 @@
 package General
 {
+	import starling.display.Image;
+
 	public class GeneralChecker
 	{
 		private static var instance:GeneralChecker;
+		//instance is created when GeneralChecker is first called
+		private var instance_placeholder:Placeholder = new Placeholder();
 		private static var gridView:Boolean = false;
+		
+		//Array holding Textures
+		private var TEXTURE:Array = new Array();
 		
 		/** An array holding room information **/
 		private var RoomGrids:Array;
@@ -50,6 +57,10 @@ package General
 				instance = new GeneralChecker();
 			}
 			return instance;
+		}
+		
+		public function getPlaceHolder():Placeholder{
+			return instance_placeholder;
 		}
 		
 		public function setGridView(identifier:Boolean):void
@@ -123,7 +134,13 @@ package General
 		{
 			return this.hallwayH[Name];
 		}
-
 		
+		public function setImages(images:Array):void{
+			this.TEXTURE = images;
+		}
+		
+		public function getImages():Array{
+			return TEXTURE;
+		}
 	}
 }

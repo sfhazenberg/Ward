@@ -8,12 +8,9 @@
 	
 	import General.GeneralChecker;
 	
-<<<<<<< HEAD
-=======
 	import MainInfo.DayReview;
 	import MainInfo.GameOver;
 	
->>>>>>> a98dd806dcd7d82768ddb0357c49acd1eaabf08e
 	import Shop.ShopMenu;
 	
 	import View.View;
@@ -57,6 +54,8 @@
 		private var pointBx:Number = 890;
 		private var pointBy:Number = 400;*/
 		
+		private var RoomArrays:Array = new Array();
+		
 		private var pointA:Point = new Point(960, 300);		//different naming might be more convenient
 		private var pointB:Point = new Point(960, 450);
 		private var pointC:Point = new Point(1160, 450);
@@ -86,6 +85,14 @@
 		{			
 			addChild(View.View.getInstance().getTopBar());
 			View.View.getInstance().updateTopBar();
+			
+			this.RoomArrays = GeneralChecker.getInstance().getPlaceHolder().Synchronise();
+			for each(var instance:Image in RoomArrays){
+				if(instance != null){
+					addChild(instance);
+					instance.addEventListener(TouchEvent.TOUCH, onTouchedROOM);
+				}
+			}
 			
 			shopButton = new Button(asset.getTexture("buttoninfo"));
 			shopButton.x = 1760;
@@ -208,7 +215,14 @@
 			
 			isLoaded = true;			
 			
-			time();
+			//time();	//reenable when done
+		}
+		
+		private function onTouchedROOM(event:TouchEvent):void{
+			if(event.target.texture == asset.getTexture('grid_treatmentroom')){
+				var IMAGE:Image = new Image(asset.getTexture('treatment_room'));
+				GeneralChecker.getInstance().getPlaceHolder().Add(IMAGE);
+			}
 		}
 		
 		private function time():void
@@ -337,6 +351,7 @@
 				grids["supply"].addEventListener(TouchEvent.TOUCH, onTouchedSupply);
 			}
 			
+			
 			/**
 			 * when a room is placed that does not have contact with a hallway, additional pieces of hallway should be created until at least one has contact with the newly built room.
 			 * happens now with first TRE room
@@ -362,15 +377,6 @@
 				grids["texture_supply"].y = 584;
 				addChild(grids["texture_supply"]);
 			}
-			
-			//add this hallway to the current array if possible
-			/*if(GeneralChecker.getInstance().getHallwayH("0"))
-			{
-				hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
-				hallwayH[3].x = 200;
-				hallwayH[3].y = 484;
-				addChild(hallwayH[3]);
-			}*/
 		}
 		
 		/**
@@ -445,12 +451,8 @@
 		
 		private function dayFinished(e:TimerEvent):void
 		{
-<<<<<<< HEAD
 			trace("DAY FINISHED");
 			View.View.getInstance().loadScreen(ShopMenu);
-		}
-
-=======
 			View.View.getInstance().loadScreen(GameOver);
 		}		
 		
@@ -458,7 +460,5 @@
 		{
 			asset.dispose();
 		}
->>>>>>> a98dd806dcd7d82768ddb0357c49acd1eaabf08e
 	}
-	
 }
