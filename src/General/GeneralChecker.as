@@ -1,16 +1,16 @@
 package General
 {
 	import starling.display.Image;
-
+	
+	/**
+	 * class responsible for handling static rooms
+	 */
 	public class GeneralChecker
 	{
 		private static var instance:GeneralChecker;
 		//instance is created when GeneralChecker is first called
 		private var instance_placeholder:Placeholder = new Placeholder();
 		private static var gridView:Boolean = false;
-		
-		//Array holding Textures
-		private var TEXTURE:Array = new Array();
 		
 		/** An array holding room information **/
 		private var RoomGrids:Array;
@@ -21,20 +21,11 @@ package General
 		{
 			//variablenaam[indextype] = variabletype
 			trace("loading constructor");
+
 			RoomGrids = new Array();
 			RoomGrids[0] = true;	//TRE_1
 			RoomGrids[1] = true;	//WAI_1
 			RoomGrids[2] = true;	//SUP_1
-			//RoomGrids["TRE_1"] = false;
-			//RoomGrids["WAI_1"] = false;
-			//RoomGrids["SUP_1"] = false;
-			
-			Texture = new Array();
-			Texture["TRE_1"] = false;
-			Texture["WAI_1"] = false;
-			Texture["SUP_1"] = false;
-			
-			//trace('sizeofTexture: ' + Texture.length);
 
 			for(var loop:int = 0; loop < RoomGrids.length; loop++)
 			{
@@ -50,6 +41,10 @@ package General
 			hallwayH[0] = false;
 		}
 		
+		/**
+		 * singleton method that returns instance of generalChecker, this way the same generalChecker object can be called by any class
+		 * @return Generalchecker, isntance of this class.
+		 */
 		public static function getInstance():GeneralChecker
 		{
 			if(instance == null)
@@ -59,18 +54,11 @@ package General
 			return instance;
 		}
 		
+		/**
+		 * method that returns placeholder, initiated when GeneralChecker is run first time
+		 */
 		public function getPlaceHolder():Placeholder{
 			return instance_placeholder;
-		}
-		
-		public function setGridView(identifier:Boolean):void
-		{
-			gridView = identifier;
-		}
-		
-		public function getGridView():Boolean
-		{
-			return gridView;
 		}
 		
 		/**
@@ -92,16 +80,6 @@ package General
 		}
 		
 		/**
-		 * method to set room textures within the hospital from Shop
-		 * @param room: can be TRE, WAI, SUP
-		 * @param value: true (show), false (don't show)
-		 */
-		public function setTextureRooms(room:int, value:Boolean):void
-		{
-			this.Texture[room] = value;
-		}
-		
-		/**
 		 * method to set newly added hallways when newly added rooms are out of reach of a hallway
 		 * @param hallway: can be 0, 1, 2, etc
 		 * @param value: true (show), false (don't show)
@@ -120,27 +98,11 @@ package General
 		}
 		
 		/**
-		 * method to get the texture of the rooms
-		 */
-		public function getTexture(Name:int):Boolean
-		{
-			return this.Texture[Name];
-		}
-		
-		/**
 		 * method to get the texture(s) of the hallways
 		 */
 		public function getHallwayH(Name:String):Boolean
 		{
 			return this.hallwayH[Name];
-		}
-		
-		public function setImages(images:Array):void{
-			this.TEXTURE = images;
-		}
-		
-		public function getImages():Array{
-			return TEXTURE;
 		}
 	}
 }

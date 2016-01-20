@@ -223,24 +223,6 @@
 		}
 		
 		/**
-		 * method called when waiting room is pushed
-		 */
-		private function onTouchedWaiting(event:TouchEvent):void
-		{
-			var touch:Touch = event.getTouch(this);
-			if(touch){
-				switch(touch.phase){
-					case TouchPhase.ENDED:
-						var tmp:Image = new Image(asset.getTexture('grid_waitingroom'));
-						GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 2);
-						//GeneralChecker.getInstance().setRoomGrids(1, true);	//reveals grid view of corresponding room
-						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
-						break;
-				}
-			}
-		}
-		
-		/**
 		 * method called when supply room is pushed
 		 */
 
@@ -258,6 +240,24 @@
 						var tmp:Image = new Image(asset.getTexture('grid_supplyroom'));
 						GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 1);
 						//GeneralChecker.getInstance().setRoomGrids(2, true);	//reveals grid view of corresponding room
+						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
+						break;
+				}
+			}
+		}
+		
+		/**
+		 * method called when waiting room is pushed
+		 */
+		private function onTouchedWaiting(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(this);
+			if(touch){
+				switch(touch.phase){
+					case TouchPhase.ENDED:
+						var tmp:Image = new Image(asset.getTexture('grid_waitingroom'));
+						GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 2);
+						//GeneralChecker.getInstance().setRoomGrids(1, true);	//reveals grid view of corresponding room
 						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
 						break;
 				}
