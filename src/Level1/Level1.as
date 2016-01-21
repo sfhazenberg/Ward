@@ -7,6 +7,7 @@
 	import flash.utils.Timer;
 	
 	import General.GeneralChecker;
+	import General.Placeholder;
 	
 	import MainInfo.DayReview;
 	import MainInfo.GameOver;
@@ -47,6 +48,7 @@
 		public var timer:Timer;
 		private var shopButton:Button;
 		private var receptionDesk:Button;
+		private var background:Image;
 		private var hallwayH:Array = new Array();
 		private var hallwayHLatest:int = 1520;
 		
@@ -86,6 +88,11 @@
 		{			
 			addChild(View.View.getInstance().getTopBar());
 			View.View.getInstance().updateTopBar();
+			
+			background = new Image(asset.getTexture("bg_gray_grad2"));
+			background.x = 0;
+			background.y = 155;
+			addChild(background);
 			
 			//dynamicly generate rooms
 			generateRooms();
@@ -163,6 +170,10 @@
 				hallwayH[3].x = hallwayHLatest;
 				hallwayH[3].y = 484;
 				addChild(hallwayH[3]);
+				hallwayV.push(new Image(asset.getTexture("hallwayV")));
+				hallwayV[1].x = 595;
+				hallwayV[1].y = 584;
+				addChild(hallwayV[1]);
 			}
 			
 			/**
@@ -176,7 +187,7 @@
 			
 			isLoaded = true;			
 			
-			//time();	//toggled inbetween coding/testing for the sake of convenience
+			time();
 		}
 		
 		private function generateRooms():void{
@@ -237,6 +248,14 @@
 						GeneralChecker.getInstance().getPlaceHolder().overwriteGrid(RoomArrays[locationInArray3]);
 						addChild(newImage3);
 					}
+					/*if(hallwayHLatest > grids["treatment"].x ){
+						hallwayHLatest -= 400;
+						var newHallway:Image = new Image(asset.getTexture("hallwayH"));
+						newHallway.x = hallwayHLatest;
+						newHallway.y = 484;
+						addChild(newHallway);
+						GeneralChecker.getInstance().setHallwayH(0, true);
+					}*/
 				}
 			}
 		}
@@ -350,6 +369,8 @@
 		private function Destroy():void
 		{
 			asset.dispose();
+			//GeneralChecker.getInstance().getPlaceHolder().Add(null, null);
+			//this.RoomArrays.pop();
 			//this.RoomArrays.splice(0);
 			//this.RoomArrays.length = 0;
 		}

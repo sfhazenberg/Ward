@@ -1,10 +1,12 @@
 package General
 {
+	import Level1.Level1;
+	
 	import starling.display.Image;
 	import starling.display.Sprite;
 	
 	/**
-	 * Class responsible for Placing the images in the right place.
+	 * Class responsible for placing the images in the right place.
 	 */
 	public class Placeholder extends Sprite{
 		//individual rooms, including x/y position in array
@@ -84,6 +86,7 @@ package General
 				texture.x = position3[1];
 				texture.y = position3[2];
 				Rooms.push(position3[0]);
+				GeneralChecker.getInstance().setHallwayH(0, true);
 				return;
 			}
 			

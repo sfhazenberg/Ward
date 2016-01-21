@@ -80,6 +80,14 @@ package General
 		}
 		
 		/**
+		 * method to get the states of the rooms
+		 */
+		public function getRoomGrids():Array
+		{
+			return this.RoomGrids;
+		}
+		
+		/**
 		 * method to set newly added hallways when newly added rooms are out of reach of a hallway
 		 * @param hallway: can be 0, 1, 2, etc
 		 * @param value: true (show), false (don't show)
@@ -87,14 +95,6 @@ package General
 		public function setHallwayH(room:int, value:Boolean):void
 		{
 			this.hallwayH[room] = value;
-		}
-		
-		/**
-		 * method to get the states of the rooms
-		 */
-		public function getRoomGrids():Array
-		{
-			return this.RoomGrids;
 		}
 		
 		/**
