@@ -73,7 +73,7 @@
 		public function loadLevel1Screen(e:Event):void 
 		{
 			Destroy();
-			View.View.getInstance().loadScreen( Level1 );
+			View.View.getInstance().loadScreen( Level1.Level1 );
 		}
 		
 		public function loadSettingsScreen(e:Event):void

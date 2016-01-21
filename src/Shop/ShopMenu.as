@@ -221,25 +221,11 @@
 			if(touch){
 				switch(touch.phase){
 					case TouchPhase.ENDED:
-					GeneralChecker.getInstance().setRoomGrids(0, true);	//reveals grid view of corresponding room	//0 should be calculated by different function, so that this function only needs to grab that integer.
+					//GeneralChecker.getInstance().setRoomGrids(0, true);	//reveals grid view of corresponding room	//0 should be calculated by different function, so that this function only needs to grab that integer.
+					var tmp:Image = new Image(asset.getTexture('grid_treatmentroom'));
+					GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 0);
 					View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
 					break;
-				}
-			}
-		}
-		
-		/**
-		 * method called when waiting room is pushed
-		 */
-		private function onTouchedWaiting(event:TouchEvent):void
-		{
-			var touch:Touch = event.getTouch(this);
-			if(touch){
-				switch(touch.phase){
-					case TouchPhase.ENDED:
-						GeneralChecker.getInstance().setRoomGrids(1, true);	//reveals grid view of corresponding room
-						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
-						break;
 				}
 			}
 		}
@@ -259,7 +245,27 @@
 			if(touch){
 				switch(touch.phase){
 					case TouchPhase.ENDED:
-						GeneralChecker.getInstance().setRoomGrids(2, true);	//reveals grid view of corresponding room
+						var tmp:Image = new Image(asset.getTexture('grid_supplyroom'));
+						GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 1);
+						//GeneralChecker.getInstance().setRoomGrids(2, true);	//reveals grid view of corresponding room
+						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
+						break;
+				}
+			}
+		}
+		
+		/**
+		 * method called when waiting room is pushed
+		 */
+		private function onTouchedWaiting(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(this);
+			if(touch){
+				switch(touch.phase){
+					case TouchPhase.ENDED:
+						var tmp:Image = new Image(asset.getTexture('grid_waitingroom'));
+						GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 2);
+						//GeneralChecker.getInstance().setRoomGrids(1, true);	//reveals grid view of corresponding room
 						View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
 						break;
 				}

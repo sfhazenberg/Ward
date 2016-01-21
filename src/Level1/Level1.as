@@ -7,9 +7,14 @@
 	import flash.utils.Timer;
 	
 	import General.GeneralChecker;
+	import General.Placeholder;
 	
+<<<<<<< HEAD
 	import Level1.Tutorial;
 	
+=======
+	import MainInfo.DayReview;
+>>>>>>> d4221b6d893f225fc68be3fe8c9107df47e1c363
 	import MainInfo.GameOver;
 	
 	import Shop.ShopMenu;
@@ -26,6 +31,7 @@
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.textures.SubTexture;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
@@ -47,6 +53,7 @@
 		public var timer:Timer;
 		private var tutorialButton:Button;
 		private var receptionDesk:Button;
+		private var background:Image;
 		private var hallwayH:Array = new Array();
 		private var hallwayHLatest:int = 1520;
 		private var budget:int = View.View.getInstance().getBudget();
@@ -56,6 +63,8 @@
 		private var pointAy:Number = 300;
 		private var pointBx:Number = 890;
 		private var pointBy:Number = 400;*/
+		
+		private var RoomArrays:Array = new Array();
 		
 		private var pointA:Point = new Point(960, 300);		//different naming might be more convenient
 		private var pointB:Point = new Point(960, 450);
@@ -87,11 +96,27 @@
 			addChild(View.View.getInstance().getTopBar());
 			View.View.getInstance().updateTopBar();
 			
+<<<<<<< HEAD
 			tutorialButton = new Button(asset.getTexture("buttoninfo"));
 			tutorialButton.x = 1760;
 			tutorialButton.y = 17;
 			tutorialButton.addEventListener( Event.TRIGGERED, tutorialScreen)
 			addChild(tutorialButton);
+=======
+			background = new Image(asset.getTexture("bg_gray_grad2"));
+			background.x = 0;
+			background.y = 155;
+			addChild(background);
+			
+			//dynamicly generate rooms
+			generateRooms();
+			
+			shopButton = new Button(asset.getTexture("buttoninfo"));
+			shopButton.x = 1760;
+			shopButton.y = 17;
+			shopButton.addEventListener( Event.TRIGGERED, goToShop)
+			addChild(shopButton);
+>>>>>>> d4221b6d893f225fc68be3fe8c9107df47e1c363
 			
 			receptionDesk = new Button(asset.getTexture("reception_desk"));
 			receptionDesk.x = 1445;
@@ -122,7 +147,6 @@
 			 * array that stores the initial horizontal hallways
 			 */
 			var hallwayH:Array = new Array();
-			//hallwayH.push(new Image(asset.getTexture("hallway_horz_PH")));
 			hallwayH.push(new Image(asset.getTexture("hallwayH")));
 			hallwayH[0].x = hallwayHLatest;
 			hallwayH[0].y = 484;
@@ -146,7 +170,6 @@
 			 * array that stores the initial vertical hallways
 			 */
 			var hallwayV:Array = new Array();
-			//hallwayV.push(new Image(asset.getTexture("hallway_vert_PH")));
 			hallwayV.push(new Image(asset.getTexture("hallwayV")));
 			hallwayV[0].x = 1820;
 			hallwayV[0].y = 584;
@@ -162,40 +185,11 @@
 				hallwayH[3].x = hallwayHLatest;
 				hallwayH[3].y = 484;
 				addChild(hallwayH[3]);
+				hallwayV.push(new Image(asset.getTexture("hallwayV")));
+				hallwayV[1].x = 595;
+				hallwayV[1].y = 584;
+				addChild(hallwayV[1]);
 			}
-			
-			//testing purposes
-			/*rooms.push(new Image(asset.getTexture("treatment_room")));
-			rooms[3].x = 420;
-			rooms[3].y = 155;
-			addChild(rooms[3]);
-			
-			rooms.push(new Image(asset.getTexture("treatment_room")));
-			rooms[4].x = 45;
-			rooms[4].y = 155;
-			addChild(rooms[4]);*/
-			//end testing purposes
-			
-			showRooms();
-			
-			//rooms.removeAt[0];
-			//removeChild(rooms[0]);
-			
-			/*var waitingRoom:Image = new Image(asset.getTexture("waiting_room"));
-			waitingRoom.x = stage.stageWidth - 375;
-			waitingRoom.y = stage.stageHeight - 329;
-			addChild(waitingRoom);
-			
-			
-			var supplyRoom:Image = new Image(asset.getTexture("supply_room"));
-			supplyRoom.x = stage.stageWidth - 755;
-			supplyRoom.y = stage.stageHeight - 329;
-			addChild(supplyRoom);
-			
-			var treatmentRoom:Image = new Image(asset.getTexture("Treatment Room"));
-			treatmentRoom.x = stage.stageWidth - 1135;
-			treatmentRoom.y = stage.stageHeight - 329;
-			addChild(treatmentRoom);*/
 			
 			/**
 			 * loads the moving doctor
@@ -209,6 +203,76 @@
 			isLoaded = true;			
 			
 			time();
+		}
+		
+		private function generateRooms():void{
+			this.RoomArrays = GeneralChecker.getInstance().getPlaceHolder().Synchronise();
+			for each(var instance:Image in RoomArrays){
+				if(instance != null){
+					//if is treatment
+					if(GeneralChecker.getInstance().getPlaceHolder().getTreat().indexOf(instance) >= 0 && GeneralChecker.getInstance().getPlaceHolder().getOverwrite().indexOf(instance) >= 0){
+						instance.texture = asset.getTexture('treatment_room');
+					}
+					else if (GeneralChecker.getInstance().getPlaceHolder().getSupply().indexOf(instance) >= 0 && GeneralChecker.getInstance().getPlaceHolder().getOverwrite().indexOf(instance) >= 0){
+						instance.texture = asset.getTexture('supply_room');
+					}
+					else if(GeneralChecker.getInstance().getPlaceHolder().getWaiting().indexOf(instance) >= 0 && GeneralChecker.getInstance().getPlaceHolder().getOverwrite().indexOf(instance) >= 0){
+						instance.texture = asset.getTexture('waiting_room');
+					}
+					instance.addEventListener(TouchEvent.TOUCH, onTouchedROOM);	
+					addChild(instance);	
+				}
+			}
+		}
+
+		/**
+		 * method called when GRID of room is pushed.
+		 * @event: push event
+		 */
+		private function onTouchedROOM(event:TouchEvent):void{
+			var touch:Touch = event.getTouch(this);
+			if(touch){
+				switch(touch.phase){
+					case TouchPhase.ENDED:
+					event.target.removeEventListeners(null);
+				
+					if(GeneralChecker.getInstance().getPlaceHolder().getTreat().indexOf(event.target) >= 0){
+						var newImage:Image = new Image(asset.getTexture('treatment_room'));
+						var locationInArray:int = this.RoomArrays.indexOf(event.target);
+						newImage.x = RoomArrays[locationInArray].x;
+						newImage.y = RoomArrays[locationInArray].y;
+						removeChild(RoomArrays[locationInArray]);
+						GeneralChecker.getInstance().getPlaceHolder().overwriteGrid(RoomArrays[locationInArray]);
+						addChild(newImage);
+					}
+					else if(GeneralChecker.getInstance().getPlaceHolder().getWaiting().indexOf(event.target) >= 0){
+						var newImage2:Image = new Image(asset.getTexture('waiting_room'));
+						var locationInArray2:int = this.RoomArrays.indexOf(event.target);
+						newImage2.x = RoomArrays[locationInArray2].x;
+						newImage2.y = RoomArrays[locationInArray2].y;
+						removeChild(RoomArrays[locationInArray2]);
+						GeneralChecker.getInstance().getPlaceHolder().overwriteGrid(RoomArrays[locationInArray2]);
+						addChild(newImage2);
+					}
+					else if(GeneralChecker.getInstance().getPlaceHolder().getSupply().indexOf(event.target) >= 0){
+						var newImage3:Image = new Image(asset.getTexture('supply_room'));
+						var locationInArray3:int = this.RoomArrays.indexOf(event.target);
+						newImage3.x = RoomArrays[locationInArray3].x;
+						newImage3.y = RoomArrays[locationInArray3].y;
+						removeChild(RoomArrays[locationInArray3]);
+						GeneralChecker.getInstance().getPlaceHolder().overwriteGrid(RoomArrays[locationInArray3]);
+						addChild(newImage3);
+					}
+					/*if(hallwayHLatest > grids["treatment"].x ){
+						hallwayHLatest -= 400;
+						var newHallway:Image = new Image(asset.getTexture("hallwayH"));
+						newHallway.x = hallwayHLatest;
+						newHallway.y = 484;
+						addChild(newHallway);
+						GeneralChecker.getInstance().setHallwayH(0, true);
+					}*/
+				}
+			}
 		}
 		
 		private function time():void
@@ -305,6 +369,7 @@
 			}
 		}
 		
+<<<<<<< HEAD
 		/**
 		 * method to show specific grids based on shop
 		 * puts rooms in static name within the array
@@ -430,23 +495,18 @@
 		}
 		
 		private function tutorialScreen (e:Event):void
+=======
+		private function goToShop (e:Event):void
+>>>>>>> d4221b6d893f225fc68be3fe8c9107df47e1c363
 		{
 			GeneralChecker.getInstance().removeRoomGrids();
-			//removeGrids();
 			Destroy();
 			View.View.getInstance().loadScreen(Tutorial);
 		}
 		
-		/*private function removeGrids():void
-		{
-			//GeneralChecker.getInstance().setRoomGrids.
-			GeneralChecker.getInstance().setRoomGrids(0, false);
-			GeneralChecker.getInstance().setRoomGrids(1, false);
-			GeneralChecker.getInstance().setRoomGrids(2, false);
-		}*/
-		
 		private function dayFinished(e:TimerEvent):void
 		{
+<<<<<<< HEAD
 			var doc:int = View.View.getInstance().getDoctors();
 			budget -= doc * 1000;
 			trace("BUDGET " + budget);
@@ -455,10 +515,20 @@
 			View.View.getInstance().loadScreen(ShopMenu);
 		}
 
+=======
+			trace("DAY FINISHED");
+			View.View.getInstance().loadScreen(ShopMenu);
+			View.View.getInstance().loadScreen(GameOver);
+		}		
+		
+>>>>>>> d4221b6d893f225fc68be3fe8c9107df47e1c363
 		private function Destroy():void
 		{
 			asset.dispose();
+			//GeneralChecker.getInstance().getPlaceHolder().Add(null, null);
+			//this.RoomArrays.pop();
+			//this.RoomArrays.splice(0);
+			//this.RoomArrays.length = 0;
 		}
 	}
-	
 }
