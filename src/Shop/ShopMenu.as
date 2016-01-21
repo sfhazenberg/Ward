@@ -3,8 +3,11 @@
 	import flash.filesystem.File;
 	
 	import General.GeneralChecker;
+	
 	import Level1.Level1;
+	
 	import MainInfo.TopBar;
+	
 	import View.View;
 	
 	import starling.display.Button;
@@ -24,7 +27,7 @@
 		private var sprite:Sprite;
 		private var topBar:TopBar;
 		private var lackOfMoney:Image;
-		public var numberOfDoctors:int = 1;
+		public var numberOfDoctors:int = View.View.getInstance().getDoctors();
 		private var amountOfDoctors:Image;
 		private var amountOfDoctorsText:TextField;
 		public var suppliesNumber:int = 0;
@@ -35,6 +38,8 @@
 		private var maxNumberOfSupplies:int = View.View.getInstance().getMaxNumberOfSupplies();
 		private var numberOfSupplies:int = View.View.getInstance().getNumberOfSupplies();
 		private var infectivity:Number = View.View.getInstance().getInfectivity();
+		private var suppliesBought:int = numberOfSupplies;
+		private var doctors:int = View.View.getInstance().getDoctors();
 		
 		private var close:Button;
 		private var backToGame:Button;
@@ -76,13 +81,19 @@
 		
 		private function startShopMenu ():void
 		{	
+			/*var budget:int = View.View.getInstance().getBudget();
+			budget -= numberOfDoctors * 1000;
+			View.View.getInstance().setBudget(budget);
+			View.View.getInstance().updateTopBar();
+			trace ("budget"+ budget);*/
+			
 			addChild(View.View.getInstance().getTopBar());
 			View.View.getInstance().getTopBar().update();
 			View.View.getInstance().updateInf();
 			
-			backToGame = new Button (asset.getTexture("ExitButtonUp"), "", asset.getTexture("ExitButtonDown"));
-			backToGame.x = 1825;
-			backToGame.y = 30;
+			backToGame = new Button (asset.getTexture("BackButton"));
+			backToGame.x = 1720;
+			backToGame.y = 8;
 			backToGame.addEventListener( Event.TRIGGERED, exitShop );
 			addChild( backToGame );
 			
@@ -372,6 +383,7 @@
 			if ( numberOfDoctors < 25 )
 			{
 				numberOfDoctors += 1;
+				View.View.getInstance().setDoctors(numberOfDoctors);
 				sprite.removeChild(amountOfDoctorsText);
 				amountOfDoctorsText = new TextField (150, 150, numberOfDoctors.toString(10), "Stencil", 60, 0xFFFFFF);
 				amountOfDoctorsText.x = 1000;
@@ -385,6 +397,7 @@
 			if (numberOfDoctors > 0)
 			{
 				numberOfDoctors -= 1;
+				View.View.getInstance().setDoctors(numberOfDoctors);
 				sprite.removeChild(amountOfDoctorsText);
 				amountOfDoctorsText = new TextField (150, 150, numberOfDoctors.toString(10), "Stencil", 60, 0xFFFFFF);
 				amountOfDoctorsText.x = 1000;
@@ -550,27 +563,71 @@
 			var dayReport:Image = new Image (asset.getTexture("DailyReportScreen"));
 			sprite.addChild(dayReport);
 			
-			// *DAILY REPORT********************************************************
+			// *DOCTORS AND FINANCIAL************************************************
 			
+			suppliesBought += 15;
+			trace("suppliesBought  " + suppliesBought);
 			
-			// *DOCTORS*************************************************************
-			
+			if (suppliesBought == maxNumberOfSupplies && suppliesBought - doctors * 15 == 0)
+			{
+				var balancedDoctors:Image = new Image (asset.getTexture("BalancedGoodJob"));
+				balancedDoctors.x = 335;
+				balancedDoctors.y = 750;
+				addChild(balancedDoctors);
+				
+				var stable:Image = new Image (asset.getTexture("StableIncome"));
+				stable.x = 1425;
+				stable.y = 750;
+				addChild(stable);
+			}  
+			else if (suppliesBought - doctors * 15 < 0)
+			{
+				var overstaff:Image = new Image (asset.getTexture("OverstaffedRumours"));
+				overstaff.x = 335;
+				overstaff.y = 750;
+				addChild(overstaff); 
+				
+				var moreThenExpected:Image = new Image (asset.getTexture("MoreThenExpected"));
+				moreThenExpected.x = 1425;
+				moreThenExpected.y = 740;
+				addChild(moreThenExpected);
+			}
+			else
+			{
+				var exhaustedDoctors:Image = new Image (asset.getTexture("UnderstaffedExhausted"));
+				exhaustedDoctors.x = 335;
+				exhaustedDoctors.y = 740;
+				addChild(exhaustedDoctors);
+				
+				var lessPatientsExpected:Image = new Image (asset.getTexture("LessPatientsExpected"));
+				lessPatientsExpected.x = 1425;
+				lessPatientsExpected.y = 740;
+				addChild(lessPatientsExpected);
+			}			
 			
 			// *INFECTIVITY*********************************************************
 			var inf:Number = View.View.getInstance().getInfectivity();
 
 			if (inf  <= 0.3)
 			{
-				var stable:Image = new Image (asset.getTexture("InfectivityStable"));
-				stable.x = 580;
-				stable.y = 570;
-				sprite.addChild(stable);
+				var min:Image = new Image (asset.getTexture("InfectivityMinimunIncr"));
+				min.x = 580;
+				min.y = 570;
+				sprite.addChild(min);
 				
 			} else if (inf > 0.3 && inf <= 0.5)
 			{
+				var rapidly:Image = new Image (asset.getTexture("InfectivityRapidlyIncr"));
+				rapidly.x = 580;
+				rapidly.y = 570;
+				sprite.addChild(rapidly);
 				
 			} else if (inf <= 0.7)
 			{
+				var massive:Image = new Image (asset.getTexture("InfectivityMassiveIncr"));
+				massive.x = 580;
+				massive.y = 570;
+				sprite.addChild(massive);
 				
 			} else if (inf <= 0.9)
 			{
@@ -581,10 +638,18 @@
 			}
 			
 			// *FINANCIAL**************************************************************
+			
+			
 		}
 		
 		private function Destroy():void{
 			asset.dispose();
+		}
+		
+		private static var instance:ShopMenu = new ShopMenu();
+		public static function getInstance():ShopMenu
+		{
+			return instance;
 		}
 		 
 	}

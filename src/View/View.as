@@ -2,6 +2,7 @@
 {
 	import MainInfo.GameOver;
 	import MainInfo.TopBar;
+	
 	import MainMenu.MainMenu;
 	
 	import starling.display.Sprite;
@@ -52,6 +53,11 @@
 			this.topBar.numberOfSupplies = n;
 		}
 		
+		public function suppliesNumberWhenDayStarts():int
+		{
+			return this.topBar.suppliesBought;
+		}
+		
 		public function getMaxNumberOfSupplies():int
 		{
 			return this.topBar.maxNumberOfSupplies;
@@ -80,7 +86,16 @@
 		public function updateInfPlus():void
 		{
 			topBar.changeInf();
-			//topBar.infectivityColor.scaleX = topBar.currentInfectivity;
+		}
+		
+		public function getDoctors():int
+		{
+			return this.topBar.numberOfDoctors;
+		}
+		
+		public function setDoctors(d:int):void
+		{
+			this.topBar.numberOfDoctors = d;
 		}
 		
 		public function destroy():void

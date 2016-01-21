@@ -8,12 +8,10 @@
 	
 	import General.GeneralChecker;
 	
-<<<<<<< HEAD
-=======
-	import MainInfo.DayReview;
+	import Level1.Tutorial;
+	
 	import MainInfo.GameOver;
 	
->>>>>>> a98dd806dcd7d82768ddb0357c49acd1eaabf08e
 	import Shop.ShopMenu;
 	
 	import View.View;
@@ -47,10 +45,12 @@
 		
 		private var asset:AssetManager;
 		public var timer:Timer;
-		private var shopButton:Button;
+		private var tutorialButton:Button;
 		private var receptionDesk:Button;
 		private var hallwayH:Array = new Array();
 		private var hallwayHLatest:int = 1520;
+		private var budget:int = View.View.getInstance().getBudget();
+		private var numberOfDoctors:int = View.View.getInstance().getDoctors();
 		
 		/*private var pointAx:Number = 960;	//points used for positioning the NPC's
 		private var pointAy:Number = 300;
@@ -87,11 +87,11 @@
 			addChild(View.View.getInstance().getTopBar());
 			View.View.getInstance().updateTopBar();
 			
-			shopButton = new Button(asset.getTexture("buttoninfo"));
-			shopButton.x = 1760;
-			shopButton.y = 17;
-			shopButton.addEventListener( Event.TRIGGERED, goToShop)
-			addChild(shopButton);
+			tutorialButton = new Button(asset.getTexture("buttoninfo"));
+			tutorialButton.x = 1760;
+			tutorialButton.y = 17;
+			tutorialButton.addEventListener( Event.TRIGGERED, tutorialScreen)
+			addChild(tutorialButton);
 			
 			receptionDesk = new Button(asset.getTexture("reception_desk"));
 			receptionDesk.x = 1445;
@@ -213,7 +213,7 @@
 		
 		private function time():void
 		{
-			timer = new Timer(1, 1000);
+			timer = new Timer(1, 1500);
 			timer.start();
 			timer.addEventListener(TimerEvent.TIMER, counting);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, dayFinished);
@@ -222,17 +222,19 @@
 		private function counting(event:TimerEvent):void
 		{
 			trace("TIME: "+timer.currentCount);
-			if (timer.currentCount > 0 && timer.currentCount % 250 == 0 && timer.currentCount != 1000)
+			if (timer.currentCount > 0 && timer.currentCount % 400 == 0 && timer.currentCount != 1500)
 			{
-				View.View.getInstance().updateInfPlus();
+				View.View.getInstance().updateInfPlus(); 
 				View.View.getInstance().updateTopBar();
 			}
 			
 			var supplies:int = View.View.getInstance().getNumberOfSupplies();
 			if (timer.currentCount > 0 && timer.currentCount % 100 == 0 && supplies != 0)
 			{
-				supplies -= 1;
+				supplies -= numberOfDoctors;
+				budget += 1000 * numberOfDoctors;
 				View.View.getInstance().setNumberOfSupplies(supplies);
+				View.View.getInstance().setBudget(budget);
 				View.View.getInstance().updateTopBar();
 				trace("SUPPLY: "+supplies);
 			}
@@ -427,12 +429,12 @@
 			}	
 		}
 		
-		private function goToShop (e:Event):void
+		private function tutorialScreen (e:Event):void
 		{
 			GeneralChecker.getInstance().removeRoomGrids();
 			//removeGrids();
 			Destroy();
-			View.View.getInstance().loadScreen(ShopMenu);
+			View.View.getInstance().loadScreen(Tutorial);
 		}
 		
 		/*private function removeGrids():void
@@ -445,20 +447,18 @@
 		
 		private function dayFinished(e:TimerEvent):void
 		{
-<<<<<<< HEAD
-			trace("DAY FINISHED");
+			var doc:int = View.View.getInstance().getDoctors();
+			budget -= doc * 1000;
+			trace("BUDGET " + budget);
+			View.View.getInstance().setBudget(budget);
+			View.View.getInstance().updateTopBar();
 			View.View.getInstance().loadScreen(ShopMenu);
 		}
 
-=======
-			View.View.getInstance().loadScreen(GameOver);
-		}		
-		
 		private function Destroy():void
 		{
 			asset.dispose();
 		}
->>>>>>> a98dd806dcd7d82768ddb0357c49acd1eaabf08e
 	}
 	
 }

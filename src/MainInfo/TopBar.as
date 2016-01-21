@@ -19,8 +19,10 @@ package MainInfo
 		private var money:Image;
 		public var budget:int = 100000;
 		public var budgetTextField:TextField;
+		public var numberOfDoctors:int = 1;
 		private var numberOfSuppliesText:TextField;
 		public var numberOfSupplies:int = 30;
+		public var suppliesBought:int;
 		private var maxNumberOfSuppliesText:TextField;
 		public var maxNumberOfSupplies:int = 30;
 		public var infectivityColor:Image;
@@ -54,7 +56,9 @@ package MainInfo
 		}
 		
 		private function start():void
-		{			
+		{	
+			suppliesBought = numberOfSupplies;
+				
 			topBarBackground = new Image(asset.getTexture("TopBarBackground"));
 			addChildAt(topBarBackground, 0);
 			
