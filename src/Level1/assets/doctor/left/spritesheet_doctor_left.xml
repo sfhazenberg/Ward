@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:a4b42f74996e6c69192f8ce747af6b08:0fa63e6ee13525266b29239299efb657:ae96e3634032782d5a74a3baaf8ac21b$ -->
+<TextureAtlas imagePath="spritesheet_doctor_left.png" width="48" height="288">
+    <SubTexture name="Doctor Left mc0001" x="1" y="1" width="46" height="94"/>
+    <SubTexture name="Doctor Left mc0002" x="1" y="1" width="46" height="94"/>
+    <SubTexture name="Doctor Left mc0003" x="1" y="97" width="46" height="94"/>
+    <SubTexture name="Doctor Left mc0004" x="1" y="97" width="46" height="94"/>
+    <SubTexture name="Doctor Left mc0005" x="1" y="193" width="46" height="94"/>
+    <SubTexture name="Doctor Left mc0006" x="1" y="193" width="46" height="94"/>
+    <SubTexture name="Doctor Left mc0007" x="1" y="97" width="46" height="94"/>
+    <SubTexture name="Doctor Left mc0008" x="1" y="97" width="46" height="94"/>
+</TextureAtlas>

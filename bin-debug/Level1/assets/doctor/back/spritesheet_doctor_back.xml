@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:b65ddd8064ef4483ad8c7cd7105dd270:097d06eada7efea3b03492e07bdee00c:74bd141e1c1421f8d8083808b9f7bc67$ -->
+<TextureAtlas imagePath="spritesheet_doctor_back.png" width="48" height="190">
+    <SubTexture name="Doctor back0001" x="1" y="1" width="46" height="93"/>
+    <SubTexture name="Doctor back0002" x="1" y="1" width="46" height="93"/>
+    <SubTexture name="Doctor back0003" x="1" y="96" width="46" height="93"/>
+    <SubTexture name="Doctor back0004" x="1" y="96" width="46" height="93"/>
+</TextureAtlas>

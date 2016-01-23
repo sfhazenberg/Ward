@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:efc106660224fd3e2fd1c343c078b40a:f606b59662f2978150fa9f4d6b346331:c7f568b056287e5d27d27ed53a5c326e$ -->
+<TextureAtlas imagePath="doc_right_test.png" width="48" height="384">
+    <SubTexture name="Doctor Right0001" x="1" y="1" width="46" height="94"/>
+    <SubTexture name="Doctor Right0002" x="1" y="1" width="46" height="94"/>
+    <SubTexture name="Doctor Right0003" x="1" y="97" width="46" height="94"/>
+    <SubTexture name="Doctor Right0004" x="1" y="97" width="46" height="94"/>
+    <SubTexture name="Doctor Right0005" x="1" y="193" width="46" height="94"/>
+    <SubTexture name="Doctor Right0006" x="1" y="193" width="46" height="94"/>
+    <SubTexture name="Doctor Right0007" x="1" y="289" width="46" height="94"/>
+    <SubTexture name="Doctor Right0008" x="1" y="289" width="46" height="94"/>
+</TextureAtlas>
