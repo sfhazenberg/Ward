@@ -207,12 +207,12 @@
 		}
 		
 
-		private function supplyTriggered():void		//should happen at the same time a new supply room has been put into the hospital screen.
+		/*private function supplyTriggered():void		//should happen at the same time a new supply room has been put into the hospital screen.
 		{
 			maxNumberOfSupplies += 30;
 			View.View.getInstance().setMaxNumberOfSupplies(maxNumberOfSupplies);
 			View.View.getInstance().updateTopBar();
-		}
+		}*/
 		
 		/**
 		 * method called when treatment room is pushed
@@ -251,6 +251,9 @@
 						GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 1);
 						//GeneralChecker.getInstance().setRoomGrids(2, true);	//reveals grid view of corresponding room
 						//View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
+						maxNumberOfSupplies += 30;
+						View.View.getInstance().setMaxNumberOfSupplies(maxNumberOfSupplies);
+						View.View.getInstance().updateTopBar();
 						break;
 				}
 			}
@@ -443,6 +446,7 @@
 			suppliesNumberTextField.y = 250;
 			sprite.addChild(suppliesNumberTextField);
 			
+			//button with +5 or +10 supplies perhaps? Constant tapping might get tedious at the higher supply capacities.
 			suppliesPlus = new Button (asset.getTexture("PlusButton"));
 			suppliesPlus.x = 1120;
 			suppliesPlus.y = 250;
@@ -579,7 +583,7 @@
 			if (suppliesBought == maxNumberOfSupplies && suppliesBought - doctors * 15 == 0)
 			{
 				var balancedDoctors:Image = new Image (asset.getTexture("BalancedGoodJob"));
-				balancedDoctors.x = 335;
+				balancedDoctors.x = 350;	//335
 				balancedDoctors.y = 750;
 				addChild(balancedDoctors);
 				
@@ -591,7 +595,7 @@
 			else if (suppliesBought - doctors * 15 < 0)
 			{
 				var overstaff:Image = new Image (asset.getTexture("OverstaffedRumours"));
-				overstaff.x = 335;
+				overstaff.x = 350;	//335
 				overstaff.y = 750;
 				addChild(overstaff); 
 				
@@ -603,7 +607,7 @@
 			else
 			{
 				var exhaustedDoctors:Image = new Image (asset.getTexture("UnderstaffedExhausted"));
-				exhaustedDoctors.x = 335;
+				exhaustedDoctors.x = 350;	//335
 				exhaustedDoctors.y = 740;
 				addChild(exhaustedDoctors);
 				

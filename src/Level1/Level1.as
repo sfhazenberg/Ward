@@ -11,7 +11,6 @@
 	
 	import Level1.Tutorial;
 	
-	import MainInfo.DayReview;
 	import MainInfo.GameOver;
 	
 	import Movement.Movement;
@@ -38,11 +37,16 @@
 	public class Level1 extends Sprite {
 		
 		[Embed(source="assets/doctor/front/spritesheet_doctor_front.xml", mimeType="application/octet-stream")]
+		//[Embed(source="assets/patient/front/spritesheet_patient_front.xml", mimeType="application/octet-stream")]
 		public static const AtlasXML:Class;
+		
 		[Embed(source="assets/doctor/front/spritesheet_doctor_front.png")]
+		//[Embed(source="assets/patient/front/spritesheet_patient_front.png")]
 		public static const AtlasTexture:Class;
+				
 		private var doctor1:MovieClip;
-		private var isLoaded:Boolean = false;
+		private var patient1:MovieClip;
+		//private var isLoaded:Boolean = false;
 		private var texture:Texture = Texture.fromEmbeddedAsset(AtlasTexture);
 		private var xml:XML = XML(new AtlasXML());
 		private var atlas:TextureAtlas = new TextureAtlas(texture, xml);
@@ -50,6 +54,7 @@
 		
 		private var asset:AssetManager;
 		public var timer:Timer;
+		public var currentTimer:Timer;
 		private var tutorialButton:Button;
 		private var receptionDesk:Button;
 		private var background:Image;
@@ -191,6 +196,16 @@
 			Starling.juggler.add(doctor1);
 			var firstMovement:Movement = new Movement(doctor1);		
 			
+			/**
+			 * loads the first patient
+			 */
+			/*var pointB:Point = new Point(1500, 700);
+			patient1 = new MovieClip(atlas.getTextures("Patient Front mc000"), 6);
+			patient1.x = pointB.x;
+			patient1.y = pointB.y;
+			addChild(patient1);
+			Starling.juggler.add(patient1);*/
+						
 			time();
 		}
 		
@@ -265,7 +280,7 @@
 			}
 		}
 		
-		private function time():void
+		public function time():void
 		{
 			timer = new Timer(1, 1500);
 			timer.start();
@@ -297,25 +312,28 @@
 		
 		private function tutorialScreen (e:Event):void
 		{
+			//var currentTimer:Timer = timer;
+			//timer.stop();
+			
 			GeneralChecker.getInstance().removeRoomGrids();
 			Destroy();
 			View.View.getInstance().loadScreen(ShopMenu);
 			View.View.getInstance().loadScreen(Tutorial);
 		}
 
-		private function goToShop (e:Event):void
-
+		/*private function goToShop (e:Event):void
 		{
 			GeneralChecker.getInstance().removeRoomGrids();
 			Destroy();
 			View.View.getInstance().loadScreen(Tutorial);
-		}
+		}*/
 		
 		private function dayFinished(e:TimerEvent):void
 		{
 			var doc:int = View.View.getInstance().getDoctors();
 			budget -= doc * 1000;
 			trace("BUDGET " + budget);
+			Destroy();
 			View.View.getInstance().setBudget(budget);
 			View.View.getInstance().updateTopBar();
 			View.View.getInstance().loadScreen(ShopMenu);

@@ -2,6 +2,8 @@ package Level1
 {
 	import flash.filesystem.File;
 	
+	import Level1.Level1;
+	
 	import View.View;
 	
 	import starling.display.Button;

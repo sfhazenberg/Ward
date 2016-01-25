@@ -1,4 +1,6 @@
 package Movement{
+	import General.GeneralChecker;
+	
 	import flash.geom.Point;
 	
 	import starling.display.MovieClip;
@@ -16,13 +18,16 @@ package Movement{
 		
 		public function Movement(doc:MovieClip){
 				this.doctorInstance = doc;
-				destinationTriggers.push(new Point(1280,450));
+				destinationTriggers.push(new Point(doc.x, 450));
 				destinationBooleans.push(true);
-				destinationTriggers.push(new Point(960,450));
+				destinationTriggers.push(new Point(1620,450));	//960x
 				destinationBooleans.push(false);
-				destinationTriggers.push(new Point(960,300));
+				destinationTriggers.push(new Point(1620,300));	//960x
 				destinationBooleans.push(false);
-				
+				destinationTriggers.push(new Point(1620,450));	//960x
+				destinationBooleans.push(false);
+				destinationTriggers.push(new Point(500,450));	//960x
+				destinationBooleans.push(false);
 				doctorInstance.addEventListener(Event.ENTER_FRAME, movedoctor);
 		}
 		
@@ -52,15 +57,15 @@ package Movement{
 				
 				//if still default flag, all destinations have been walked, stop the function
 				if(index == -1) return;
-				trace('[MOVEMENT] INDEX: ' + index);
 				
 				//fill local destination value x/y
 				var distanceX:Number = doctorInstance.x - destination.x;
-				trace('[MOVEMENT] DESTINATION_X: ' + destination.x);
+				
 				var distanceY:Number = doctorInstance.y - destination.y;
 				
 				// calculate rotation based on the geometry of player, destination, x and y
 				var rotation:Number = Math.atan2(doctorInstance.y - destination.y,doctorInstance.x - destination.x) / Math.PI * 180;
+
 				// calculate distance based on destination and doctor difference x and y
 				var distance:Number = Math.sqrt((distanceX*distanceX)+(distanceY*distanceY));
 				
@@ -72,7 +77,6 @@ package Movement{
 					//teleport to destination
 					doctorInstance.x = destination.x;
 					doctorInstance.y = destination.y;
-					
 					//tell the array destination is reached
 					destinationBooleans[index] = false;
 					// tell the array that a new destination exists
@@ -86,16 +90,67 @@ package Movement{
 					}
 				}
 				//if the doctor is east of the destination go west
-				else if(doctorInstance.x < destination.x){
-					doctorInstance.x = doctorInstance.x + Math.cos(rotation/180*Math.PI)*playerSpeed;
-					doctorInstance.y = doctorInstance.y - Math.sin(rotation/180*Math.PI)*playerSpeed;
+				else if(doctorInstance.x <= destination.x){
+					trace('go right');
+					
+					if(destination.y == doctorInstance.y){
+						if(check(destination.x - 5, doctorInstance.x , destination.x + 5)){
+							doctorInstance.x = destination.x;	
+						}
+						else if(doctorInstance.x <= destination.x){
+							doctorInstance.x = doctorInstance.x + playerSpeed;
+						}
+						else{
+							doctorInstance.x = doctorInstance.x - playerSpeed;
+						}
+					}
+					
+					if(check(destination.y - 5, doctorInstance.y , destination.y + 5)){
+						doctorInstance.y = destination.y;	
+					}
+					else if(doctorInstance.y <= destination.y){
+						doctorInstance.y = doctorInstance.y + playerSpeed;
+					}
+					else{
+						doctorInstance.y = doctorInstance.y - playerSpeed;
+					}
+					
 				}
 				//if the doctor is west of the destination go east
 				else{
-					doctorInstance.x = doctorInstance.x - Math.cos(rotation/180*Math.PI)*playerSpeed;
-					doctorInstance.y = doctorInstance.y - Math.sin(rotation/180*Math.PI)*playerSpeed;
+					trace('go left');
+					if(destination.y == doctorInstance.y){
+						if(check(destination.x - 5, doctorInstance.x , destination.x + 5)){
+							doctorInstance.x = destination.x;	
+						}
+						else if(doctorInstance.x <= destination.x){
+							doctorInstance.x = doctorInstance.x + playerSpeed;
+						}
+						else{
+							doctorInstance.x = doctorInstance.x - playerSpeed;
+						}
+					}					
+					if(check(destination.y - 5, doctorInstance.y , destination.y + 5)){
+						doctorInstance.y = destination.y;	
+					}
+					else if(doctorInstance.y <= destination.y){
+						doctorInstance.y = doctorInstance.y + playerSpeed;
+					}
+					else{
+						doctorInstance.y = doctorInstance.y - playerSpeed;
+					}
 				}
 		}
 		
+		/**
+		 * meathod to return boolean when between
+		 */
+		private function check(min:Number , value:Number , max:Number):Boolean{
+			return min > value ? false : ( max < value ? false : true );
+		}
+		
+		private function chooseDestination():void{
+			
+		}
 	}
 }
