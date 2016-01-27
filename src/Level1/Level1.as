@@ -109,13 +109,13 @@
 			background.y = 155;
 			addChild(background);
 			
-			//dynamicly generate rooms
-			generateRooms();
-			
 			receptionDesk = new Button(asset.getTexture("reception_desk"));
 			receptionDesk.x = 1445;
 			receptionDesk.y = 584;
 			addChild(receptionDesk);
+			
+			//dynamicly generate rooms
+			generateRooms();
 			
 			/**
 			*array that stores the images of the initial rooms
@@ -188,7 +188,8 @@
 			/**
 			 * loads the moving doctor
 			 */
-			var pointA:Point = new Point(1280, 300);		//different naming might be more convenient
+			//seperate class is probably more convenient
+			var pointA:Point = new Point(1280, 300);
 			doctor1 = new MovieClip(atlas.getTextures("Doctor_Front000"), 6);
 			doctor1.x = pointA.x;	//initial starting point of doctor1
 			doctor1.y = pointA.y;
@@ -209,7 +210,7 @@
 			time();
 		}
 		
-		private function generateRooms():void{
+		/*private function generateRooms():void{
 			this.RoomArrays = GeneralChecker.getInstance().getPlaceHolder().Synchronise();
 			for each(var instance:Image in RoomArrays){
 				if(instance != null){
@@ -233,16 +234,35 @@
 						instance.texture = asset.getTexture('grid_waitingroom');
 					}
 					instance.addEventListener(TouchEvent.TOUCH, onTouchedROOM);	
-					addChild(instance);	
+					addChild(instance);
+					trace('TEST');
+				}
+			}
+		}*/
+		
+		private function generateRooms():void{
+			this.RoomArrays = GeneralChecker.getInstance().getPlaceHolder().Synchronise();
+			for each(var instance:Image in RoomArrays){
+				if(instance != null){
+					if(GeneralChecker.getInstance().getPlaceHolder().getTreat().indexOf(instance) >= 0){
+						instance.texture = asset.getTexture('treatment_room');
+					}
+					else if(GeneralChecker.getInstance().getPlaceHolder().getSupply().indexOf(instance) >= 0){
+						instance.texture = asset.getTexture('supply_room');
+					}
+					else if(GeneralChecker.getInstance().getPlaceHolder().getWaiting().indexOf(instance) >= 0){
+						instance.texture = asset.getTexture('waiting_room');
+					}	
+					addChild(instance);
 				}
 			}
 		}
-
+		
 		/**
 		 * method called when GRID of room is pushed.
 		 * @event: push event
 		 */
-		private function onTouchedROOM(event:TouchEvent):void{
+		/*private function onTouchedROOM(event:TouchEvent):void{
 			var touch:Touch = event.getTouch(this);
 			if(touch){
 				switch(touch.phase){
@@ -278,7 +298,7 @@
 					}
 				}
 			}
-		}
+		}*/
 		
 		public function time():void
 		{
@@ -343,7 +363,7 @@
 		/*	trace("DAY FINISHED");
 			View.View.getInstance().loadScreen(ShopMenu);
 			View.View.getInstance().loadScreen(GameOver);
-		}*/		
+		}*/
 		
 
 		private function Destroy():void

@@ -3,11 +3,14 @@
 	
 	import flash.filesystem.File;
 	
+	import Cutscenes.OpeningCutscene;
+	
 	import MainMenu.MainMenu;
 	
 	import View.View;
 	
 	import starling.display.Button;
+	import starling.display.DisplayObjectContainer;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -16,7 +19,9 @@
 	public class Settings extends Sprite {
 		
 		public var asset:AssetManager;
-
+		private var MovieClip:DisplayObjectContainer;
+		private var cutscene:OpeningCutscene = new OpeningCutscene(MovieClip);
+		
 		public function Settings() {
 			addEventListener( Event.ADDED_TO_STAGE, initialize );
 		}
@@ -61,7 +66,29 @@
 			
 			backToMenu.addEventListener( Event.TRIGGERED, exitSettings );
 			addChild( backToMenu );
+		
+			/////////////////////////////
+			var testImage:Button = new Button(asset.getTexture("TEST"));
+			testImage.x = 960;
+			testImage.y = 400;
+			testImage.addEventListener(Event.TRIGGERED, Cutscene);
+			addChild(testImage);
+			/////////////////////////////
 		}
+		
+		/////////////////////////////////////////////////////
+		public function getCutscene(OpeningCutscene:Boolean):void
+		{
+			//var cutscene = OpeningCutscene.
+			//return cutscene;
+		}
+		
+		private function Cutscene(value:Boolean):void
+		{
+			//Cutscenes.OpeningCutscene(checker = true);
+			
+		}
+		/////////////////////////////////////////////////////
 		
 		private function music (e:Event):void
 		{

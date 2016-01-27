@@ -223,10 +223,9 @@
 			if(touch){
 				switch(touch.phase){
 					case TouchPhase.ENDED:
-					//GeneralChecker.getInstance().setRoomGrids(0, true);	//reveals grid view of corresponding room	//0 should be calculated by different function, so that this function only needs to grab that integer.
-					var tmp:Image = new Image(asset.getTexture('grid_treatmentroom'));
+					//var tmp:Image = new Image(asset.getTexture('grid_treatmentroom'));
+					var tmp:Image = new Image(asset.getTexture('treatment_room'));
 					GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 0);
-					//View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
 					break;
 				}
 			}
@@ -235,22 +234,16 @@
 		/**
 		 * method called when supply room is pushed
 		 */
-
-		/*private function onTouchedSupply(event:TouchEvent):void
-		{
-			GeneralChecker.getInstance().setRooms("SUP", true);
-		}*/	
-
 		private function onTouchedSupply(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(this);
 			if(touch){
 				switch(touch.phase){
 					case TouchPhase.ENDED:
-						var tmp:Image = new Image(asset.getTexture('grid_supplyroom'));
+						//var tmp:Image = new Image(asset.getTexture('grid_supplyroom'));
+						var tmp:Image = new Image(asset.getTexture('supply_room'));
 						GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 1);
-						//GeneralChecker.getInstance().setRoomGrids(2, true);	//reveals grid view of corresponding room
-						//View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
+						
 						maxNumberOfSupplies += 30;
 						View.View.getInstance().setMaxNumberOfSupplies(maxNumberOfSupplies);
 						View.View.getInstance().updateTopBar();
@@ -268,10 +261,9 @@
 			if(touch){
 				switch(touch.phase){
 					case TouchPhase.ENDED:
-						var tmp:Image = new Image(asset.getTexture('grid_waitingroom'));
+						//var tmp:Image = new Image(asset.getTexture('grid_waitingroom'));
+						var tmp:Image = new Image(asset.getTexture('waiting_room'));
 						GeneralChecker.getInstance().getPlaceHolder().Add(tmp, 2);
-						//GeneralChecker.getInstance().setRoomGrids(1, true);	//reveals grid view of corresponding room
-						//View.View.getInstance().loadScreen( Level1 );		//loads back to the main game screen
 						break;
 				}
 			}

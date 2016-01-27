@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:c80b0bc25fa484d2326fab7fd74664d9:c6fc64edb4045c13fc75bbd230b38f90:39a891952026b8bb4e720664063fe1ea$ -->
+<TextureAtlas imagePath="spritesheet_patient_idle.png" width="48" height="190">
+    <SubTexture name="Patient Idle mc0001" x="1" y="1" width="46" height="93"/>
+    <SubTexture name="Patient Idle mc0002" x="1" y="1" width="46" height="93"/>
+    <SubTexture name="Patient Idle mc0003" x="1" y="96" width="46" height="93"/>
+    <SubTexture name="Patient Idle mc0004" x="1" y="96" width="46" height="93"/>
+</TextureAtlas>

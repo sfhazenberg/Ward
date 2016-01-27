@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:b002027e0938624d4957ab9e3d56eacd:ba1d4f64b7e36d14de99da42f4a61765:eaff4638d9309cfc6c8960df7887430a$ -->
+<TextureAtlas imagePath="spritesheet_patient_left.png" width="48" height="288">
+    <SubTexture name="Patient Left mc0001" x="1" y="1" width="46" height="94"/>
+    <SubTexture name="Patient Left mc0002" x="1" y="1" width="46" height="94"/>
+    <SubTexture name="Patient Left mc0003" x="1" y="97" width="46" height="94"/>
+    <SubTexture name="Patient Left mc0004" x="1" y="97" width="46" height="94"/>
+    <SubTexture name="Patient Left mc0005" x="1" y="193" width="46" height="94"/>
+    <SubTexture name="Patient Left mc0006" x="1" y="193" width="46" height="94"/>
+    <SubTexture name="Patient Left mc0007" x="1" y="97" width="46" height="94"/>
+    <SubTexture name="Patient Left mc0008" x="1" y="97" width="46" height="94"/>
+</TextureAtlas>

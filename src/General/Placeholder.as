@@ -55,7 +55,7 @@ package General
 		 * method to add rooms depending on availability
 		 * @param texture: the image to display
 		 * @param identifier: the specific room to load (0 = treatment, 1 = supply, 2 = waiting)
-		 * position 1 to 5 is checked wether it has been filled or not, if filled continue at next position
+		 * position 1 to 5 is checked whether it has been filled or not, if filled continue at next position
 		 * return ends the function
 		 */
 		public function Add(texture:Image, identifier:int):void{
@@ -143,7 +143,7 @@ package General
 		}
 		
 		/**
-		 * method that overwrites grid with actual room teture
+		 * method that overwrites grid with actual room texture
 		 */
 		public function overwriteGrid(texture:Image):void{
 			this.noneGridRooms.push(texture);

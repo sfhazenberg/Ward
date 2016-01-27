@@ -26,7 +26,7 @@ package Movement{
 				destinationBooleans.push(false);
 				destinationTriggers.push(new Point(1620,450));	//960x
 				destinationBooleans.push(false);
-				destinationTriggers.push(new Point(500,450));	//960x
+				destinationTriggers.push(new Point(1000,450));	//960x
 				destinationBooleans.push(false);
 				doctorInstance.addEventListener(Event.ENTER_FRAME, movedoctor);
 		}

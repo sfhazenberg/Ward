@@ -1,9 +1,14 @@
 package MainInfo
 {
 	import flash.filesystem.File;
+	import flash.utils.Timer;
+	
+	import Level1.Level1;
+	import Level1.Tutorial;
+	
+	import MainMenu.MainMenu;
 	
 	import View.View;
-	import MainMenu.MainMenu;
 	
 	import starling.display.Button;
 	import starling.display.Image;
